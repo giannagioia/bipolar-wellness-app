@@ -31,10 +31,11 @@ nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;st
 .top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .back{background:var(--pan2);border-radius:50%;width:44px;height:44px;font-size:20px}
 .home{flex:1;display:flex;flex-direction:column;position:relative;padding:18px 18px 0;overflow:hidden}
-.hill{position:absolute;left:-10%;right:-10%;bottom:0;height:34%;background:var(--lav);border-radius:50% 50% 0 0/40% 40% 0 0}
-.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative;z-index:1;padding-bottom:12px}
+.ground{position:relative;z-index:1;flex:none;margin:0 -14%;padding:46px calc(14% + 18px) 0;background:#d7d5f7;border-radius:50% 50% 0 0/64px 64px 0 0}
+.stage{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative;z-index:2;margin-bottom:-34px;padding-top:12px}
+.stage img{display:block;width:100%;max-width:285px;height:auto;min-height:0;max-height:100%;object-fit:contain}
 .bubble{background:var(--pan2);padding:10px 16px;border-radius:18px;margin-bottom:10px;max-width:260px;text-align:center;font-size:15px}
-.dock{position:relative;z-index:1;padding:0 0 18px}
+.dock{position:relative;padding:0 0 18px}
 .say{background:rgba(23,18,58,.55);border-radius:999px;display:flex;align-items:center;padding:6px 6px 6px 20px;width:100%;color:#fff;text-align:left;min-height:56px;justify-content:space-between}
 .say b{width:44px;height:44px;border-radius:50%;background:var(--lav);color:#17123a;display:grid;place-items:center;font-size:26px}
 .quick{display:flex;gap:8px;margin:0 0 10px}.quick button{flex:1;background:rgba(20,16,43,.8);border-radius:18px;padding:10px 6px;font-size:13px;min-height:48px}
@@ -68,6 +69,34 @@ nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;st
 .tps{display:flex;align-items:center;gap:8px}.tps select{width:auto;flex:1;border-radius:999px;text-align:center;text-align-last:center;min-height:50px;font-size:19px;font-weight:700}
 .tl{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid #2c2650}.tl:last-child{border:0}.tm{width:74px;flex:none;color:var(--peri);font-weight:700;font-size:14px}.tl>span:nth-child(2){flex:1}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Chat screen: accessible circular controls and slide-out conversation history. */
+.chat-header{display:flex;align-items:center;gap:12px;padding:14px 18px 6px;flex:none}
+.chat-header h1{flex:1;margin:0;font-size:22px}
+.chat-icon{width:44px;height:44px;border-radius:50%;background:var(--pan2);color:var(--tx);display:grid;place-items:center;flex:none}
+.chat-icon svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.chat-help-icon{font-size:23px;font-weight:700;border:1px solid #514879}
+.chat-help-icon:focus-visible,.chat-icon:focus-visible{outline:3px solid var(--peri)}
+.chat-overlay{position:absolute;inset:0;background:rgba(5,3,20,.68);z-index:12}
+.chat-drawer{position:absolute;left:0;top:0;bottom:0;width:58%;min-width:215px;max-width:285px;z-index:13;background:#171230;display:flex;flex-direction:column;padding:20px 12px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:12px 0 35px rgba(0,0,0,.25)}
+.drawer-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 3px 10px}
+.drawer-heading h2{margin:0;font-size:19px}
+.drawer-close{border-radius:50%;background:var(--pan2);width:36px;height:36px;font-size:23px;flex:none}
+.drawer-new{border:1px solid #484167;border-radius:16px;background:var(--pan2);padding:12px 10px;text-align:left;width:100%;margin:8px 0 12px;min-height:44px;font-weight:700}
+.drawer-history{flex:1;overflow-y:auto;min-height:0}
+.drawer-history button{display:block;width:100%;text-align:left;border-radius:13px;background:transparent;color:var(--tx);padding:12px 10px;margin:2px 0;min-height:52px;overflow-wrap:anywhere}
+.drawer-history button.active{background:#393154}
+.drawer-history small{display:block;font-size:11px;color:var(--mu);margin-top:3px}
+.chat-info-sheet h3{font-size:15px;margin:18px 0 7px;color:var(--peri)}
+.chat-info-sheet p{font-size:14px;line-height:1.5}
+.chat-info-sheet ul{margin:8px 0;padding-left:20px;font-size:14px;line-height:1.55}
+.chat-info-sheet li{margin:6px 0}
+.chat-info-sheet a{color:#cfd9ff;text-decoration:underline;text-underline-offset:3px}
+.chat-info-sheet .info-warning{border:1px solid #59517d;background:#211c3d;border-radius:16px;padding:12px;margin:12px 0}
+.chat-info-sheet .help-entry{border-bottom:1px solid #363050;padding:10px 0}
+.chat-info-sheet .help-entry:last-child{border:0}
+.chat-info-sheet .help-entry b{display:block;font-size:14px}
+.chat-info-sheet .help-entry p{margin:3px 0}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -89,6 +118,9 @@ if(!S.v2){const sd=seed();for(const d in sd.checks){const c=S.checks[d],e=c&&c.e
  if(S.sums.length)m.summary=t;if(S.appts.some(a=>!a.sample))m.appt=t;if(Object.keys(S.preps).length)m.prep=t;S.v2=1}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 let ui={stack:[],sum:{range:3,src:{chat:1,checks:1},ex:{}},draft:null,busy:false,err:null,modal:null,hist:false};
+const closeHistory=()=>{ui.hist=false;render()};
+const openChatInfo=()=>{ui.hist=false;ui.modal='chatInfo';render()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ui.hist){closeHistory()}else if(e.key==='Escape'&&ui.modal==='chatInfo'){ui.modal=null;render()}});
 
 // ===== Voiceflow adapter boundary =====
 // Presentation never calls Voiceflow directly. To connect: deploy a small server proxy that holds your Voiceflow API key
@@ -100,6 +132,12 @@ const ChatService={async send(text,history){
  if(VOICEFLOW.proxyUrl){const r=await fetch(VOICEFLOW.proxyUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history})});if(!r.ok)throw new Error('Service error');return{text:(await r.json()).text}}
  await new Promise(r=>setTimeout(r,900));if(/\/fail/.test(text))throw new Error('Simulated failure');
  if(CRISIS.test(text))return{crisis:true};
+ if(/\b(am i bipolar|do i have bipolar|diagnose me|is this mania|am i manic|is this depression)\b/i.test(text))return{text:'I can explain terms and help you prepare for an evaluation, but I cannot determine whether you have bipolar disorder or identify a mood episode. A licensed clinician can review your experience and history with you. Would you like to write down questions for an appointment?',proto:1};
+ if(/\b(hypomania|hypomanic)\b/i.test(text))return{text:'Hypomania is a period of elevated or unusually irritable mood and increased energy or activity that is less severe than mania. It is a clinical term, not something Beary can identify in an individual. Read more: https://medlineplus.gov/bipolardisorder.html',proto:1};
+ if(/\b(mania|manic)\b/i.test(text))return{text:'Mania is a clinical term for a period of unusually elevated or irritable mood and increased activity or energy. A healthcare professional evaluates symptoms and their context. More information: https://www.nimh.nih.gov/health/publications/bipolar-disorder',proto:1};
+ if(/\b(bipolar|bipolar disorder)\b/i.test(text))return{text:'Bipolar disorder is a mental health condition involving changes in mood, energy, activity, and thinking, including manic or hypomanic and depressive episodes. These terms describe patterns assessed by clinicians. Learn more: https://www.nimh.nih.gov/health/publications/bipolar-disorder',proto:1};
+ if(/support group|support organization|where can i find support|find help|resources/i.test(text))return{text:'The Depression and Bipolar Support Alliance (DBSA) offers peer-support resources: https://www.dbsalliance.org/ . For mental health treatment providers in the U.S., use the government directory at https://findtreatment.gov/ . For immediate U.S. crisis support, call or text 988.',proto:1};
+ if(/questions.*(doctor|provider|appointment)|what should i ask|prep.*appointment|prepare.*visit/i.test(text))return{text:'For your next visit, you could write down: What changes should I describe? Which mood, sleep, or energy patterns should I track? What questions do I have about care options or medications? You can edit these questions and bring them to your clinician.',proto:1};
  if(/(medic|meds|dose|pill)/i.test(text))return{text:'I can\'t advise on starting, stopping or changing medication. Your prescriber is the right person for that. Want me to add it to your appointment questions?',proto:1};
  if(/(haven't slept|not sleeping|racing|can't stop)/i.test(text))return{text:'Thanks for telling me. A big change like that is worth sharing with your care team soon. I can help you put it into a summary for them.',proto:1};
  const r=['Thank you for sharing that. What was that like for you?','I\'m listening. Is there anything about your sleep or energy you\'d want to remember for later?','That makes sense to put into words. Would you like to note it as a question for your next appointment?'];
@@ -150,7 +188,7 @@ const fd=s=>new Date(s.length==10?s+'T12:00':s).toLocaleDateString(undefined,{mo
 const toast=m=>{const o=$('.toast');let x=m;if(o&&/star/.test(o.textContent)&&!/star/.test(m))x=m+' · A new star appeared';if(o)o.remove();const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=x;$('#app').append(t);setTimeout(()=>t.remove(),2800)};
 const ICON={summaries:'<path d="M7 4h8l4 4v12H7z"/><path d="M15 4v4h4M10 13h6M10 17h6"/>',home:'<path d="M4 11l8-7 8 7v8a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',pat:'<path d="M4 18l5-6 4 3 7-9"/>',care:'<path d="M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.500-7 10-7 10z"/>'};
 function bear(w=140,eyes=1){return `<svg width="${w}" viewBox="0 0 160 150" role="img" aria-label="Beary the bear companion"><g stroke="#9aa8dd" stroke-width="6" stroke-linejoin="round"><circle cx="42" cy="50" r="13" fill="#f3e6f2"/><circle cx="118" cy="50" r="13" fill="#f3e6f2"/><rect x="40" y="90" width="80" height="50" rx="26" fill="#f3e6f2"/><circle cx="80" cy="68" r="44" fill="#f3e6f2"/><path d="M40 52a40 36 0 0180 0z" fill="#b9c0ec"/><circle cx="80" cy="12" r="12" fill="#e8dcef"/><path d="M42 100q38 12 76 0v14q-38 12-76 0z" fill="#a9b4e6"/></g><ellipse cx="62" cy="74" rx="4" ry="${eyes?4.500:1.500}" fill="#8f9ddd"/><ellipse cx="98" cy="74" rx="4" ry="${eyes?4.500:1.500}" fill="#8f9ddd"/><ellipse cx="80" cy="80" rx="6" ry="4" fill="#8f9ddd"/></svg>`}
-function go(v,push=true){if(push&&S.view!==v)ui.stack.push(S.view);S.view=v;save();render()}
+function go(v,push=true){if(push&&S.view!==v)ui.stack.push(S.view);if(v!=='chat')ui.hist=false;S.view=v;save();render()}
 function back(){S.view=ui.stack.pop()||'home';save();render()}
 const bump=()=>{S.pts=(S.pts||0)+1};
 const topbar=(t,r='')=>`<div class="top"><button class="back" onclick="back()" aria-label="Back">‹</button><h1 style="margin:0;flex:1">${t}</h1>${r}</div>`;
@@ -161,16 +199,16 @@ const V={
 home(){const c=S.checks[today()],up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0],ls=S.sums[0];
  const pv=up?`<button class="pv" style="display:flex;gap:12px;align-items:center" onclick="go('care')">${tile(up.date)}<span><b>Next visit</b> · ${rel(up.date)}, ${ftm(up.time)}<br><span class="mu">${esc(up.who)}${tc(up.id)?' · '+tc(up.id).replace(/[()]/g,'').trim()+' ready':''}</span></span></button>`:ls?`<button class="pv" onclick="ui.draft=S.sums[0];go('sumview')"><b>Latest summary</b><br><span class="mu">${esc(ls.title)}</span></button>`:'';
  return `<div class="home"><div class="between"><button class="sky" onclick="go('journey')" aria-label="Open your night sky"><span style="width:104px;display:block">${sky()}</span><span>Your sky</span></button><button class="back" onclick="go('settings')" aria-label="Settings">⚙</button></div>
- <div class="stage"><div class="bubble">${c&&c.entries.length?'Thanks for checking in. Rest counts too.':'Hi, I\'m Beary. No pressure. Check in when you\'re ready.'}</div>${bear(150)}</div><div class="hill"></div>
- <div class="dock">${pv}<div class="row" style="flex-wrap:nowrap;gap:10px;margin-bottom:12px"><button class="talk" style="margin:0;flex:3" onclick="go('chat')">Talk with Beary</button><button class="talk" style="margin:0;flex:2" onclick="openSums()">Summary</button></div><button class="say" onclick="ui.modal='checkin';render()"><span>Today I'm feeling…</span><b aria-hidden="true">+</b></button></div></div>`},
+ <div class="stage"><div class="bubble">${c&&c.entries.length?'Thanks for checking in. Rest counts too.':'Hi, I\'m Beary. No pressure. Check in when you\'re ready.'}</div><img src="beary-home-bear.png" alt="Beary sitting with a blue scarf"></div>
+ <div class="ground"><div class="dock">${pv}<div class="row" style="flex-wrap:nowrap;gap:10px;margin-bottom:12px"><button class="talk" style="margin:0;flex:1;min-width:0" onclick="ui.d=null;ui.f=null;ui.modal='checkin';render()">Daily Checks</button><button class="talk" style="margin:0;flex:1;min-width:0" onclick="openSums()">Summary</button></div><button class="say" onclick="go('chat')"><span>Talk with Beary</span><b aria-hidden="true">→</b></button></div></div></div>`},
 chat(){const c=S.conv[S.cur];
  const ms=c.msgs.map((m,i)=>m.crisis?crisisCard():`<div class="m ${m.r}">${esc(m.t)}${m.proto?'<small>Prototype reply, not live AI</small>':''}</div>`).join('');
- const empty=!c.msgs.length?`<div style="text-align:center;margin-top:20px">${bear(110)}<p>Say anything, or start with one of these.</p><div class="row" style="justify-content:center">${['How has my week been?','I want to prep for my appointment','I can\'t sleep well lately'].map(s=>`<button class="pill" onclick="sendMsg(this.textContent)">${s}</button>`).join('')}</div></div>`:'';
- return `<div style="padding:14px 18px 0">${topbar('Beary',`<button class="back" style="font-size:14px;width:auto;padding:0 14px" onclick="ui.hist=!ui.hist;render()">History</button>`)}
- ${ui.hist?`<div class="card">${S.conv.map((x,i)=>`<button class="pill" style="width:100%;text-align:left;margin:3px 0" onclick="S.cur=${i};ui.hist=false;save();render()">${fd(x.t)} · ${esc(x.title)}</button>`).join('')}<button class="btn ghost" style="margin-top:6px" onclick="newChat()">New conversation</button></div>`:''}</div>
+ const empty=!c.msgs.length?`<div style="text-align:center;margin-top:20px">${bear(110)}<p>Say anything, or start with one of these.</p><div class="row" style="justify-content:center">${['What is bipolar disorder?','Where can I find support?','What should I ask my provider?'].map(s=>`<button class="pill" onclick="sendMsg(this.textContent)">${s}</button>`).join('')}</div></div>`:'';
+ const drawer=ui.hist?`<div class="chat-overlay" aria-hidden="true" onclick="closeHistory()"></div><aside class="chat-drawer" role="dialog" aria-modal="true" aria-label="Conversation history"><div class="drawer-heading"><h2>Chats</h2><button class="drawer-close" aria-label="Close history" onclick="closeHistory()">×</button></div><button class="drawer-new" onclick="newChat()">＋ New conversation</button><div class="drawer-history">${S.conv.map((x,i)=>`<button class="${i===S.cur?'active':''}" ${i===S.cur?'aria-current="true"':''} onclick="S.cur=${i};closeHistory();save()">${esc(x.title)}<small>${fd(x.t)}</small></button>`).join('')}</div></aside>`:'';
+ return `<header class="chat-header"><button class="chat-icon" aria-label="Open conversation history" aria-expanded="${ui.hist}" onclick="ui.hist=!ui.hist;render()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><h1>Beary</h1><button class="chat-icon chat-help-icon" aria-label="About Beary and help resources" title="About Beary" onclick="openChatInfo()">?</button></header>
  <main id="msgs"><p class="mu" style="text-align:center">${fd(c.t)} · Beary is for reflection, not medical advice or emergencies.</p><div class="msgs">${ms}${empty}${ui.busy?'<div class="m"><span class="dots" aria-label="Beary is typing"><span></span><span></span><span></span></span></div>':''}${ui.err?`<div class="m" style="border:1px solid var(--bad)">Message didn't send. Check your connection. <button class="pill" style="min-height:36px;padding:6px 14px" onclick="retry()">Retry</button></div>`:''}</div></main>
  <div style="padding:0 14px;background:#0b0824"><button class="pill" style="font-size:13px;min-height:36px;padding:6px 14px;margin-top:8px" onclick="go('sumsetup')">Turn conversations into a summary</button></div>
- <form class="compose" onsubmit="event.preventDefault();sendMsg($('#ci').value)"><input id="ci" aria-label="Message Beary" placeholder="Type here…" autocomplete="off"><button class="send" aria-label="Send">➤</button></form>`},
+ <form class="compose" onsubmit="event.preventDefault();sendMsg($('#ci').value)"><input id="ci" aria-label="Message Beary" placeholder="Type here…" autocomplete="off"><button class="send" aria-label="Send">➤</button></form>${drawer}`},
 patterns(){const sm=ui.ptab=='sum',b=sm?V.sumlist():V.trends();const seg=`<div class="row" role="group" aria-label="Patterns view" style="margin-bottom:6px"><button class="pill ${sm?'':'on'}" aria-pressed="${!sm}" onclick="ui.ptab='trends';render()">Trends</button><button class="pill ${sm?'on':''}" aria-pressed="${sm}" onclick="ui.ptab='sum';render()">Summaries</button></div>`;return b.replace(/<h1>[^<]*<\/h1>/,'<h1>Patterns</h1>'+seg)},
 trends(){const dates=[...Array(7)].map((_,i)=>iso(ago(6-i)));const W=340,H=90;
  const mv={good:3,okay:2,low:1,irr:0};const mc=dates.map((d,i)=>{const es=(S.checks[d]||{}).entries||[];if(!es.length)return `<circle cx="${25+i*50}" cy="45" r="3" fill="none" stroke="#6a64a0"/>`;const n=es.length;return es.map((e,k)=>`<circle cx="${25+i*50+(n>1?(k-(n-1)/2)*(Math.min(16,36/(n-1))):0)}" cy="${15+(3-mv[e.mood])*20}" r="${n>1?6:8}" fill="${MOODS.find(m=>m[0]==e.mood)[2]}"/>`).join('')}).join('');
@@ -244,6 +282,26 @@ function modal(){const m=ui.modal;if(!m)return'';let h='';
  if(m=='sleep'){const d=ui.d||today(),z=S.sleep[d];h=`<h2>${z?'Edit sleep':'Log sleep'}</h2><label>Night of (the morning you woke up)</label>${strip(d,'pickSleepDay')}<label for="sh">Hours slept</label><input id="sh" type="number" step="0.5" min="0" max="16" placeholder="e.g. 7.5" value="${z?z.h:''}"><label for="sq">How did it feel?</label><select id="sq">${Object.entries(QN).map(([k,v])=>`<option value="${k}" ${(z?z.q:'ok')==k?'selected':''}>${v[0].toUpperCase()+v.slice(1)}</option>`).join('')}</select><p id="fe" style="color:var(--bad)"></p><button class="btn" onclick="saveSleep()">Save</button>${z?'<button class="btn ghost" style="margin-top:8px" onclick="delSleep()">Remove this entry</button>':''}`}
  if(m=='appt'){if(!ui.ap||ui.ap.id!=ui.edit){const a=S.appts.find(x=>x.id==ui.edit)||{who:'',kind:'Therapy session',date:today(),time:'10:00'};ui.ap={id:ui.edit,who:a.who,kind:a.kind,date:a.date,time:a.time}}const a=ui.ap;
   h=`<h2>${ui.edit?'Edit':'Add'} appointment</h2><p class="mu">This only saves a note here. It doesn't book anything.</p><label for="aw">Provider name</label><input id="aw" value="${esc(a.who)}"><label for="ak">Type</label><input id="ak" value="${esc(a.kind)}"><label>Date</label>${strip(a.date,'pickApDay',1)}<label>Time</label>${tpick('ap',a.time)}<p id="fe" style="color:var(--bad)"></p><button class="btn" onclick="saveAppt()">Save</button>${ui.edit?'<button class="btn ghost" style="margin-top:8px" onclick="delAppt()">Delete</button>':''}`}
+  if(m=='chatInfo')h=`<div class="chat-info-sheet"><h2 id="about-beary">About Beary <span aria-hidden="true">✦</span></h2>
+  <p>Beary is a learning and reflection companion for people living with bipolar disorder, those exploring whether to seek an evaluation, and anyone who wants to understand the condition. It can help you explore information and prepare questions for a healthcare professional.</p>
+  <h3>What Beary is designed to help with</h3>
+  <ul><li>Learn about bipolar disorder from approved educational resources.</li><li>Understand mental health terminology in accessible language.</li><li>Find additional information and support organizations.</li><li>Prepare questions for healthcare providers.</li><li>Reflect on experiences and explore topics at your own pace.</li><li>Find crisis and emergency resources when appropriate.</li></ul>
+  <h3>What Beary cannot do</h3>
+  <ul><li>Diagnose bipolar disorder or any mental health condition.</li><li>Determine whether you are experiencing mania, depression, psychosis, or another mood state.</li><li>Recommend starting, stopping, or changing medication.</li><li>Interpret your symptoms as medical advice.</li><li>Replace a clinician or provide individualized treatment recommendations.</li></ul>
+  <h3>Approved educational references</h3>
+  <p>These are the sources designated for Beary's intended educational content:</p>
+  <ul><li><a href="https://www.nimh.nih.gov/health/publications/bipolar-disorder" target="_blank" rel="noopener noreferrer">National Institute of Mental Health (NIMH)</a></li>
+  <li><a href="https://medlineplus.gov/bipolardisorder.html" target="_blank" rel="noopener noreferrer">MedlinePlus (U.S. National Library of Medicine)</a></li>
+  <li><a href="https://www.dbsalliance.org/" target="_blank" rel="noopener noreferrer">Depression and Bipolar Support Alliance (DBSA)</a></li>
+  <li><a href="https://www.who.int/news-room/fact-sheets/detail/bipolar-disorder" target="_blank" rel="noopener noreferrer">World Health Organization (WHO)</a></li></ul>
+  <div class="info-warning"><b>Prototype notice</b><p>Beary currently uses scripted demonstration replies. It does <b>not</b> look up, check, or cite these sources automatically yet. Educational answers will need source verification and clinical review before real-world use. Your conversations are saved in this browser, which is not secure storage for health data.</p></div>
+  <h3>Help and crisis resources (United States)</h3>
+  <p>These are real services, separate from Beary. Beary does not contact them for you.</p>
+  <div class="help-entry"><b>988 Suicide &amp; Crisis Lifeline</b><p>Call or text <a href="tel:988">988</a> for mental health crisis support, 24/7. <a href="https://988lifeline.org/" target="_blank" rel="noopener noreferrer">988 Lifeline website</a></p></div>
+  <div class="help-entry"><b>Emergency services</b><p>Call <a href="tel:911">911</a> if you or someone else is in immediate danger.</p></div>
+  <div class="help-entry"><b>SAMHSA National Helpline</b><p>Call <a href="tel:18006624357">1-800-662-HELP (4357)</a> for free, confidential treatment referrals and information, 24/7. <a href="https://findtreatment.gov/" target="_blank" rel="noopener noreferrer">Find mental health treatment</a></p></div>
+  <div class="help-entry"><b>Veterans Crisis Line</b><p>Call <a href="tel:988">988</a> and press 1, or text <a href="sms:838255">838255</a>. <a href="https://www.veteranscrisisline.net/" target="_blank" rel="noopener noreferrer">Veterans Crisis Line</a></p></div>
+  <p class="mu">These phone numbers are for the U.S. For emergencies elsewhere, contact your local emergency service.</p></div>`;
  if(m=='share')h=`<h2>Before you copy</h2><p>This summary contains personal reflections. Copying doesn't send it anywhere. You decide who sees it.</p><div class="row"><button class="btn" onclick="copyIt()">Copy summary</button><button class="btn ghost" onclick="ui.modal=null;render()">Not now</button></div>`;
  return `<div class="modal" onclick="if(event.target==this){ui.modal=null;ui.f=null;ui.d=null;ui.ap=null;render()}"><div class="sheet" role="dialog" aria-modal="true">${h}<button class="btn ghost" style="margin-top:10px" onclick="ui.modal=null;ui.f=null;ui.d=null;ui.ap=null;render()">Close</button></div></div>`}
 
