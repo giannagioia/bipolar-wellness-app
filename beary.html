@@ -31,10 +31,11 @@ nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;st
 .top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .back{background:var(--pan2);border-radius:50%;width:44px;height:44px;font-size:20px}
 .home{flex:1;display:flex;flex-direction:column;position:relative;padding:18px 18px 0;overflow:hidden}
-.hill{position:absolute;left:-10%;right:-10%;bottom:0;height:34%;background:var(--lav);border-radius:50% 50% 0 0/40% 40% 0 0}
-.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative;z-index:1;padding-bottom:12px}
+.ground{position:relative;z-index:1;flex:none;margin:0 -14%;padding:46px calc(14% + 18px) 0;background:#d7d5f7;border-radius:50% 50% 0 0/64px 64px 0 0}
+.stage{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative;z-index:2;margin-bottom:-34px;padding-top:12px}
+.stage img{display:block;width:100%;max-width:285px;height:auto;min-height:0;max-height:100%;object-fit:contain}
 .bubble{background:var(--pan2);padding:10px 16px;border-radius:18px;margin-bottom:10px;max-width:260px;text-align:center;font-size:15px}
-.dock{position:relative;z-index:1;padding:0 0 18px}
+.dock{position:relative;padding:0 0 18px}
 .say{background:rgba(23,18,58,.55);border-radius:999px;display:flex;align-items:center;padding:6px 6px 6px 20px;width:100%;color:#fff;text-align:left;min-height:56px;justify-content:space-between}
 .say b{width:44px;height:44px;border-radius:50%;background:var(--lav);color:#17123a;display:grid;place-items:center;font-size:26px}
 .quick{display:flex;gap:8px;margin:0 0 10px}.quick button{flex:1;background:rgba(20,16,43,.8);border-radius:18px;padding:10px 6px;font-size:13px;min-height:48px}
@@ -198,8 +199,8 @@ const V={
 home(){const c=S.checks[today()],up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0],ls=S.sums[0];
  const pv=up?`<button class="pv" style="display:flex;gap:12px;align-items:center" onclick="go('care')">${tile(up.date)}<span><b>Next visit</b> · ${rel(up.date)}, ${ftm(up.time)}<br><span class="mu">${esc(up.who)}${tc(up.id)?' · '+tc(up.id).replace(/[()]/g,'').trim()+' ready':''}</span></span></button>`:ls?`<button class="pv" onclick="ui.draft=S.sums[0];go('sumview')"><b>Latest summary</b><br><span class="mu">${esc(ls.title)}</span></button>`:'';
  return `<div class="home"><div class="between"><button class="sky" onclick="go('journey')" aria-label="Open your night sky"><span style="width:104px;display:block">${sky()}</span><span>Your sky</span></button><button class="back" onclick="go('settings')" aria-label="Settings">⚙</button></div>
- <div class="stage"><div class="bubble">${c&&c.entries.length?'Thanks for checking in. Rest counts too.':'Hi, I\'m Beary. No pressure. Check in when you\'re ready.'}</div><img src="beary-home-bear.png" alt="Beary sitting with a blue scarf" style="width:100%;max-width:285px;height:auto;display:block;object-fit:contain"></div><div class="hill"></div>
- <div class="dock">${pv}<div class="row" style="flex-wrap:nowrap;gap:10px;margin-bottom:12px"><button class="talk" style="margin:0;flex:1;min-width:0" onclick="ui.d=null;ui.f=null;ui.modal='checkin';render()">Daily Checks</button><button class="talk" style="margin:0;flex:1;min-width:0" onclick="openSums()">Summary</button></div><button class="say" onclick="go('chat')"><span>Talk with Beary</span><b aria-hidden="true">→</b></button></div></div>`},
+ <div class="stage"><div class="bubble">${c&&c.entries.length?'Thanks for checking in. Rest counts too.':'Hi, I\'m Beary. No pressure. Check in when you\'re ready.'}</div><img src="beary-home-bear.png" alt="Beary sitting with a blue scarf"></div>
+ <div class="ground"><div class="dock">${pv}<div class="row" style="flex-wrap:nowrap;gap:10px;margin-bottom:12px"><button class="talk" style="margin:0;flex:1;min-width:0" onclick="ui.d=null;ui.f=null;ui.modal='checkin';render()">Daily Checks</button><button class="talk" style="margin:0;flex:1;min-width:0" onclick="openSums()">Summary</button></div><button class="say" onclick="go('chat')"><span>Talk with Beary</span><b aria-hidden="true">→</b></button></div></div></div>`},
 chat(){const c=S.conv[S.cur];
  const ms=c.msgs.map((m,i)=>m.crisis?crisisCard():`<div class="m ${m.r}">${esc(m.t)}${m.proto?'<small>Prototype reply, not live AI</small>':''}</div>`).join('');
  const empty=!c.msgs.length?`<div style="text-align:center;margin-top:20px">${bear(110)}<p>Say anything, or start with one of these.</p><div class="row" style="justify-content:center">${['What is bipolar disorder?','Where can I find support?','What should I ask my provider?'].map(s=>`<button class="pill" onclick="sendMsg(this.textContent)">${s}</button>`).join('')}</div></div>`:'';
