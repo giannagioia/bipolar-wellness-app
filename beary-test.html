@@ -1,0 +1,388 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Beary – wellness companion (prototype)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#0d0a2e;--bg2:#241a5c;--panel:#14102b;--pan2:#211c3d;--lav:#cfcbea;--peri:#a9b4e6;--tx:#f3f1ff;--mu:#aaa6c7;--bad:#e9a3a3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:#07051c;color:var(--tx);font:16px/1.45 Figtree,system-ui,sans-serif}
+#app{max-width:430px;height:100%;margin:0 auto;position:relative;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--bg1),var(--bg2) 80%);overflow:hidden}
+main{flex:1;overflow-y:auto;padding:18px 18px 24px}
+h1{font-size:22px;margin:4px 0 12px;line-height:1.25}h2{font-size:17px;margin:20px 0 8px}p{margin:6px 0}
+.mu{color:var(--mu);font-size:14px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0}
+:focus-visible{outline:3px solid var(--peri);outline-offset:2px}
+.pill{background:var(--pan2);border-radius:999px;padding:11px 18px;min-height:44px;color:var(--tx)}
+.pill.on{background:var(--lav);color:#17123a;font-weight:700}
+.btn{background:var(--lav);color:#17123a;font-weight:700;border-radius:999px;padding:14px 22px;width:100%;min-height:48px}
+.btn.ghost{background:var(--pan2);color:var(--tx);font-weight:500}
+.btn.sm{width:auto;padding:10px 18px;min-height:44px}
+.row{display:flex;gap:8px;flex-wrap:wrap}.between{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card{background:var(--panel);border-radius:22px;padding:16px;margin:10px 0}
+.card.tap{width:100%;text-align:left;display:block}
+input,select,textarea{background:var(--pan2);border:1px solid #3a3466;border-radius:16px;padding:12px 14px;width:100%}
+textarea{min-height:120px;resize:vertical}
+label{display:block;margin:12px 0 6px;color:var(--mu);font-size:14px}
+nav{display:flex;background:#0b0824;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;color:var(--mu);padding:8px 2px;min-height:52px;border-radius:16px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button.on{color:var(--tx);background:var(--pan2)}
+nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.back{background:var(--pan2);border-radius:50%;width:44px;height:44px;font-size:20px}
+.home{flex:1;display:flex;flex-direction:column;position:relative;padding:18px 18px 0;overflow:hidden}
+.ground{position:relative;z-index:1;flex:none;margin:0 -14%;padding:46px calc(14% + 18px) 0;background:#d7d5f7;border-radius:50% 50% 0 0/64px 64px 0 0}
+.stage{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative;z-index:2;margin-bottom:-34px;padding-top:12px}
+.stage img{display:block;width:100%;max-width:285px;height:auto;min-height:0;max-height:100%;object-fit:contain}
+.bubble{background:var(--pan2);padding:10px 16px;border-radius:18px;margin-bottom:10px;max-width:260px;text-align:center;font-size:15px}
+.dock{position:relative;padding:0 0 18px}
+.say{background:rgba(23,18,58,.55);border-radius:999px;display:flex;align-items:center;padding:6px 6px 6px 20px;width:100%;color:#fff;text-align:left;min-height:56px;justify-content:space-between}
+.say b{width:44px;height:44px;border-radius:50%;background:var(--lav);color:#17123a;display:grid;place-items:center;font-size:26px}
+.quick{display:flex;gap:8px;margin:0 0 10px}.quick button{flex:1;background:rgba(20,16,43,.8);border-radius:18px;padding:10px 6px;font-size:13px;min-height:48px}
+.sky{display:flex;gap:10px;align-items:center;background:rgba(20,16,43,.55);padding:8px 14px;border-radius:999px;font-size:13px}
+.msgs{display:flex;flex-direction:column;gap:10px;padding-bottom:8px}
+.m{max-width:82%;padding:11px 15px;border-radius:18px;background:var(--panel);white-space:pre-wrap}
+.m.u{align-self:flex-end;background:var(--pan2)}.m small{display:block;color:var(--mu);font-size:11px;margin-top:4px}
+.crisis{border:2px solid var(--bad);background:#2a1630;border-radius:18px;padding:14px;max-width:92%}
+.dots span{display:inline-block;width:7px;height:7px;margin-right:4px;border-radius:50%;background:var(--mu);animation:b 1.2s infinite}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes b{50%{opacity:.25}}
+.compose{display:flex;gap:8px;padding:10px 14px;background:#0b0824}.compose input{border-radius:999px}
+.send{width:48px;height:48px;border-radius:50%;background:var(--lav);color:#17123a;font-size:20px;flex:none}
+.modal{position:absolute;inset:0;background:rgba(5,3,20,.7);display:flex;align-items:flex-end;z-index:9}
+.sheet{background:var(--panel);width:100%;border-radius:26px 26px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px));max-height:90%;overflow-y:auto}
+.toast{position:absolute;left:50%;bottom:90px;transform:translateX(-50%);background:var(--lav);color:#17123a;padding:10px 18px;border-radius:999px;z-index:20;font-weight:700;white-space:nowrap}
+.mood{display:flex;gap:6px}.mood button{flex:1;border-radius:18px;padding:12px 2px;min-height:48px;color:#17123a;font-weight:700;font-size:14px;opacity:.55}.mood button.on{opacity:1;outline:3px solid #fff}
+.tag{display:inline-block;background:var(--pan2);border-radius:999px;padding:3px 10px;font-size:12px;color:var(--mu)}
+.scroll{overflow-x:auto}.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;min-height:44px}.chk input{width:22px;height:22px;margin-top:2px;flex:none}
+
+.pv{display:block;width:100%;text-align:left;background:rgba(20,16,43,.78);border-radius:18px;padding:10px 14px;margin-bottom:12px;font-size:14px;min-height:44px}
+.talk{background:#17123a;color:#fff;border-radius:999px;min-height:54px;width:100%;font-weight:700;margin-bottom:12px}
+.miss{border:1px dashed #4a4580;background:none;color:var(--mu)}
+.toast{white-space:normal;max-width:90%;text-align:center}
+.card textarea{min-height:0}
+
+.tile{width:50px;flex:none;background:var(--pan2);border-radius:16px;text-align:center;padding:6px 0;line-height:1.1}.tile small{display:block;font-size:12px;color:var(--peri)}.tile b{font-size:21px}
+.strip{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;scroll-snap-type:x proximity;scrollbar-width:none}
+.dchip{flex:none;width:54px;min-height:68px;border-radius:18px;background:var(--pan2);padding:8px 0 4px;text-align:center;scroll-snap-align:center}.dchip small{display:block;font-size:11px;color:var(--mu)}.dchip b{font-size:19px}.dchip i{display:block;width:5px;height:5px;border-radius:50%;margin:3px auto 0;background:var(--peri)}
+.dchip.on{background:var(--lav);color:#17123a}.dchip.on small{color:#3b3566}.dchip.on i{background:#17123a}
+.tps{display:flex;align-items:center;gap:8px}.tps select{width:auto;flex:1;border-radius:999px;text-align:center;text-align-last:center;min-height:50px;font-size:19px;font-weight:700}
+.tl{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid #2c2650}.tl:last-child{border:0}.tm{width:74px;flex:none;color:var(--peri);font-weight:700;font-size:14px}.tl>span:nth-child(2){flex:1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Chat screen: accessible circular controls and slide-out conversation history. */
+.chat-header{display:flex;align-items:center;gap:12px;padding:14px 18px 6px;flex:none}
+.chat-header h1{flex:1;margin:0;font-size:22px}
+.chat-icon{width:44px;height:44px;border-radius:50%;background:var(--pan2);color:var(--tx);display:grid;place-items:center;flex:none}
+.chat-icon svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.chat-help-icon{font-size:23px;font-weight:700;border:1px solid #514879}
+.chat-help-icon:focus-visible,.chat-icon:focus-visible{outline:3px solid var(--peri)}
+.chat-overlay{position:absolute;inset:0;background:rgba(5,3,20,.68);z-index:12}
+.chat-drawer{position:absolute;left:0;top:0;bottom:0;width:58%;min-width:215px;max-width:285px;z-index:13;background:#171230;display:flex;flex-direction:column;padding:20px 12px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:12px 0 35px rgba(0,0,0,.25)}
+.drawer-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 3px 10px}
+.drawer-heading h2{margin:0;font-size:19px}
+.drawer-close{border-radius:50%;background:var(--pan2);width:36px;height:36px;font-size:23px;flex:none}
+.drawer-new{border:1px solid #484167;border-radius:16px;background:var(--pan2);padding:12px 10px;text-align:left;width:100%;margin:8px 0 12px;min-height:44px;font-weight:700}
+.drawer-history{flex:1;overflow-y:auto;min-height:0}
+.drawer-history button{display:block;width:100%;text-align:left;border-radius:13px;background:transparent;color:var(--tx);padding:12px 10px;margin:2px 0;min-height:52px;overflow-wrap:anywhere}
+.drawer-history button.active{background:#393154}
+.drawer-history small{display:block;font-size:11px;color:var(--mu);margin-top:3px}
+.chat-info-sheet h3{font-size:15px;margin:18px 0 7px;color:var(--peri)}
+.chat-info-sheet p{font-size:14px;line-height:1.5}
+.chat-info-sheet ul{margin:8px 0;padding-left:20px;font-size:14px;line-height:1.55}
+.chat-info-sheet li{margin:6px 0}
+.chat-info-sheet a{color:#cfd9ff;text-decoration:underline;text-underline-offset:3px}
+.chat-info-sheet .info-warning{border:1px solid #59517d;background:#211c3d;border-radius:16px;padding:12px;margin:12px 0}
+.chat-info-sheet .help-entry{border-bottom:1px solid #363050;padding:10px 0}
+.chat-info-sheet .help-entry:last-child{border:0}
+.chat-info-sheet .help-entry b{display:block;font-size:14px}
+.chat-info-sheet .help-entry p{margin:3px 0}
+</style></head><body><div id="app"></div>
+<script>
+// ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
+// Two test links share this file: ?mode=fresh (first-time user, starts with onboarding) and ?mode=alex (pre-filled fictional person).
+const MODE=(()=>{try{return new URLSearchParams(location.search).get('mode')==='alex'?'alex':'fresh'}catch(e){return'fresh'}})();
+const KEY='beary-'+MODE+'-v1',$=s=>document.querySelector(s);
+const iso=d=>d.toISOString().slice(0,10),ago=n=>{const d=new Date();d.setDate(d.getDate()-n);return d};
+const MOODS=[['good','Good','#9fcf9f'],['okay','Okay','#b6a5cf'],['low','Low','#9fb4d3'],['irr','Irritable','#d3a0a0']];
+const MN=Object.fromEntries(MOODS.map(m=>[m[0],m[1]]));
+function seed(){const checks={},sleep={};
+ // 14 days, oldest first. Each day: entries [time, mood, energy, note], meds, sleep hours. Fictional person, not real data.
+ const D=[
+ [[['09:00','okay','steady','Slept okay. Class went fine.']],'taken',7.5],
+ [[['21:30','low','low','Tired after work. Kept thinking about the exam.']],'taken',6],
+ [[['10:00','okay','steady',''],['18:30','good','high','Went for a walk with a friend and felt lighter.']],'taken',7],
+ [[['08:30','low','low','Barely slept, woke up twice.'],['20:00','okay','steady','']],'taken',5],
+ [[['15:00','irr','high','Snapped at my roommate over nothing. Is this stress or my mood?'],['22:00','low','low','Felt bad about it later.']],'skipped',5.5],
+ [[['11:00','okay','steady','']],'taken',7],
+ [[['12:00','okay','steady','']],'taken',7],
+ [[['09:00','low','low','Overwhelmed with school and work.']],'taken',6],
+ [[['13:00','good','steady','Good day. Got things done.']],'',7.5],
+ [[['09:30','okay','steady','']],'taken',7],
+ [[['08:00','low','low','Did not sleep much again. Should I mention this to Dr. Rivera?']],'skipped',5],
+ [[['16:00','irr','steady','Busy day, felt on edge.'],['21:00','okay','steady','']],'taken',6],
+ [[['12:00','okay','steady','']],'taken',7],
+ [[],'',0]];
+ D.forEach((x,i)=>{const d=iso(ago(13-i));checks[d]={entries:x[0].map(e=>({t:e[0],mood:e[1],energy:e[2]||undefined,note:e[3],sample:1})),meds:x[1]||undefined,msample:x[1]?1:undefined};if(!x[1])delete checks[d].msample;if(!x[0].length&&!x[1])delete checks[d];if(x[2])sleep[d]={h:x[2],q:'ok',sample:1}});
+ const B=(t)=>({r:'b',t,proto:1}),U=(t)=>({r:'u',t});
+ return{view:'home',v2:1,ms:{},checks,sleep,cur:0,
+ conv:[
+ {id:3,sample:1,t:ago(2).toISOString(),title:'Questions for Dr. Rivera',msgs:[U('What should I ask my provider?'),B('For your next visit, you could write down: What changes should I describe? Which mood, sleep, or energy patterns should I track? What questions do I have about care options? You can edit these and bring them to your clinician.'),U('I have not been sleeping well. Should I bring that up?'),B('Thanks for telling me. A big change like that is worth sharing with your care team. I can help you put it into a summary for them.')]},
+ {id:2,sample:1,t:ago(5).toISOString(),title:'Feeling overwhelmed',msgs:[U('I feel overwhelmed with school and work lately.'),B('That sounds like a lot to carry. What has felt heaviest this week?'),U('Deadlines, mostly. I get stressed and then my energy drops.')]},
+ {id:1,sample:1,t:ago(9).toISOString(),title:'Stress or mood?',msgs:[U('Is it stress or is my mood changing? I can\'t tell them apart.'),B('That is a hard thing to sort out alone. I can\'t tell you which it is, but a clinician can look at it with you. Want to note it as a question for your appointment?')]}],
+ appts:[{id:1,sample:1,who:'Dr. Rivera (sample)',kind:'Therapy session',date:iso(ago(-4)),time:'15:30'}],sums:[],preps:{}}}
+const blank=()=>({view:MODE=='fresh'?'onb':'home',v2:1,ms:{},checks:{},sleep:{},cur:0,conv:[{id:Date.now(),t:new Date().toISOString(),title:'New conversation',msgs:[]}],appts:[],sums:[],preps:{}});
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!S)S=MODE=='alex'?seed():blank();Object.values(S.checks).forEach(c=>{if(!c.entries){c.entries=c.mood?[{t:'12:00',mood:c.mood,note:c.note||''}]:[];delete c.mood;delete c.note}});
+if(!S.v2){const sd=seed();for(const d in sd.checks){const c=S.checks[d],e=c&&c.entries,x=sd.checks[d].entries[0];if(c&&e.length==1&&e[0].mood==x.mood&&e[0].t=='12:00'&&(e[0].note||'')==x.note){e[0].sample=1;c.msample=1}}
+ for(const d in sd.sleep){const z=S.sleep[d];if(z&&z.h==sd.sleep[d].h&&z.q=='ok')z.sample=1}
+ S.appts.forEach(a=>{if(a.id===1)a.sample=1});S.conv.forEach(c=>{if(c.id===1)c.sample=1});const m=S.ms={};const t=new Date().toISOString().slice(0,10);
+ if(Object.values(S.checks).some(c=>c.entries.some(e=>!e.sample)))m.checkin=t;if(S.conv.some(c=>!c.sample&&c.msgs.some(x=>x.r=='u')))m.chat=t;if(Object.values(S.sleep).some(z=>!z.sample))m.sleep=t;
+ if(S.sums.length)m.summary=t;if(S.appts.some(a=>!a.sample))m.appt=t;if(Object.keys(S.preps).length)m.prep=t;S.v2=1}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+let ui={stack:[],sum:{range:3,src:{chat:1,checks:1},ex:{}},draft:null,busy:false,err:null,modal:null,hist:false};
+const closeHistory=()=>{ui.hist=false;render()};
+const openChatInfo=()=>{ui.hist=false;ui.modal='chatInfo';render()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ui.hist){closeHistory()}else if(e.key==='Escape'&&ui.modal==='chatInfo'){ui.modal=null;render()}});
+
+// ===== Voiceflow adapter boundary =====
+// Presentation never calls Voiceflow directly. To connect: deploy a small server proxy that holds your Voiceflow API key
+// and calls POST https://general-runtime.voiceflow.com/state/user/{userID}/interact with your versionID;
+// then set VOICEFLOW.proxyUrl to that proxy. Never put the API key in this file.
+const VOICEFLOW={proxyUrl:null};
+const CRISIS=/(suicid|kill myself|end my life|want to die|hurt myself|self.?harm|not safe)/i;
+const ChatService={async send(text,history){
+ if(VOICEFLOW.proxyUrl){const r=await fetch(VOICEFLOW.proxyUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history})});if(!r.ok)throw new Error('Service error');return{text:(await r.json()).text}}
+ await new Promise(r=>setTimeout(r,900));if(/\/fail/.test(text))throw new Error('Simulated failure');
+ if(CRISIS.test(text))return{crisis:true};
+ if(/\b(am i bipolar|do i have bipolar|diagnose me|is this mania|am i manic|is this depression)\b/i.test(text))return{text:'I can explain terms and help you prepare for an evaluation, but I cannot determine whether you have bipolar disorder or identify a mood episode. A licensed clinician can review your experience and history with you. Would you like to write down questions for an appointment?',proto:1};
+ if(/\b(hypomania|hypomanic)\b/i.test(text))return{text:'Hypomania is a period of elevated or unusually irritable mood and increased energy or activity that is less severe than mania. It is a clinical term, not something Beary can identify in an individual. Read more: https://medlineplus.gov/bipolardisorder.html',proto:1};
+ if(/\b(mania|manic)\b/i.test(text))return{text:'Mania is a clinical term for a period of unusually elevated or irritable mood and increased activity or energy. A healthcare professional evaluates symptoms and their context. More information: https://www.nimh.nih.gov/health/publications/bipolar-disorder',proto:1};
+ if(/\b(bipolar|bipolar disorder)\b/i.test(text))return{text:'Bipolar disorder is a mental health condition involving changes in mood, energy, activity, and thinking, including manic or hypomanic and depressive episodes. These terms describe patterns assessed by clinicians. Learn more: https://www.nimh.nih.gov/health/publications/bipolar-disorder',proto:1};
+ if(/support group|support organization|where can i find support|find help|resources/i.test(text))return{text:'The Depression and Bipolar Support Alliance (DBSA) offers peer-support resources: https://www.dbsalliance.org/ . For mental health treatment providers in the U.S., use the government directory at https://findtreatment.gov/ . For immediate U.S. crisis support, call or text 988.',proto:1};
+ if(/questions.*(doctor|provider|appointment)|what should i ask|prep.*appointment|prepare.*visit/i.test(text))return{text:'For your next visit, you could write down: What changes should I describe? Which mood, sleep, or energy patterns should I track? What questions do I have about care options or medications? You can edit these questions and bring them to your clinician.',proto:1};
+ if(/(medic|meds|dose|pill)/i.test(text))return{text:'I can\'t advise on starting, stopping or changing medication. Your prescriber is the right person for that. Want me to add it to your appointment questions?',proto:1};
+ if(/(haven't slept|not sleeping|racing|can't stop)/i.test(text))return{text:'Thanks for telling me. A big change like that is worth sharing with your care team soon. I can help you put it into a summary for them.',proto:1};
+ const r=['Thank you for sharing that. What was that like for you?','I\'m listening. Is there anything about your sleep or energy you\'d want to remember for later?','That makes sense to put into words. Would you like to note it as a question for your next appointment?'];
+ return{text:r[history.length%r.length],proto:1}}};
+
+// ===== Journey, sample-data and summary helpers =====
+const EN={low:'Low',steady:'Steady',high:'High'},QN={rested:'restful',ok:'okay',poor:'poor'};
+const MS=[['checkin','First check-in','Add a mood entry',[25,70]],['chat','First conversation','Say hello to Beary',[70,35]],['sleep','Sleep noted','Log a night of sleep',[120,72]],['patterns','Looked back','Open My Patterns',[165,40]],['summary','First summary','Build a summary from your entries',[210,78]],['appt','Care team noted','Add an appointment',[255,38]],['prep','Visit prepared','Pick topics to discuss at a visit',[300,70]]];
+const award=k=>{S.ms=S.ms||{};if(!S.ms[k]){S.ms[k]=today();ui.pend='A new star appeared in your sky';save()}};
+function sky(big){const lit=MS.map(m=>!!(S.ms||{})[m[0]]),P=MS.map(m=>m[3]);
+ const ln=P.slice(1).map((p,i)=>{const on=lit[i]&&lit[i+1];return `<line x1="${P[i][0]}" y1="${P[i][1]}" x2="${p[0]}" y2="${p[1]}" stroke="${on?'#9aa6e8':'#3d3870'}" stroke-width="1.2" ${on?'':'stroke-dasharray="3 4"'}/>`}).join('');
+ const st=P.map((p,i)=>lit[i]?`<circle cx="${p[0]}" cy="${p[1]}" r="${big?13:10}" fill="#cfd6ff" opacity=".18"/><circle cx="${p[0]}" cy="${p[1]}" r="${big?5:4}" fill="#e8ebff"/>`:`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="none" stroke="#5a54a0"/>`).join('');
+ return `<svg viewBox="0 0 330 110" width="100%" role="img" aria-label="Constellation with ${lit.filter(Boolean).length} of 7 stars found">${ln}${st}</svg>`}
+const sampleCount=()=>{let n=0;Object.values(S.checks).forEach(c=>{n+=c.entries.filter(e=>e.sample).length;if(c.msample)n++});n+=Object.values(S.sleep).filter(z=>z.sample).length+S.appts.filter(a=>a.sample).length+S.conv.filter(c=>c.sample).length;return n};
+const hasSample=()=>sampleCount()>0;
+function removeSample(){if(!confirm('Remove the sample entries? Anything you added yourself stays.'))return;Object.keys(S.checks).forEach(d=>{const c=S.checks[d];c.entries=c.entries.filter(e=>!e.sample);if(c.msample){delete c.meds;delete c.msample}if(!c.entries.length&&c.meds===undefined)delete S.checks[d]});
+ Object.keys(S.sleep).forEach(d=>{if(S.sleep[d].sample)delete S.sleep[d]});S.appts=S.appts.filter(a=>!a.sample);S.conv=S.conv.filter(c=>!c.sample);if(!S.conv.length)S.conv=blank().conv;S.cur=0;save();render();toast('Sample data removed. Your own entries are untouched.')}
+function reloadSample(){const sd=seed();for(const d in sd.checks){if(!S.checks[d])S.checks[d]=sd.checks[d];else if(!S.checks[d].entries.length){S.checks[d].entries=sd.checks[d].entries}}for(const d in sd.sleep)if(!S.sleep[d])S.sleep[d]=sd.sleep[d];
+ if(!S.appts.some(a=>a.id===1))S.appts.push(sd.appts[0]);if(!S.conv.some(c=>c.id===1))S.conv.push(sd.conv[0]);save();render();toast('Sample data added to empty days only.')}
+function eraseAll(){if(!confirm('Erase everything saved in this browser, including your entries, summaries and stars? This can\'t be undone.'))return;try{localStorage.removeItem(KEY)}catch(e){}S=blank();ui.stack=[];ui.draft=null;ui.onb=0;save();render();toast('Everything erased')}
+const TH=[['Sleep',/sleep|tired|rest|insomnia/i],['School & work',/school|work|class|job|deadline|exam/i],['Stress & overwhelm',/stress|overwhelm|anxious|pressure/i],['Energy & focus',/energy|motivat|focus|concentrat/i],['Mood changes',/mood|irritab|sad|low|angry|up and down/i],['Medication questions',/medic|meds|dose|pill/i],['People in my life',/friend|family|partner|roommate/i]];
+const compose=d=>`${d.title}\n${d.range||''}\nSources: ${d.src}\nDraft built by simple rules from my own entries, not by AI. Edited by me.\n\n`+d.sec.map(x=>x.h.toUpperCase()+'\n'+x.t).join('\n\n');
+function topicsFrom(m){if(!m.sec)return(m.qs||[]).map(t=>({t,s:'Question'}));const L=id=>{const x=m.sec.find(y=>y.id==id);return x?x.t.split('\n').map(z=>z.replace(/^- /,'').trim()).filter(Boolean):[]};
+ return[...L('themes').filter(x=>!/^No repeated/.test(x)).map(x=>({t:'Talk about: '+x.replace(/ \(.*\)$/,''),s:'Theme'})),...L('qs').map(t=>({t,s:'Question'}))]}
+const tc=id=>{const p=S.preps[id],l=p?(p.topics||p.qs||[]):[],n=l.filter(t=>t.on).length;return n?` (${n} topic${n==1?'':'s'})`:''};
+function prepText(id){const a=S.appts.find(x=>x.id==id),p=S.preps[id],on=p.topics.filter(t=>t.on);return `Preparing for ${a.kind} with ${a.who}, ${fd(a.date)} ${ftm(a.time)}\n${p.sum!=null&&S.sums[p.sum]?'Based on: '+S.sums[p.sum].title+'\n':''}\nTopics I want to discuss:\n`+(on.length?on.map(t=>'- '+t.t).join('\n'):'- (none chosen yet)')}
+function pickSum(id,i){const p=S.preps[id];p.sum=i;topicsFrom(S.sums[i]).forEach(t=>{if(!p.topics.some(x=>x.t==t.t))p.topics.push({...t,on:true})});award('prep');save();render()}
+function togT(id,i,v){S.preps[id].topics[i].on=v;if(v)award('prep');save();render()}
+function addTopic(id){const v=$('#nt').value.trim();if(!v)return;S.preps[id].topics.push({t:v,on:true,s:'You'});award('prep');save();render()}
+const rel=d=>{const t=today();return d==t?'Today':d==iso(ago(1))?'Yesterday':d==iso(ago(-1))?'Tomorrow':new Date(d+'T12:00').toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})};
+const tile=d=>{const x=new Date(d+'T12:00');return `<div class="tile"><small>${x.toLocaleDateString(undefined,{month:'short'})}</small><b>${x.getDate()}</b></div>`};
+const hasRec=d=>{const c=S.checks[d];return !!((c&&(c.entries.length||c.meds))||S.sleep[d])};
+function strip(sel,fn,fut){const L=fut?[...Array(21)].map((_,i)=>iso(ago(-i))):[...Array(30)].map((_,i)=>iso(ago(29-i)));
+ return `<div class="strip" role="group" aria-label="Choose a date">${L.map(d=>{const x=new Date(d+'T12:00'),on=d==sel;return `<button class="dchip ${on?'on':''}" aria-pressed="${on}" aria-label="${rel(d)}" onclick="${fn}('${d}')"><small>${d==today()?'Today':x.toLocaleDateString(undefined,{weekday:'short'})}</small><b>${x.getDate()}</b><i${!fut&&hasRec(d)?'':' style="background:none"'}></i></button>`}).join('')}</div>`}
+function tpick(k,val){const [H,M]=val.split(':').map(Number),h=H%12||12,ap=H<12?'AM':'PM',ms=[...Array(12)].map((_,i)=>i*5);if(!ms.includes(M)){ms.push(M);ms.sort((a,b)=>a-b)}
+ const o=(a,sel,f)=>a.map(x=>`<option value="${x}" ${x==sel?'selected':''}>${f?f(x):x}</option>`).join('');
+ return `<div class="row" style="margin-bottom:8px">${[['Now',nowT()],['Morning','09:00'],['Afternoon','14:00'],['Evening','19:00']].map(q=>`<button class="pill" style="min-height:40px;padding:8px 14px;${val==q[1]&&q[0]!='Now'?'background:var(--lav);color:#17123a;font-weight:700':''}" onclick="setTime('${k}','${q[1]}')">${q[0]}</button>`).join('')}</div>
+ <div class="tps" role="group" aria-label="Time"><select id="tph" aria-label="Hour" onchange="tpSet('${k}')">${o([...Array(12)].map((_,i)=>i+1),h)}</select><b>:</b><select id="tpm" aria-label="Minute" onchange="tpSet('${k}')">${o(ms,M,x=>String(x).padStart(2,'0'))}</select><select id="tpa" aria-label="AM or PM" onchange="tpSet('${k}')">${o(['AM','PM'],ap)}</select></div>`}
+const apSync=()=>{if(ui.ap){const w=$('#aw'),k=$('#ak');if(w)ui.ap.who=w.value;if(k)ui.ap.kind=k.value}};
+function setTime(k,v){syncF();apSync();ui[k].time=v;render()}
+function tpSet(k){const h=+$('#tph').value%12,m=+$('#tpm').value,pm=$('#tpa').value=='PM';setTime(k,String(h+(pm?12:0)).padStart(2,'0')+':'+String(m).padStart(2,'0'))}
+const openSums=()=>{ui.ptab='sum';go('patterns')};const pickDay=d=>{syncF();ui.d=d;ui.f=null;render()},pickSleepDay=d=>{ui.d=d;render()},pickApDay=d=>{apSync();ui.ap.date=d;render()},openDay=d=>{ui.d=d;ui.modal='day';render()};
+function useSum(i){const up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0];if(!up){toast('Add an appointment first');go('care');return}ui.prep=up.id;const p=S.preps[up.id]||(S.preps[up.id]={sum:null,topics:[]});if(!p.topics)p.topics=[];pickSum(up.id,i);go('prep')}
+function delSum(i){if(!confirm('Delete this saved summary? Preparation topics you already chose stay.'))return;S.sums.splice(i,1);Object.values(S.preps).forEach(p=>{if(p.sum===i)p.sum=null;else if(p.sum>i)p.sum--});save();render();toast('Summary deleted')}
+// ===== Helpers =====
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fd=s=>new Date(s.length==10?s+'T12:00':s).toLocaleDateString(undefined,{month:'short',day:'numeric'});
+const toast=m=>{const o=$('.toast');let x=m;if(o&&/star/.test(o.textContent)&&!/star/.test(m))x=m+' · A new star appeared';if(o)o.remove();const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=x;$('#app').append(t);setTimeout(()=>t.remove(),2800)};
+const ICON={summaries:'<path d="M7 4h8l4 4v12H7z"/><path d="M15 4v4h4M10 13h6M10 17h6"/>',home:'<path d="M4 11l8-7 8 7v8a1 1 0 01-1 1h-4v-6H9v6H5a1 1 0 01-1-1z"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',pat:'<path d="M4 18l5-6 4 3 7-9"/>',care:'<path d="M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.500-7 10-7 10z"/>'};
+function bear(w=140,eyes=1){return `<svg width="${w}" viewBox="0 0 160 150" role="img" aria-label="Beary the bear companion"><g stroke="#9aa8dd" stroke-width="6" stroke-linejoin="round"><circle cx="42" cy="50" r="13" fill="#f3e6f2"/><circle cx="118" cy="50" r="13" fill="#f3e6f2"/><rect x="40" y="90" width="80" height="50" rx="26" fill="#f3e6f2"/><circle cx="80" cy="68" r="44" fill="#f3e6f2"/><path d="M40 52a40 36 0 0180 0z" fill="#b9c0ec"/><circle cx="80" cy="12" r="12" fill="#e8dcef"/><path d="M42 100q38 12 76 0v14q-38 12-76 0z" fill="#a9b4e6"/></g><ellipse cx="62" cy="74" rx="4" ry="${eyes?4.500:1.500}" fill="#8f9ddd"/><ellipse cx="98" cy="74" rx="4" ry="${eyes?4.500:1.500}" fill="#8f9ddd"/><ellipse cx="80" cy="80" rx="6" ry="4" fill="#8f9ddd"/></svg>`}
+function go(v,push=true){if(push&&S.view!==v)ui.stack.push(S.view);if(v!=='chat')ui.hist=false;S.view=v;save();render()}
+function back(){S.view=ui.stack.pop()||'home';save();render()}
+const bump=()=>{S.pts=(S.pts||0)+1};
+const topbar=(t,r='')=>`<div class="top"><button class="back" onclick="back()" aria-label="Back">‹</button><h1 style="margin:0;flex:1">${t}</h1>${r}</div>`;
+const today=()=>iso(new Date());const ftm=t=>new Date('2000-01-01T'+t).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});const nowT=()=>{const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')};const syncF=()=>{const n=$('#fn'),t=$('#ft');if(ui.f&&n)ui.f.note=n.value;if(ui.f&&t)ui.f.time=t.value};
+
+// ===== Views =====
+const V={
+onb(){const n=ui.onb||0,last=4;
+ const dots=`<div class="row" style="justify-content:center;gap:8px;margin:6px 0 14px" role="img" aria-label="Step ${n+1} of 5">${[0,1,2,3,4].map(i=>`<span style="width:${i==n?22:8}px;height:8px;border-radius:99px;background:${i==n?'var(--lav)':'#3a3466'}"></span>`).join('')}</div>`;
+ const hero=`<img src="beary-home-bear.png" alt="Beary the bear" style="width:100%;max-width:210px;display:block;margin:0 auto">`;
+ const body=[
+ `${hero}<h1 style="text-align:center;margin-top:12px">Hi, I'm Beary</h1><p style="text-align:center">A quiet place to put your days into words between visits with your care team. No pressure, and you set the pace.</p>`,
+ `<h1>What you can do here</h1><div class="card"><b>Check in</b><p class="mu">Note your mood, energy, sleep and medication whenever you like, even several times a day.</p></div><div class="card"><b>Talk with Beary</b><p class="mu">Chat to reflect on your day or ask general questions about bipolar disorder.</p></div><div class="card"><b>Make a summary</b><p class="mu">Turn your chats and check-ins into a note you can edit and bring to a visit. Nothing is sent to anyone.</p></div>`,
+ `<h1>What Beary won't do</h1><div class="card"><p>Beary doesn't diagnose, predict episodes, or give medication advice. Your care team is the right place for those.</p></div><div class="crisis" style="max-width:100%"><b>Not for emergencies</b><p>If you might be in danger, call <b>911</b>. In the US you can call or text <b>988</b> any time to reach the Suicide &amp; Crisis Lifeline.</p></div>`,
+ `<h1>About this test version</h1><div class="card"><p>This is an early prototype for testing.</p><ul style="margin:6px 0;padding-left:20px"><li>Beary's replies are pre-written. No live AI is connected.</li><li>What you enter stays in this browser on this device.</li><li><b>Please don't enter real health information.</b> Use made-up details.</li><li>You can start over any time in Settings.</li></ul></div>`,
+ `<h1>What should Beary call you?</h1><p class="mu">Optional. A nickname is fine, and it stays on this device.</p><label for="nick">Name or nickname</label><input id="nick" maxlength="24" autocomplete="off" value="${esc(S.name||'')}">`][n];
+ const btns=n<last?`<button class="btn" onclick="onbNext()">${n==3?'I understand':'Next'}</button>`:`<button class="btn" onclick="finishOnb(true)">Start with a first check-in</button><button class="btn ghost" style="margin-top:10px" onclick="finishOnb(false)">Look around first</button>`;
+ return `<main style="display:flex;flex-direction:column"><div class="between" style="min-height:44px">${n>0?'<button class="back" aria-label="Back" onclick="onbBack()">‹</button>':'<span></span>'}${n<last?'<button class="pill" style="min-height:40px;padding:8px 14px" onclick="finishOnb(false)">Skip intro</button>':'<span></span>'}</div>${dots}<div style="flex:1">${body}</div><div style="padding-top:16px">${btns}</div></main>`},
+home(){const c=S.checks[today()],up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0],ls=S.sums[0];
+ const pv=up?`<button class="pv" style="display:flex;gap:12px;align-items:center" onclick="go('care')">${tile(up.date)}<span><b>Next visit</b> · ${rel(up.date)}, ${ftm(up.time)}<br><span class="mu">${esc(up.who)}${tc(up.id)?' · '+tc(up.id).replace(/[()]/g,'').trim()+' ready':''}</span></span></button>`:ls?`<button class="pv" onclick="ui.draft=S.sums[0];go('sumview')"><b>Latest summary</b><br><span class="mu">${esc(ls.title)}</span></button>`:'';
+ return `<div class="home"><div class="between"><button class="sky" onclick="go('journey')" aria-label="Open your night sky"><span style="width:104px;display:block">${sky()}</span><span>Your sky</span></button><button class="back" onclick="go('settings')" aria-label="Settings">⚙</button></div>
+ <div class="stage"><div class="bubble">${c&&c.entries.length?'Thanks for checking in. Rest counts too.':'Hi'+(S.name?' '+esc(S.name):'')+', I\'m Beary. No pressure. Check in when you\'re ready.'}</div><img src="beary-home-bear.png" alt="Beary sitting with a blue scarf"></div>
+ <div class="ground"><div class="dock">${pv}<div class="row" style="flex-wrap:nowrap;gap:10px;margin-bottom:12px"><button class="talk" style="margin:0;flex:1;min-width:0" onclick="ui.d=null;ui.f=null;ui.modal='checkin';render()">Daily Checks</button><button class="talk" style="margin:0;flex:1;min-width:0" onclick="openSums()">Summary</button></div><button class="say" onclick="go('chat')"><span>Talk with Beary</span><b aria-hidden="true">→</b></button></div></div></div>`},
+chat(){const c=S.conv[S.cur];
+ const ms=c.msgs.map((m,i)=>m.crisis?crisisCard():`<div class="m ${m.r}">${esc(m.t)}${m.proto?'<small>Prototype reply, not live AI</small>':''}</div>`).join('');
+ const empty=!c.msgs.length?`<div style="text-align:center;margin-top:20px">${bear(110)}<p>Say anything, or start with one of these.</p><div class="row" style="justify-content:center">${['What is bipolar disorder?','Where can I find support?','What should I ask my provider?'].map(s=>`<button class="pill" onclick="sendMsg(this.textContent)">${s}</button>`).join('')}</div></div>`:'';
+ const drawer=ui.hist?`<div class="chat-overlay" aria-hidden="true" onclick="closeHistory()"></div><aside class="chat-drawer" role="dialog" aria-modal="true" aria-label="Conversation history"><div class="drawer-heading"><h2>Chats</h2><button class="drawer-close" aria-label="Close history" onclick="closeHistory()">×</button></div><button class="drawer-new" onclick="newChat()">＋ New conversation</button><div class="drawer-history">${S.conv.map((x,i)=>`<button class="${i===S.cur?'active':''}" ${i===S.cur?'aria-current="true"':''} onclick="S.cur=${i};closeHistory();save()">${esc(x.title)}<small>${fd(x.t)}</small></button>`).join('')}</div></aside>`:'';
+ return `<header class="chat-header"><button class="chat-icon" aria-label="Open conversation history" aria-expanded="${ui.hist}" onclick="ui.hist=!ui.hist;render()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><h1>Beary</h1><button class="chat-icon chat-help-icon" aria-label="About Beary and help resources" title="About Beary" onclick="openChatInfo()">?</button></header>
+ <main id="msgs"><p class="mu" style="text-align:center">${fd(c.t)} · Beary is for reflection, not medical advice or emergencies.</p><div class="msgs">${ms}${empty}${ui.busy?'<div class="m"><span class="dots" aria-label="Beary is typing"><span></span><span></span><span></span></span></div>':''}${ui.err?`<div class="m" style="border:1px solid var(--bad)">Message didn't send. Check your connection. <button class="pill" style="min-height:36px;padding:6px 14px" onclick="retry()">Retry</button></div>`:''}</div></main>
+ <div style="padding:0 14px;background:#0b0824"><button class="pill" style="font-size:13px;min-height:36px;padding:6px 14px;margin-top:8px" onclick="go('sumsetup')">Turn conversations into a summary</button></div>
+ <form class="compose" onsubmit="event.preventDefault();sendMsg($('#ci').value)"><input id="ci" aria-label="Message Beary" placeholder="Type here…" autocomplete="off"><button class="send" aria-label="Send">➤</button></form>${drawer}`},
+patterns(){const sm=ui.ptab=='sum',b=sm?V.sumlist():V.trends();const seg=`<div class="row" role="group" aria-label="Patterns view" style="margin-bottom:6px"><button class="pill ${sm?'':'on'}" aria-pressed="${!sm}" onclick="ui.ptab='trends';render()">Trends</button><button class="pill ${sm?'on':''}" aria-pressed="${sm}" onclick="ui.ptab='sum';render()">Summaries</button></div>`;return b.replace(/<h1>[^<]*<\/h1>/,'<h1>Patterns</h1>'+seg)},
+trends(){const dates=[...Array(7)].map((_,i)=>iso(ago(6-i)));const W=340,H=90;
+ const mv={good:3,okay:2,low:1,irr:0};const mc=dates.map((d,i)=>{const es=(S.checks[d]||{}).entries||[];if(!es.length)return `<circle cx="${25+i*50}" cy="45" r="3" fill="none" stroke="#6a64a0"/>`;const n=es.length;return es.map((e,k)=>`<circle cx="${25+i*50+(n>1?(k-(n-1)/2)*(Math.min(16,36/(n-1))):0)}" cy="${15+(3-mv[e.mood])*20}" r="${n>1?6:8}" fill="${MOODS.find(m=>m[0]==e.mood)[2]}"/>`).join('')}).join('');
+ const sb=dates.map((d,i)=>{const z=S.sleep[d];if(!z)return `<rect x="${12+i*50}" y="${H-8}" width="26" height="8" rx="4" fill="none" stroke="#6a64a0" stroke-dasharray="3 3"/>`;const h=z.h;return `<rect x="${12+i*50}" y="${H-h*9}" width="26" height="${h*9}" rx="6" fill="#a9b4e6"/><text x="${25+i*50}" y="${H-h*9-4}" fill="#cfcbea" font-size="11" text-anchor="middle">${h}</text>`}).join('');
+ const lab=dates.map((d,i)=>`<text x="${25+i*50}" y="12" fill="#aaa6c7" font-size="10" text-anchor="middle">${fd(d).replace(/^\w+ /,'')}</text>`).join('');
+ const med=`<div style="display:flex;justify-content:space-between">${dates.map(d=>{const c=S.checks[d],m=c&&c.meds,wd=new Date(d+'T12:00').toLocaleDateString(undefined,{weekday:'short'});const dot=m=='taken'?'<circle cx="16" cy="16" r="12" fill="#cfcbea"/><path d="M10 16l4 4 8-8" stroke="#17123a" stroke-width="2.500" fill="none" stroke-linecap="round"/>':m=='skipped'?'<circle cx="16" cy="16" r="11" fill="none" stroke="#cfcbea" stroke-width="2.500"/>':'<circle cx="16" cy="16" r="3" fill="#6a64a0"/>';return `<button onclick="ui.modal='day';ui.d='${d}';render()" aria-label="${fd(d)}: ${m=='taken'?'logged taken':m=='skipped'?'logged not taken':'no medication entry'}. Tap to edit" style="background:none;text-align:center;padding:2px;min-width:44px"><svg width="32" height="32" viewBox="0 0 32 32">${dot}</svg><div class="mu" style="font-size:12px">${wd}</div></button>`}).join('')}</div><div class="row mu" style="margin-top:10px;font-size:13px;gap:14px"><span>● Taken</span><span>○ Not taken</span><span>· No entry</span></div>`;
+ return `<main><h1>My Patterns</h1>${hasSample()?'<p class="tag">Includes labelled sample data. Manage it in Settings.</p>':''}
+ <h2>Mood, last 7 days</h2><div class="card scroll"><svg viewBox="0 0 350 100" width="100%" role="img" aria-label="Mood by day">${mc}<g transform="translate(0,90)">${lab.replace(/y="12"/g,'y="8"')}</g></svg><p class="mu">Higher dots = more positive mood word. Several dots in one day = your mood changed during that day. Empty circles = no entry.</p></div>
+ <h2>Sleep hours</h2><div class="card"><svg viewBox="0 0 ${W+10} ${H+16}" width="100%" role="img" aria-label="Sleep hours by day">${sb}<g transform="translate(0,${H+14})">${lab.replace(/y="12"/g,'y="0"')}</g></svg>
+ <p class="mu">Dashed outline = nothing recorded that night.</p><button class="btn ghost sm" onclick="ui.d=null;ui.modal='sleep';render()">Log sleep</button></div>
+ <h2>Medication log</h2><div class="card">${med}<p class="mu">A record only, never a score. Tap any day to add or change it.</p></div>
+ <h2>Review by date</h2>${strip(null,'openDay')}<p class="mu" style="margin-top:0">A dot means something was recorded that day.</p>
+ <div>${[...Array(14)].map((_,i)=>iso(ago(i))).map(d=>{const c=S.checks[d],z=S.sleep[d],es=c?c.entries:[];const rec=es.length||z||(c&&c.meds);return rec?`<button class="card tap" style="display:flex;gap:12px;align-items:center" onclick="openDay('${d}')">${tile(d)}<span><b>${rel(d)}</b><br><span class="mu">${es.length?es.map(e=>MN[e.mood]+(e.energy?' ('+EN[e.energy].toLowerCase()+' energy)':'')).join(' → '):'No mood entry'}${z?' · slept '+z.h+'h':''}</span></span></button>`:`<button class="card tap miss" style="display:flex;gap:12px;align-items:center" onclick="openDay('${d}')">${tile(d)}<span>${rel(d)} · Nothing recorded</span></button>`}).join('')}</div>
+ <p class="mu">These are recorded entries only. They don't show cause and effect, and the app can't identify or predict episodes.</p></main>`},
+care(){const up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)),ls=S.sums[0];
+ return `<main><h1>My Care</h1><button class="card tap" onclick="openSums()"><div class="between"><span><b>Summaries</b><br><span class="mu">${ls?S.sums.length+' saved · latest: '+esc(ls.title.replace('Summary, ','')):'Build one to prepare for a visit'}</span></span><span aria-hidden="true" style="font-size:22px">›</span></div></button>
+ <div class="card"><p>Keeping in touch with your care team is part of looking after yourself. If something feels different lately, consider contacting them.</p><p class="mu">Beary hasn't contacted anyone. Nothing is shared unless you choose to copy it yourself. Reminders aren't sent in this prototype.</p></div>
+ <div class="between"><h2>Upcoming</h2><button class="pill" onclick="ui.edit=null;ui.ap=null;ui.modal='appt';render()">Add</button></div>
+ ${up.length?up.map(a=>`<div class="card"><div style="display:flex;gap:12px">${tile(a.date)}<div><b>${esc(a.kind)}</b><br>${esc(a.who)}<br><span class="mu">${rel(a.date)} · ${ftm(a.time)}</span></div></div><div class="row" style="margin-top:12px"><button class="btn sm" onclick="ui.prep=${a.id};go('prep')">Prepare${tc(a.id)}</button><button class="btn ghost sm" onclick="ui.edit=${a.id};ui.ap=null;ui.modal='appt';render()">Edit</button></div></div>`).join(''):`<div class="card" style="text-align:center">${bear(90)}<p>No upcoming visits. Add one when you have it.</p></div>`}</main>`},
+sumlist(){const n=S.sums.length;return `<main><h1>Summaries</h1>
+ <div class="card" style="text-align:center;padding:22px 18px">${bear(96)}<p style="font-size:18px;font-weight:700;margin:8px 0">Put the last few days into words</p><p class="mu">Turn your chats and check-ins into a note you can read, edit and bring to a visit. You choose what goes in and who sees it.</p><button class="btn" style="margin-top:10px" onclick="go('sumsetup')">Build a summary</button></div>
+ <h2>Saved</h2>${n?S.sums.map((m,i)=>`<div class="card"><b>${esc(m.title)}</b><p class="mu">${esc(m.src||'')}${m.saved?' · Saved '+rel(m.saved):''}</p><div class="row"><button class="btn sm" onclick="ui.draft=S.sums[${i}];go('sumview')">Open</button><button class="btn ghost sm" onclick="useSum(${i})">Use for a visit</button><button class="btn ghost sm" onclick="delSum(${i})">Delete</button></div></div>`).join(''):'<p class="mu">Nothing saved yet. Build a summary, then save it here.</p>'}</main>`},
+sumsetup(){const u=ui.sum,R=[[1,'Just today'],[3,'Past 3 days'],[7,'Past 7 days'],[30,'Past month']];
+ return `<main><div style="background:var(--panel);border-radius:26px;padding:18px">${topbar('Getting your thoughts into words is hard. Let me help.')}
+ <label>How far back?</label><div class="row" role="group">${R.map(r=>`<button class="pill ${u.range==r[0]?'on':''}" aria-pressed="${u.range==r[0]}" onclick="ui.sum.range=${r[0]};render()">${r[1]}</button>`).join('')}</div>
+ <label>What should I include?</label><div class="row">${[['chat','Conversations'],['checks','Daily check-ins & sleep']].map(s=>`<button class="pill ${u.src[s[0]]?'on':''}" aria-pressed="${!!u.src[s[0]]}" onclick="ui.sum.src['${s[0]}']=!ui.sum.src['${s[0]}'];render()">${s[1]}</button>`).join('')}</div>
+ ${u.src.chat?`<label>Leave out any conversations?</label>${S.conv.map(c=>`<label class="chk"><input type="checkbox" ${u.ex[c.id]?'checked':''} onchange="ui.sum.ex[${c.id}]=this.checked"> ${fd(c.t)} · ${esc(c.title)}</label>`).join('')}`:''}
+ <button class="btn" style="margin-top:18px" onclick="genSum()">Generate draft</button></div></main>`},
+sumview(){const d=ui.draft;if(!d.sec)d.sec=[{h:'Earlier draft',k:'Your edited text',t:d.text||''}];
+ return `<main>${topbar('Review summary')}<div class="card"><b>${esc(d.title)}</b><p class="mu">${esc(d.range||'')}</p><p class="mu">Sources: ${esc(d.src)}</p><p class="mu">Prototype: built by simple rules from your entries. No AI is connected, and nothing here is an assessment.</p></div>
+ ${d.sec.map((x,i)=>`<div class="card"><div class="between"><b>${esc(x.h)}</b><span class="tag">${esc(x.k)}</span></div><textarea aria-label="${esc(x.h)}" rows="${Math.max(3,x.t.split('\n').length+1)}" style="margin-top:8px" oninput="ui.draft.sec[${i}].t=this.value">${esc(x.t)}</textarea></div>`).join('')}
+ <p class="mu">Every section is editable. Copying sends nothing anywhere.</p>
+ <div class="row"><button class="btn" onclick="ui.copyText=()=>compose(ui.draft);ui.modal='share';render()">Copy to share</button><button class="btn ghost" onclick="saveSum()">Save to My Care</button></div></main>`},
+journey(){const L=S.ms||{},n=MS.filter(m=>L[m[0]]).length;return `<main>${topbar('Your night sky')}<p class="mu">The Sleeping Bear. A star appears the first time you try something that helps you understand your own patterns. It isn't about how you feel or how well you're doing.</p><div class="card">${sky(1)}<p class="mu" style="text-align:center">${n} of 7 stars found</p></div>
+ ${MS.map(m=>`<div class="card" style="display:flex;gap:12px;align-items:center;${L[m[0]]?'':'opacity:.75'}"><span style="font-size:20px" aria-hidden="true">${L[m[0]]?'✦':'◌'}</span><span><b>${m[1]}</b><br><span class="mu">${L[m[0]]?'Found '+fd(L[m[0]]):m[2]}</span></span></div>`).join('')}
+ <p class="mu">Stars stay. There are no streaks, nothing expires, and taking a break is fine.</p></main>`},
+prep(){const id=ui.prep,a=S.appts.find(x=>x.id==id);if(!a)return `<main>${topbar('Prepare')}<p>That appointment isn't here anymore.</p></main>`;
+ const p=S.preps[id]||(S.preps[id]={sum:null,topics:[]});if(!p.topics)p.topics=(p.qs||[]).map(q=>({t:q.t,on:q.on,s:'You'}));const on=p.topics.filter(t=>t.on);
+ return `<main>${topbar('Prepare for your visit')}<div class="card" style="display:flex;gap:12px">${tile(a.date)}<div><b>${esc(a.kind)}</b><br><span class="mu">${esc(a.who)} · ${rel(a.date)} at ${ftm(a.time)}</span></div></div>
+ <h2>Summary to draw from</h2>${S.sums.length?`<div class="row">${S.sums.map((m,i)=>`<button class="pill ${p.sum===i?'on':''}" aria-pressed="${p.sum===i}" onclick="pickSum(${id},${i})">${esc(m.title.replace('Summary, ',''))}</button>`).join('')}</div><p class="mu">Choosing one adds its themes and questions below. You decide what stays.</p>`:`<p class="mu">No saved summaries yet.</p><button class="btn ghost sm" onclick="go('sumsetup')">Build a summary</button>`}
+ <h2>Topics I want to discuss</h2>${p.topics.length?p.topics.map((t,i)=>`<label class="chk"><input type="checkbox" ${t.on?'checked':''} onchange="togT(${id},${i},this.checked)"><span>${esc(t.t)} <span class="tag">${esc(t.s||'You')}</span></span></label>`).join(''):'<p class="mu">Nothing yet. Choose a summary or add your own topic.</p>'}
+ <label for="nt">Add a topic or question</label><div class="row" style="flex-wrap:nowrap"><input id="nt" onkeydown="if(event.key=='Enter')addTopic(${id})"><button class="btn sm" onclick="addTopic(${id})">Add</button></div>
+ <h2>Your prep sheet</h2><div class="card"><p class="mu">${on.length} topic${on.length==1?'':'s'} to discuss${p.sum!=null&&S.sums[p.sum]?' · from '+esc(S.sums[p.sum].title):''}</p>${on.length?'<ul style="margin:6px 0;padding-left:20px">'+on.map(t=>'<li>'+esc(t.t)+'</li>').join('')+'</ul>':''}
+ <div class="row"><button class="btn sm" onclick="ui.copyText=()=>prepText(${id});ui.modal='share';render()">Copy prep notes</button>${p.sum!=null&&S.sums[p.sum]?`<button class="btn ghost sm" onclick="ui.draft=S.sums[${p.sum}];go('sumview')">Open summary</button>`:''}</div></div><p class="mu">Nothing is sent to your provider. You choose what to share.</p></main>`},
+settings(){const n=sampleCount();return `<main>${topbar('Settings & privacy')}<div class="card"><b>Where your data lives</b><p class="mu">In this prototype, entries are stored only in this browser. That is not a secure health-data store. Nothing is sent anywhere.</p></div>
+ <div class="card"><b>Chat connection</b><p class="mu">${VOICEFLOW.proxyUrl?'Voiceflow proxy configured.':'Not connected. Beary uses scripted prototype replies, and summaries are built by simple rules, not AI. To connect Voiceflow, set VOICEFLOW.proxyUrl to a server proxy that keeps your API key.'}</p></div>
+ <div class="card"><b>Safety</b><p class="mu">Beary doesn't diagnose or advise on medication. In an emergency call 911; in the US call or text 988. This wording is a prototype and hasn't been clinically reviewed.</p></div>
+ <div class="card"><b>This test version</b><p class="mu">${MODE=='alex'?'You are exploring as Alex, a fictional person. Everything here is made up.':'You are using Beary as a first-time user. Entries stay in this browser.'}</p><button class="btn ghost sm" onclick="resetDemo()">${MODE=='alex'?'Reset Alex':'Start over from the welcome'}</button></div>
+ ${MODE=='alex'?`<h2>Sample data</h2><div class="card"><p class="mu">${n?n+' labelled sample item'+(n==1?'':'s')+' mixed into your records. These buttons never touch entries you made yourself.':'No sample data right now.'}</p><div class="row"><button class="btn ghost sm" ${n?'':'disabled'} onclick="removeSample()">Remove sample data</button><button class="btn ghost sm" onclick="reloadSample()">Add sample data back</button></div></div>`:''}
+ <h2>Erase my data</h2><div class="card"><p class="mu">Deletes everything saved in this browser: your entries, summaries, preparation notes and stars. This can't be undone.</p><button class="btn ghost sm" style="color:var(--bad)" onclick="eraseAll()">Erase everything</button></div></main>`}
+};
+function crisisCard(){return `<div class="crisis"><b>You matter, and you deserve support from a person right now.</b><p>If you might be in danger, call <b>911</b>. In the US you can call or text <b>988</b> to reach the Suicide & Crisis Lifeline, any time.</p><p>You could also contact your therapist or someone you trust.</p><p class="mu">Prototype wording, pending clinical review.</p></div>`}
+
+// ===== Onboarding and test-version helpers =====
+function onbNext(){ui.onb=(ui.onb||0)+1;render()}
+function onbBack(){ui.onb=Math.max(0,(ui.onb||0)-1);render()}
+function finishOnb(chk){const n=$('#nick');if(n)S.name=n.value.trim().slice(0,24);S.onbDone=today();ui.onb=0;ui.stack=[];S.view='home';if(chk){ui.d=null;ui.f=null;ui.modal='checkin'}save();render()}
+function resetDemo(){if(!confirm(MODE=='alex'?'Reset Alex to the starting data? Anything you added will be removed.':'Start over from the welcome screens? This erases what you entered in this test.'))return;try{localStorage.removeItem(KEY)}catch(e){}location.reload()}
+
+// ===== Modals =====
+function modal(){const m=ui.modal;if(!m)return'';let h='';
+ if(m=='persona')h=`<h2>Meet Alex</h2><p>You are exploring Beary as Alex, a fictional person. The check-ins, chats and appointment are made up, and nothing here is real or goes anywhere.</p><p>Try it as Alex would: look at Patterns, build a summary, and prepare for the upcoming visit. You can add your own entries too.</p><p class="mu">Please don't type real health information. To start over, open Settings (the gear on Home) and choose Reset Alex.</p>`;
+ if(m=='journey')h=`<h2>Your night sky</h2><p>A star lights up when you reflect, chat, make a summary or prepare for a visit. Stars never go out. Resting, skipping and coming back later are all part of the journey.</p><p class="mu">Stars show engagement, not mood or health.</p>`;
+ if(m=='checkin'){const d=ui.d||today(),c=S.checks[d]||{entries:[]};if(!ui.f||ui.f.d!=d)ui.f={d,mood:null,energy:null,time:d==today()?nowT():'12:00',meds:c.meds,note:''};const f=ui.f;
+  h=`<h2>${d==today()?'How are you feeling?':'Add to '+rel(d)}</h2>${strip(d,'pickDay')}
+  ${c.entries.length?c.entries.map((e,i)=>`<div class="tl"><span class="tm">${ftm(e.t)}</span><span>${MN[e.mood]}${e.energy?'<span class="mu"> · energy '+EN[e.energy].toLowerCase()+'</span>':''}${e.note?'<br><span class="mu">'+esc(e.note)+'</span>':''}</span><button class="pill" style="padding:6px 14px" aria-label="Remove ${ftm(e.t)} entry" onclick="delEntry(${i})">Remove</button></div>`).join(''):''}
+  <label>I feel</label><div class="mood">${MOODS.map(x=>`<button style="background:${x[2]}" class="${f.mood==x[0]?'on':''}" aria-pressed="${f.mood==x[0]}" onclick="syncF();ui.f.mood='${x[0]}';render()">${x[1]}</button>`).join('')}</div>
+  <label>Energy (optional)</label><div class="row">${Object.entries(EN).map(([k,v])=>`<button class="pill ${f.energy==k?'on':''}" aria-pressed="${f.energy==k}" onclick="syncF();ui.f.energy=ui.f.energy=='${k}'?null:'${k}';render()">${v}</button>`).join('')}</div>
+  <label>Time</label>${tpick('f',f.time)}
+  <label for="fn">Anything that shaped it? (optional)</label><textarea id="fn" style="min-height:70px">${esc(f.note)}</textarea>
+  <label>Meds that day (optional, once a day)</label><div class="row">${[['taken','Took them'],['skipped','Didn\'t take'],['','Not logging']].map(x=>`<button class="pill ${f.meds===x[0]?'on':''}" onclick="syncF();ui.f.meds='${x[0]}';render()">${x[1]}</button>`).join('')}</div>
+  <p class="mu" id="fe" style="color:var(--bad)"></p><button class="btn" onclick="saveCheck()">Save</button>`}
+ if(m=='day'){const d=ui.d,c=S.checks[d],z=S.sleep[d],es=c?c.entries:[];
+  h=`<h2>${rel(d)}</h2><p class="mu" style="margin-top:-6px">${new Date(d+'T12:00').toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'})}</p>
+  ${es.length?es.map(e=>`<div class="tl"><span class="tm">${ftm(e.t)}</span><span>${MN[e.mood]}${e.energy?' · energy '+EN[e.energy].toLowerCase():''}${e.sample?' <span class="tag">sample</span>':''}${e.note?`<br><span class="mu">“${esc(e.note)}”</span>`:''}</span></div>`).join(''):'<div class="card miss"><p>No mood entries. Nothing was recorded for this day, and that\'s okay.</p></div>'}
+  <p><b>Medication:</b> ${c&&c.meds?(c.meds=='taken'?'logged taken':'logged not taken'):'<span class="mu">not logged</span>'}</p>
+  <p><b>Sleep:</b> ${z?z.h+' hours, '+QN[z.q]+(z.sample?' <span class="tag">sample</span>':''):'<span class="mu">not recorded</span>'}</p>
+  <div class="row"><button class="btn sm" onclick="ui.f=null;ui.modal='checkin';render()">${es.length?'Add or remove moods':'Add mood'}</button><button class="btn ghost sm" onclick="ui.modal='sleep';render()">${z?'Edit sleep':'Log sleep'}</button></div>`}
+ if(m=='sleep'){const d=ui.d||today(),z=S.sleep[d];h=`<h2>${z?'Edit sleep':'Log sleep'}</h2><label>Night of (the morning you woke up)</label>${strip(d,'pickSleepDay')}<label for="sh">Hours slept</label><input id="sh" type="number" step="0.5" min="0" max="16" placeholder="e.g. 7.5" value="${z?z.h:''}"><label for="sq">How did it feel?</label><select id="sq">${Object.entries(QN).map(([k,v])=>`<option value="${k}" ${(z?z.q:'ok')==k?'selected':''}>${v[0].toUpperCase()+v.slice(1)}</option>`).join('')}</select><p id="fe" style="color:var(--bad)"></p><button class="btn" onclick="saveSleep()">Save</button>${z?'<button class="btn ghost" style="margin-top:8px" onclick="delSleep()">Remove this entry</button>':''}`}
+ if(m=='appt'){if(!ui.ap||ui.ap.id!=ui.edit){const a=S.appts.find(x=>x.id==ui.edit)||{who:'',kind:'Therapy session',date:today(),time:'10:00'};ui.ap={id:ui.edit,who:a.who,kind:a.kind,date:a.date,time:a.time}}const a=ui.ap;
+  h=`<h2>${ui.edit?'Edit':'Add'} appointment</h2><p class="mu">This only saves a note here. It doesn't book anything.</p><label for="aw">Provider name</label><input id="aw" value="${esc(a.who)}"><label for="ak">Type</label><input id="ak" value="${esc(a.kind)}"><label>Date</label>${strip(a.date,'pickApDay',1)}<label>Time</label>${tpick('ap',a.time)}<p id="fe" style="color:var(--bad)"></p><button class="btn" onclick="saveAppt()">Save</button>${ui.edit?'<button class="btn ghost" style="margin-top:8px" onclick="delAppt()">Delete</button>':''}`}
+  if(m=='chatInfo')h=`<div class="chat-info-sheet"><h2 id="about-beary">About Beary <span aria-hidden="true">✦</span></h2>
+  <p>Beary is a learning and reflection companion for people living with bipolar disorder, those exploring whether to seek an evaluation, and anyone who wants to understand the condition. It can help you explore information and prepare questions for a healthcare professional.</p>
+  <h3>What Beary is designed to help with</h3>
+  <ul><li>Learn about bipolar disorder from approved educational resources.</li><li>Understand mental health terminology in accessible language.</li><li>Find additional information and support organizations.</li><li>Prepare questions for healthcare providers.</li><li>Reflect on experiences and explore topics at your own pace.</li><li>Find crisis and emergency resources when appropriate.</li></ul>
+  <h3>What Beary cannot do</h3>
+  <ul><li>Diagnose bipolar disorder or any mental health condition.</li><li>Determine whether you are experiencing mania, depression, psychosis, or another mood state.</li><li>Recommend starting, stopping, or changing medication.</li><li>Interpret your symptoms as medical advice.</li><li>Replace a clinician or provide individualized treatment recommendations.</li></ul>
+  <h3>Approved educational references</h3>
+  <p>These are the sources designated for Beary's intended educational content:</p>
+  <ul><li><a href="https://www.nimh.nih.gov/health/publications/bipolar-disorder" target="_blank" rel="noopener noreferrer">National Institute of Mental Health (NIMH)</a></li>
+  <li><a href="https://medlineplus.gov/bipolardisorder.html" target="_blank" rel="noopener noreferrer">MedlinePlus (U.S. National Library of Medicine)</a></li>
+  <li><a href="https://www.dbsalliance.org/" target="_blank" rel="noopener noreferrer">Depression and Bipolar Support Alliance (DBSA)</a></li>
+  <li><a href="https://www.who.int/news-room/fact-sheets/detail/bipolar-disorder" target="_blank" rel="noopener noreferrer">World Health Organization (WHO)</a></li></ul>
+  <div class="info-warning"><b>Prototype notice</b><p>Beary currently uses scripted demonstration replies. It does <b>not</b> look up, check, or cite these sources automatically yet. Educational answers will need source verification and clinical review before real-world use. Your conversations are saved in this browser, which is not secure storage for health data.</p></div>
+  <h3>Help and crisis resources (United States)</h3>
+  <p>These are real services, separate from Beary. Beary does not contact them for you.</p>
+  <div class="help-entry"><b>988 Suicide &amp; Crisis Lifeline</b><p>Call or text <a href="tel:988">988</a> for mental health crisis support, 24/7. <a href="https://988lifeline.org/" target="_blank" rel="noopener noreferrer">988 Lifeline website</a></p></div>
+  <div class="help-entry"><b>Emergency services</b><p>Call <a href="tel:911">911</a> if you or someone else is in immediate danger.</p></div>
+  <div class="help-entry"><b>SAMHSA National Helpline</b><p>Call <a href="tel:18006624357">1-800-662-HELP (4357)</a> for free, confidential treatment referrals and information, 24/7. <a href="https://findtreatment.gov/" target="_blank" rel="noopener noreferrer">Find mental health treatment</a></p></div>
+  <div class="help-entry"><b>Veterans Crisis Line</b><p>Call <a href="tel:988">988</a> and press 1, or text <a href="sms:838255">838255</a>. <a href="https://www.veteranscrisisline.net/" target="_blank" rel="noopener noreferrer">Veterans Crisis Line</a></p></div>
+  <p class="mu">These phone numbers are for the U.S. For emergencies elsewhere, contact your local emergency service.</p></div>`;
+ if(m=='share')h=`<h2>Before you copy</h2><p>This summary contains personal reflections. Copying doesn't send it anywhere. You decide who sees it.</p><div class="row"><button class="btn" onclick="copyIt()">Copy summary</button><button class="btn ghost" onclick="ui.modal=null;render()">Not now</button></div>`;
+ return `<div class="modal" onclick="if(event.target==this){ui.modal=null;ui.f=null;ui.d=null;ui.ap=null;render()}"><div class="sheet" role="dialog" aria-modal="true">${h}<button class="btn ghost" style="margin-top:10px" onclick="ui.modal=null;ui.f=null;ui.d=null;ui.ap=null;render()">Close</button></div></div>`}
+
+// ===== Actions =====
+const err=m=>{const e=$('#fe');if(e)e.textContent=m};
+function saveCheck(){syncF();const f=ui.f,ex=S.checks[f.d],cm=ex?ex.meds:undefined;if(!f.mood&&f.meds===cm)return err('Pick a mood, or change the medication log, to save.');if(f.mood&&!f.time)return err('Add a time for this entry.');const c=S.checks[f.d]||(S.checks[f.d]={entries:[]});if(f.mood){c.entries.push({t:f.time,mood:f.mood,energy:f.energy||undefined,note:(f.note||'').trim()});c.entries.sort((x,y)=>x.t.localeCompare(y.t));award('checkin')}if(f.meds!==undefined&&f.meds!==cm){c.meds=f.meds;delete c.msample}save();ui.modal=null;ui.f=null;ui.d=null;ui.ap=null;render();toast(f.mood?'Added. Moods can change, and that\'s okay.':'Saved')}
+function delEntry(i){syncF();S.checks[ui.f.d].entries.splice(i,1);save();render()}
+function saveSleep(){const h=parseFloat($('#sh').value),d=ui.d||today();if(isNaN(h)||h<0||h>16)return err('Enter hours between 0 and 16.');S.sleep[d]={h,q:$('#sq').value};award('sleep');save();ui.modal=null;ui.d=null;render();toast('Sleep saved for '+fd(d))}
+function delSleep(){delete S.sleep[ui.d||today()];save();ui.modal=null;ui.d=null;render();toast('Sleep entry removed')}
+function saveAppt(){apSync();const a=ui.ap,o={who:(a.who||'').trim(),kind:(a.kind||'').trim()||'Appointment',date:a.date,time:a.time};if(!o.who)return err('Add a provider name.');if(ui.edit)Object.assign(S.appts.find(x=>x.id==ui.edit),o);else S.appts.push({id:Date.now(),...o});award('appt');save();ui.modal=null;ui.ap=null;render();toast('Appointment saved for '+rel(o.date))}
+function delAppt(){S.appts=S.appts.filter(a=>a.id!=ui.edit);save();ui.modal=null;ui.ap=null;render();toast('Removed')}
+function newChat(){S.conv.unshift({id:Date.now(),t:new Date().toISOString(),title:'New conversation',excl:false,msgs:[]});S.cur=0;ui.hist=false;save();render()}
+async function sendMsg(t){t=(t||'').trim();if(!t||ui.busy)return;const c=S.conv[S.cur];c.msgs.push({r:'u',t});if(c.title=='New conversation')c.title=t.slice(0,32);ui.err=null;save();await reply(c)}
+async function reply(c){ui.busy=true;render();try{const r=await ChatService.send(c.msgs[c.msgs.length-1].t,c.msgs);c.msgs.push(r.crisis?{r:'b',crisis:1}:{r:'b',t:r.text,proto:r.proto});award('chat')}catch(e){ui.err=1}ui.busy=false;save();render()}
+function retry(){ui.err=null;reply(S.conv[S.cur])}
+function genSum(){const u=ui.sum,cut=iso(ago(u.range-1)),end=today(),sec=[],qt=[];
+ const dts=[...Array(u.range)].map((_,i)=>iso(ago(u.range-1-i))),cs=u.src.chat?S.conv.filter(c=>c.t.slice(0,10)>=cut&&!u.ex[c.id]):[];
+ cs.forEach(c=>c.msgs.filter(m=>m.r=='u').forEach(m=>qt.push({s:'Chat, '+fd(c.t),t:m.t})));
+ if(u.src.checks)dts.forEach(d=>((S.checks[d]||{}).entries||[]).forEach(e=>e.note&&qt.push({s:'Check-in, '+fd(d)+' '+ftm(e.t),t:e.note})));
+ const rec=u.src.checks?dts.filter(d=>(S.checks[d]||{}).entries&&S.checks[d].entries.length||S.sleep[d]):[];
+ if(!qt.length&&!rec.length){toast('Nothing recorded in that range yet. Try a longer period or other sources.');return}
+ const th=TH.map(([n,re])=>[n,qt.filter(q=>re.test(q.t)).length]).filter(x=>x[1]);
+ sec.push({id:'themes',h:'Themes in what I wrote',k:'Keyword match, not AI',t:th.length?th.map(x=>`- ${x[0]} (${x[1]} ${x[1]==1?'entry':'entries'})`).join('\n'):'- No repeated topics found yet.'});
+ sec.push({id:'words',h:'In my own words',k:'Your words, with dates',t:qt.length?qt.map(q=>`- “${q.t}” (${q.s})`).join('\n'):'- No written reflections in this period.'});
+ if(u.src.checks){const L=[];let none=0;dts.forEach(d=>{const es=(S.checks[d]||{}).entries||[];if(!es.length){none++;return}L.push(`- ${fd(d)}: `+es.map(e=>`${MN[e.mood]} ${ftm(e.t)}${e.energy?' (energy '+EN[e.energy].toLowerCase()+')':''}`).join(' → '))});
+  const sd=dts.filter(d=>S.sleep[d]);if(sd.length){const h=sd.map(d=>S.sleep[d].h);L.push(`- Sleep: ${sd.length} night(s) recorded, ${Math.min(...h)} to ${Math.max(...h)} hours, average ${(h.reduce((a,b)=>a+b)/h.length).toFixed(1)}`)}
+  if(dts.length-sd.length)L.push(`- Sleep not recorded on ${dts.length-sd.length} night(s)`);const ml=dts.map(d=>(S.checks[d]||{}).meds);L.push(`- Medication log: taken on ${ml.filter(x=>x=='taken').length} day(s), not taken on ${ml.filter(x=>x=='skipped').length}, not logged on ${ml.filter(x=>!x).length}`);if(none)L.push(`- No mood entries on ${none} day(s)`);L.push('(Days without entries are simply not recorded. They are not results.)');
+  sec.push({id:'track',h:'Recorded tracking',k:'Recorded entries',t:L.join('\n')})}
+ sec.push({id:'qs',h:'Questions for my appointment',k:'From your messages. Add your own.',t:qt.filter(q=>q.t.includes('?')).map(q=>'- '+q.t).join('\n')||'- '});
+ const src=[u.src.chat?cs.length+' conversation'+(cs.length==1?'':'s'):'',u.src.checks?'check-ins and sleep records':''].filter(Boolean).join(' and ')||'none';
+ const title=`Summary, ${fd(cut)} to ${fd(end)}`;ui.draft={title,range:`${fd(cut)} to ${fd(end)} (${u.range==1?'today':'past '+u.range+' days'})`,src:src+(Object.values(u.ex).some(x=>x)?', some conversations left out':''),sec};award('summary');go('sumview')}
+function saveSum(){if(!S.sums.includes(ui.draft)){ui.draft.saved=today();S.sums.unshift(ui.draft)}save();toast('Saved to My Care')}
+async function copyIt(){const t=ui.copyText();try{await navigator.clipboard.writeText(t)}catch(e){const x=document.createElement('textarea');x.value=t;document.body.append(x);x.select();document.execCommand('copy');x.remove()}ui.modal=null;render();toast('Copied. Paste it where you choose.')}
+
+// ===== Render =====
+function render(){const v=S.view;if(v=='patterns'&&ui.ptab!='sum')award('patterns');const pm=$('main'),pt=pm&&ui.lv==v?pm.scrollTop:0;ui.lv=v;const full=v=='home',tab={home:'home',chat:'chat',patterns:'patterns',care:'care',prep:'care',journey:'home'}[v]||(['sumsetup','sumview'].includes(v)?'patterns':v=='settings'?'home':'');
+ const tabs=[['home','Home'],['chat','Chat'],['patterns','Patterns'],['care','Care']];
+ $('#app').innerHTML=(v=='chat'?'<div style="flex:1;display:flex;flex-direction:column;min-height:0">':'')+V[v]()+(v=='chat'?'</div>':'')+(v=='onb'?'':`<nav aria-label="Main">${tabs.map(t=>`<button class="${tab==t[0]?'on':''}" ${tab==t[0]?'aria-current="page"':''} onclick="ui.stack=[];go('${t[0]}',false)"><svg viewBox="0 0 24 24">${ICON[t[0]=='patterns'?'pat':t[0]]}</svg>${t[1]}</button>`).join('')}</nav>`)+modal();
+ const dc=$('.dchip.on');if(dc&&dc.scrollIntoView)dc.scrollIntoView({inline:'center',block:'nearest'});const nm=$('main');if(nm)nm.scrollTop=pt;if(ui.pend){const q=ui.pend;ui.pend=null;toast(q)}if(v=='chat'){const m=$('#msgs');if(m)m.scrollTop=m.scrollHeight;if(!ui.busy&&!ui.modal&&!ui.hist){const i=$('#ci');if(i&&matchMedia('(pointer:fine)').matches)i.focus()}}}
+if(MODE=='alex'&&!S.alexInit){S.name='Alex';ui.sum={range:7,src:{chat:1,checks:1},ex:{}};genSum();if(ui.draft){ui.draft.saved=today();S.sums.unshift(ui.draft)}ui.draft=null;ui.pend=null;ui.stack=[];S.view='home';S.ms={checkin:today(),chat:today(),sleep:today(),summary:today(),appt:today()};S.alexInit=1;save()}
+if(MODE=='alex'&&!S.introSeen){ui.modal='persona';S.introSeen=1;save()}
+render();
+</script></body></html>
