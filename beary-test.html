@@ -97,6 +97,12 @@ nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;st
 .chat-info-sheet .help-entry:last-child{border:0}
 .chat-info-sheet .help-entry b{display:block;font-size:14px}
 .chat-info-sheet .help-entry p{margin:3px 0}
+.tour-block{position:absolute;inset:0;z-index:40}
+.tour-dim{position:absolute;inset:0;background:rgba(5,3,20,.62);z-index:40;pointer-events:none}
+.tour-ring{position:absolute;z-index:40;border-radius:20px;pointer-events:none;box-shadow:0 0 0 9999px rgba(5,3,20,.62),0 0 0 3px var(--lav)}
+.tour-card{position:absolute;left:12px;right:12px;z-index:41;background:var(--panel);border:1px solid #4a4580;border-radius:22px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.tour-card h2{font-size:18px}
+[hidden]{display:none!important}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -131,7 +137,7 @@ function seed(){const checks={},sleep={};
  {id:2,sample:1,t:ago(5).toISOString(),title:'Feeling overwhelmed',msgs:[U('I feel overwhelmed with school and work lately.'),B('That sounds like a lot to carry. What has felt heaviest this week?'),U('Deadlines, mostly. I get stressed and then my energy drops.')]},
  {id:1,sample:1,t:ago(9).toISOString(),title:'Stress or mood?',msgs:[U('Is it stress or is my mood changing? I can\'t tell them apart.'),B('That is a hard thing to sort out alone. I can\'t tell you which it is, but a clinician can look at it with you. Want to note it as a question for your appointment?')]}],
  appts:[{id:1,sample:1,who:'Dr. Rivera (sample)',kind:'Therapy session',date:iso(ago(-4)),time:'15:30'}],sums:[],preps:{}}}
-const blank=()=>({view:MODE=='fresh'?'onb':'home',v2:1,ms:{},checks:{},sleep:{},cur:0,conv:[{id:Date.now(),t:new Date().toISOString(),title:'New conversation',msgs:[]}],appts:[],sums:[],preps:{}});
+const blank=()=>({view:'home',v2:1,ms:{},checks:{},sleep:{},cur:0,conv:[{id:Date.now(),t:new Date().toISOString(),title:'New conversation',msgs:[]}],appts:[],sums:[],preps:{}});
 let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!S)S=MODE=='alex'?seed():blank();Object.values(S.checks).forEach(c=>{if(!c.entries){c.entries=c.mood?[{t:'12:00',mood:c.mood,note:c.note||''}]:[];delete c.mood;delete c.note}});
 if(!S.v2){const sd=seed();for(const d in sd.checks){const c=S.checks[d],e=c&&c.entries,x=sd.checks[d].entries[0];if(c&&e.length==1&&e[0].mood==x.mood&&e[0].t=='12:00'&&(e[0].note||'')==x.note){e[0].sample=1;c.msample=1}}
  for(const d in sd.sleep){const z=S.sleep[d];if(z&&z.h==sd.sleep[d].h&&z.q=='ok')z.sample=1}
@@ -175,11 +181,11 @@ function sky(big){const lit=MS.map(m=>!!(S.ms||{})[m[0]]),P=MS.map(m=>m[3]);
  return `<svg viewBox="0 0 330 110" width="100%" role="img" aria-label="Constellation with ${lit.filter(Boolean).length} of 7 stars found">${ln}${st}</svg>`}
 const sampleCount=()=>{let n=0;Object.values(S.checks).forEach(c=>{n+=c.entries.filter(e=>e.sample).length;if(c.msample)n++});n+=Object.values(S.sleep).filter(z=>z.sample).length+S.appts.filter(a=>a.sample).length+S.conv.filter(c=>c.sample).length;return n};
 const hasSample=()=>sampleCount()>0;
-function removeSample(){if(!confirm('Remove the sample entries? Anything you added yourself stays.'))return;Object.keys(S.checks).forEach(d=>{const c=S.checks[d];c.entries=c.entries.filter(e=>!e.sample);if(c.msample){delete c.meds;delete c.msample}if(!c.entries.length&&c.meds===undefined)delete S.checks[d]});
+function removeSample(){ask('Remove the sample entries? Anything you added yourself stays.','Remove sample data',doRemoveSample)}function doRemoveSample(){Object.keys(S.checks).forEach(d=>{const c=S.checks[d];c.entries=c.entries.filter(e=>!e.sample);if(c.msample){delete c.meds;delete c.msample}if(!c.entries.length&&c.meds===undefined)delete S.checks[d]});
  Object.keys(S.sleep).forEach(d=>{if(S.sleep[d].sample)delete S.sleep[d]});S.appts=S.appts.filter(a=>!a.sample);S.conv=S.conv.filter(c=>!c.sample);if(!S.conv.length)S.conv=blank().conv;S.cur=0;save();render();toast('Sample data removed. Your own entries are untouched.')}
 function reloadSample(){const sd=seed();for(const d in sd.checks){if(!S.checks[d])S.checks[d]=sd.checks[d];else if(!S.checks[d].entries.length){S.checks[d].entries=sd.checks[d].entries}}for(const d in sd.sleep)if(!S.sleep[d])S.sleep[d]=sd.sleep[d];
  if(!S.appts.some(a=>a.id===1))S.appts.push(sd.appts[0]);if(!S.conv.some(c=>c.id===1))S.conv.push(sd.conv[0]);save();render();toast('Sample data added to empty days only.')}
-function eraseAll(){if(!confirm('Erase everything saved in this browser, including your entries, summaries and stars? This can\'t be undone.'))return;try{localStorage.removeItem(KEY)}catch(e){}S=blank();ui.stack=[];ui.draft=null;ui.onb=0;save();render();toast('Everything erased')}
+function eraseAll(){ask('Erase everything saved in this browser, including your entries, summaries and stars? This can\'t be undone.','Erase everything',doEraseAll)}function doEraseAll(){try{localStorage.removeItem(KEY)}catch(e){}S=blank();ui.stack=[];ui.draft=null;ui.tour=null;ui.ptab=null;save();if(MODE=='fresh')tourGo(0);else render();toast('Everything erased')}
 const TH=[['Sleep',/sleep|tired|rest|insomnia/i],['School & work',/school|work|class|job|deadline|exam/i],['Stress & overwhelm',/stress|overwhelm|anxious|pressure/i],['Energy & focus',/energy|motivat|focus|concentrat/i],['Mood changes',/mood|irritab|sad|low|angry|up and down/i],['Medication questions',/medic|meds|dose|pill/i],['People in my life',/friend|family|partner|roommate/i]];
 const compose=d=>`${d.title}\n${d.range||''}\nSources: ${d.src}\nDraft built by simple rules from my own entries, not by AI. Edited by me.\n\n`+d.sec.map(x=>x.h.toUpperCase()+'\n'+x.t).join('\n\n');
 function topicsFrom(m){if(!m.sec)return(m.qs||[]).map(t=>({t,s:'Question'}));const L=id=>{const x=m.sec.find(y=>y.id==id);return x?x.t.split('\n').map(z=>z.replace(/^- /,'').trim()).filter(Boolean):[]};
@@ -203,7 +209,7 @@ function setTime(k,v){syncF();apSync();ui[k].time=v;render()}
 function tpSet(k){const h=+$('#tph').value%12,m=+$('#tpm').value,pm=$('#tpa').value=='PM';setTime(k,String(h+(pm?12:0)).padStart(2,'0')+':'+String(m).padStart(2,'0'))}
 const openSums=()=>{ui.ptab='sum';go('patterns')};const pickDay=d=>{syncF();ui.d=d;ui.f=null;render()},pickSleepDay=d=>{ui.d=d;render()},pickApDay=d=>{apSync();ui.ap.date=d;render()},openDay=d=>{ui.d=d;ui.modal='day';render()};
 function useSum(i){const up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0];if(!up){toast('Add an appointment first');go('care');return}ui.prep=up.id;const p=S.preps[up.id]||(S.preps[up.id]={sum:null,topics:[]});if(!p.topics)p.topics=[];pickSum(up.id,i);go('prep')}
-function delSum(i){if(!confirm('Delete this saved summary? Preparation topics you already chose stay.'))return;S.sums.splice(i,1);Object.values(S.preps).forEach(p=>{if(p.sum===i)p.sum=null;else if(p.sum>i)p.sum--});save();render();toast('Summary deleted')}
+function delSum(i){ask('Delete this saved summary? Preparation topics you already chose stay.','Delete summary',()=>doDelSum(i))}function doDelSum(i){S.sums.splice(i,1);Object.values(S.preps).forEach(p=>{if(p.sum===i)p.sum=null;else if(p.sum>i)p.sum--});save();render();toast('Summary deleted')}
 // ===== Helpers =====
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fd=s=>new Date(s.length==10?s+'T12:00':s).toLocaleDateString(undefined,{month:'short',day:'numeric'});
@@ -218,17 +224,6 @@ const today=()=>iso(new Date());const ftm=t=>new Date('2000-01-01T'+t).toLocaleT
 
 // ===== Views =====
 const V={
-onb(){const n=ui.onb||0,last=4;
- const dots=`<div class="row" style="justify-content:center;gap:8px;margin:6px 0 14px" role="img" aria-label="Step ${n+1} of 5">${[0,1,2,3,4].map(i=>`<span style="width:${i==n?22:8}px;height:8px;border-radius:99px;background:${i==n?'var(--lav)':'#3a3466'}"></span>`).join('')}</div>`;
- const hero=`<img src="beary-home-bear.png" alt="Beary the bear" style="width:100%;max-width:210px;display:block;margin:0 auto">`;
- const body=[
- `${hero}<h1 style="text-align:center;margin-top:12px">Hi, I'm Beary</h1><p style="text-align:center">A quiet place to put your days into words between visits with your care team. No pressure, and you set the pace.</p>`,
- `<h1>What you can do here</h1><div class="card"><b>Check in</b><p class="mu">Note your mood, energy, sleep and medication whenever you like, even several times a day.</p></div><div class="card"><b>Talk with Beary</b><p class="mu">Chat to reflect on your day or ask general questions about bipolar disorder.</p></div><div class="card"><b>Make a summary</b><p class="mu">Turn your chats and check-ins into a note you can edit and bring to a visit. Nothing is sent to anyone.</p></div>`,
- `<h1>What Beary won't do</h1><div class="card"><p>Beary doesn't diagnose, predict episodes, or give medication advice. Your care team is the right place for those.</p></div><div class="crisis" style="max-width:100%"><b>Not for emergencies</b><p>If you might be in danger, call <b>911</b>. In the US you can call or text <b>988</b> any time to reach the Suicide &amp; Crisis Lifeline.</p></div>`,
- `<h1>About this test version</h1><div class="card"><p>This is an early prototype for testing.</p><ul style="margin:6px 0;padding-left:20px"><li>Beary's replies are pre-written. No live AI is connected.</li><li>What you enter stays in this browser on this device.</li><li><b>Please don't enter real health information.</b> Use made-up details.</li><li>You can start over any time in Settings.</li></ul></div>`,
- `<h1>What should Beary call you?</h1><p class="mu">Optional. A nickname is fine, and it stays on this device.</p><label for="nick">Name or nickname</label><input id="nick" maxlength="24" autocomplete="off" value="${esc(S.name||'')}">`][n];
- const btns=n<last?`<button class="btn" onclick="onbNext()">${n==3?'I understand':'Next'}</button>`:`<button class="btn" onclick="finishOnb(true)">Start with a first check-in</button><button class="btn ghost" style="margin-top:10px" onclick="finishOnb(false)">Look around first</button>`;
- return `<main style="display:flex;flex-direction:column"><div class="between" style="min-height:44px">${n>0?'<button class="back" aria-label="Back" onclick="onbBack()">‹</button>':'<span></span>'}${n<last?'<button class="pill" style="min-height:40px;padding:8px 14px" onclick="finishOnb(false)">Skip intro</button>':'<span></span>'}</div>${dots}<div style="flex:1">${body}</div><div style="padding-top:16px">${btns}</div></main>`},
 home(){const c=S.checks[today()],up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0],ls=S.sums[0];
  const pv=up?`<button class="pv" style="display:flex;gap:12px;align-items:center" onclick="go('care')">${tile(up.date)}<span><b>Next visit</b> · ${rel(up.date)}, ${ftm(up.time)}<br><span class="mu">${esc(up.who)}${tc(up.id)?' · '+tc(up.id).replace(/[()]/g,'').trim()+' ready':''}</span></span></button>`:ls?`<button class="pv" onclick="ui.draft=S.sums[0];go('sumview')"><b>Latest summary</b><br><span class="mu">${esc(ls.title)}</span></button>`:'';
  return `<div class="home"><div class="between"><button class="sky" onclick="go('journey')" aria-label="Open your night sky"><span style="width:104px;display:block">${sky()}</span><span>Your sky</span></button><button class="back" onclick="go('settings')" aria-label="Settings">⚙</button></div>
@@ -289,20 +284,47 @@ prep(){const id=ui.prep,a=S.appts.find(x=>x.id==id);if(!a)return `<main>${topbar
 settings(){const n=sampleCount();return `<main>${topbar('Settings & privacy')}<div class="card"><b>Where your data lives</b><p class="mu">In this prototype, entries are stored only in this browser. That is not a secure health-data store. Nothing is sent anywhere.</p></div>
  <div class="card"><b>Chat connection</b><p class="mu">${VOICEFLOW.proxyUrl?'Voiceflow proxy configured.':'Not connected. Beary uses scripted prototype replies, and summaries are built by simple rules, not AI. To connect Voiceflow, set VOICEFLOW.proxyUrl to a server proxy that keeps your API key.'}</p></div>
  <div class="card"><b>Safety</b><p class="mu">Beary doesn't diagnose or advise on medication. In an emergency call 911; in the US call or text 988. This wording is a prototype and hasn't been clinically reviewed.</p></div>
- <div class="card"><b>This test version</b><p class="mu">${MODE=='alex'?'You are exploring as Alex, a fictional person. Everything here is made up.':'You are using Beary as a first-time user. Entries stay in this browser.'}</p><button class="btn ghost sm" onclick="resetDemo()">${MODE=='alex'?'Reset Alex':'Start over from the welcome'}</button></div>
+ <div class="card"><b>This test version</b><p class="mu">${MODE=='alex'?'You are exploring as Alex, a fictional person. Everything here is made up.':'You are using Beary as a first-time user. Entries stay in this browser.'}</p><div class="row">${MODE=='alex'?'':'<button class="btn ghost sm" onclick="tourGo(0)">Replay the walkthrough</button>'}<button class="btn ghost sm" onclick="resetDemo()">${MODE=='alex'?'Reset Alex':'Start over'}</button></div></div>
  ${MODE=='alex'?`<h2>Sample data</h2><div class="card"><p class="mu">${n?n+' labelled sample item'+(n==1?'':'s')+' mixed into your records. These buttons never touch entries you made yourself.':'No sample data right now.'}</p><div class="row"><button class="btn ghost sm" ${n?'':'disabled'} onclick="removeSample()">Remove sample data</button><button class="btn ghost sm" onclick="reloadSample()">Add sample data back</button></div></div>`:''}
  <h2>Erase my data</h2><div class="card"><p class="mu">Deletes everything saved in this browser: your entries, summaries, preparation notes and stars. This can't be undone.</p><button class="btn ghost sm" style="color:var(--bad)" onclick="eraseAll()">Erase everything</button></div></main>`}
 };
 function crisisCard(){return `<div class="crisis"><b>You matter, and you deserve support from a person right now.</b><p>If you might be in danger, call <b>911</b>. In the US you can call or text <b>988</b> to reach the Suicide & Crisis Lifeline, any time.</p><p>You could also contact your therapist or someone you trust.</p><p class="mu">Prototype wording, pending clinical review.</p></div>`}
 
 // ===== Onboarding and test-version helpers =====
-function onbNext(){ui.onb=(ui.onb||0)+1;render()}
-function onbBack(){ui.onb=Math.max(0,(ui.onb||0)-1);render()}
-function finishOnb(chk){const n=$('#nick');if(n)S.name=n.value.trim().slice(0,24);S.onbDone=today();ui.onb=0;ui.stack=[];S.view='home';if(chk){ui.d=null;ui.f=null;ui.modal='checkin'}save();render()}
-function resetDemo(){if(!confirm(MODE=='alex'?'Reset Alex to the starting data? Anything you added will be removed.':'Start over from the welcome screens? This erases what you entered in this test.'))return;try{localStorage.removeItem(KEY)}catch(e){}location.reload()}
+function ask(msg,label,fn){ui.askMsg=msg;ui.askLabel=label;ui.askFn=fn;ui.modal='ask';render()}
+// ===== Test-version helpers =====
+function ask(msg,label,fn){ui.askMsg=msg;ui.askLabel=label;ui.askFn=fn;ui.modal='ask';render()}
+function resetDemo(){ask(MODE=='alex'?'Reset Alex to the starting data? Anything you added will be removed.':'Start over? This erases what you entered in this test and replays the walkthrough.','Reset',doResetDemo)}
+function doResetDemo(){try{localStorage.removeItem(KEY)}catch(e){}S=MODE=='alex'?seed():blank();ui.stack=[];ui.draft=null;ui.modal=null;ui.tour=null;ui.ptab=null;ui.hist=false;ui.f=null;ui.d=null;boot();render();toast(MODE=='alex'?'Alex is back to the starting data':'Started over')}
+
+// ===== Walkthrough (first-time user version) =====
+const TOUR=[
+ {v:'home',h:'Welcome to Beary',t:'This is Home. Beary is a quiet place to put your days into words between visits with your care team. This is a test version, so replies are pre-written and your entries stay on this device. Please use made-up details, not real health information.'},
+ {v:'home',sel:'.talk',h:'Daily Checks',t:'Log your mood, energy, sleep and medication here. You can check in more than once a day, because moods change.'},
+ {v:'home',sel:'.say',h:'Talk with Beary',t:'Open the chat to reflect on your day or ask general questions. Tap Next to see it.'},
+ {v:'chat',sel:'.chat-help-icon',h:'About Beary',t:'The question mark shows what Beary can and can\'t do, plus crisis resources. The menu on the left holds your past chats.'},
+ {v:'chat',h:'What Beary won\'t do',crisis:1,t:'Beary doesn\'t diagnose, predict episodes, or give medication advice. If you might be in danger, call 911, or call or text 988 in the US.'},
+ {v:'patterns',tab:'trends',sel:'nav button:nth-child(3)',h:'Patterns',t:'Your mood, sleep and medication history. Days with nothing recorded are simply blank. They are not a result.'},
+ {v:'patterns',tab:'sum',sel:'[aria-label="Patterns view"] button:nth-child(2)',h:'Summaries',t:'Turn chats and check-ins into a note you can edit and bring to a visit. You choose what goes in, and nothing is sent to anyone.'},
+ {v:'care',sel:'nav button:nth-child(4)',h:'Care',t:'Add appointments and pick topics to talk about at each visit.'},
+ {v:'home',sel:'.sky',h:'Your sky',last:1,t:'A star appears the first time you try something. There are no streaks, and taking a break is fine.'}];
+function tourGo(i){const st=TOUR[i];ui.tour=i;ui.stack=[];ui.hist=false;ui.modal=null;ui.f=null;ui.d=null;S.view=st.v;if(st.tab)ui.ptab=st.tab;render()}
+function tourNext(){tourGo(ui.tour+1)}
+function tourBack(){tourGo(Math.max(0,ui.tour-1))}
+function endTour(chk){S.tourDone=today();ui.tour=null;ui.stack=[];ui.ptab=null;S.view='home';if(chk){ui.d=null;ui.f=null;ui.modal='checkin'}save();render()}
+function tourHTML(){const i=ui.tour,st=TOUR[i];
+ const btns=st.last?`<button class="btn" onclick="endTour(true)">Start with a first check-in</button><button class="btn ghost" style="margin-top:8px" onclick="endTour(false)">Explore on my own</button>`:`<div class="row" style="flex-wrap:nowrap">${i>0?'<button class="btn ghost sm" style="flex:none" onclick="tourBack()">Back</button>':''}<button class="btn sm" style="flex:1" onclick="tourNext()">Next</button></div>`;
+ return `<div class="tour-block" id="tblock"></div><div class="tour-dim" id="tdim"></div><div class="tour-ring" id="tring" hidden></div><div class="tour-card" id="tcard" role="dialog" aria-label="Walkthrough, step ${i+1} of ${TOUR.length}" style="${st.crisis?'border-color:var(--bad)':''}"><div class="between"><span class="tag">Step ${i+1} of ${TOUR.length}</span>${st.last?'':'<button class="pill" style="min-height:36px;padding:4px 14px;font-size:13px" onclick="endTour(false)">Skip tour</button>'}</div><h2 style="margin:10px 0 4px">${esc(st.h)}</h2><p style="margin:0 0 12px">${esc(st.t)}</p>${btns}</div>`}
+function positionTour(){const st=TOUR[ui.tour],ap=$('#app'),card=$('#tcard'),ring=$('#tring'),dim=$('#tdim');if(!card||!ring||!dim)return;
+ const t=st.sel?$(st.sel):null,bot='calc(80px + env(safe-area-inset-bottom,0px))';
+ if(t&&t.getBoundingClientRect&&ap&&ap.getBoundingClientRect){const a=ap.getBoundingClientRect(),r=t.getBoundingClientRect(),pd=6;
+  ring.style.cssText=`left:${r.left-a.left-pd}px;top:${r.top-a.top-pd}px;width:${r.width+2*pd}px;height:${r.height+2*pd}px`;ring.hidden=false;dim.hidden=true;
+  if((r.top-a.top)+r.height/2>a.height/2){card.style.top='calc(12px + env(safe-area-inset-top,0px))';card.style.bottom='auto'}else{card.style.bottom=bot;card.style.top='auto'}}
+ else{ring.hidden=true;dim.hidden=false;card.style.bottom=bot}}
 
 // ===== Modals =====
 function modal(){const m=ui.modal;if(!m)return'';let h='';
+ if(m=='ask')h=`<h2>${esc(ui.askMsg)}</h2><button class="btn" onclick="const f=ui.askFn;ui.modal=null;ui.askFn=null;render();f()">${esc(ui.askLabel)}</button>`;
  if(m=='persona')h=`<h2>Meet Alex</h2><p>You are exploring Beary as Alex, a fictional person. The check-ins, chats and appointment are made up, and nothing here is real or goes anywhere.</p><p>Try it as Alex would: look at Patterns, build a summary, and prepare for the upcoming visit. You can add your own entries too.</p><p class="mu">Please don't type real health information. To start over, open Settings (the gear on Home) and choose Reset Alex.</p>`;
  if(m=='journey')h=`<h2>Your night sky</h2><p>A star lights up when you reflect, chat, make a summary or prepare for a visit. Stars never go out. Resting, skipping and coming back later are all part of the journey.</p><p class="mu">Stars show engagement, not mood or health.</p>`;
  if(m=='checkin'){const d=ui.d||today(),c=S.checks[d]||{entries:[]};if(!ui.f||ui.f.d!=d)ui.f={d,mood:null,energy:null,time:d==today()?nowT():'12:00',meds:c.meds,note:''};const f=ui.f;
@@ -344,7 +366,7 @@ function modal(){const m=ui.modal;if(!m)return'';let h='';
   <div class="help-entry"><b>Veterans Crisis Line</b><p>Call <a href="tel:988">988</a> and press 1, or text <a href="sms:838255">838255</a>. <a href="https://www.veteranscrisisline.net/" target="_blank" rel="noopener noreferrer">Veterans Crisis Line</a></p></div>
   <p class="mu">These phone numbers are for the U.S. For emergencies elsewhere, contact your local emergency service.</p></div>`;
  if(m=='share')h=`<h2>Before you copy</h2><p>This summary contains personal reflections. Copying doesn't send it anywhere. You decide who sees it.</p><div class="row"><button class="btn" onclick="copyIt()">Copy summary</button><button class="btn ghost" onclick="ui.modal=null;render()">Not now</button></div>`;
- return `<div class="modal" onclick="if(event.target==this){ui.modal=null;ui.f=null;ui.d=null;ui.ap=null;render()}"><div class="sheet" role="dialog" aria-modal="true">${h}<button class="btn ghost" style="margin-top:10px" onclick="ui.modal=null;ui.f=null;ui.d=null;ui.ap=null;render()">Close</button></div></div>`}
+ return `<div class="modal" onclick="if(event.target==this){ui.modal=null;ui.f=null;ui.d=null;ui.ap=null;render()}"><div class="sheet" role="dialog" aria-modal="true">${h}<button class="btn ghost" style="margin-top:10px" onclick="ui.modal=null;ui.f=null;ui.d=null;ui.ap=null;render()">${m=='ask'?'Cancel':'Close'}</button></div></div>`}
 
 // ===== Actions =====
 const err=m=>{const e=$('#fe');if(e)e.textContent=m};
@@ -378,11 +400,11 @@ function saveSum(){if(!S.sums.includes(ui.draft)){ui.draft.saved=today();S.sums.
 async function copyIt(){const t=ui.copyText();try{await navigator.clipboard.writeText(t)}catch(e){const x=document.createElement('textarea');x.value=t;document.body.append(x);x.select();document.execCommand('copy');x.remove()}ui.modal=null;render();toast('Copied. Paste it where you choose.')}
 
 // ===== Render =====
-function render(){const v=S.view;if(v=='patterns'&&ui.ptab!='sum')award('patterns');const pm=$('main'),pt=pm&&ui.lv==v?pm.scrollTop:0;ui.lv=v;const full=v=='home',tab={home:'home',chat:'chat',patterns:'patterns',care:'care',prep:'care',journey:'home'}[v]||(['sumsetup','sumview'].includes(v)?'patterns':v=='settings'?'home':'');
+function render(){const v=S.view;if(v=='patterns'&&ui.ptab!='sum'&&ui.tour==null)award('patterns');const pm=$('main'),pt=pm&&ui.lv==v?pm.scrollTop:0;ui.lv=v;const full=v=='home',tab={home:'home',chat:'chat',patterns:'patterns',care:'care',prep:'care',journey:'home'}[v]||(['sumsetup','sumview'].includes(v)?'patterns':v=='settings'?'home':'');
  const tabs=[['home','Home'],['chat','Chat'],['patterns','Patterns'],['care','Care']];
- $('#app').innerHTML=(v=='chat'?'<div style="flex:1;display:flex;flex-direction:column;min-height:0">':'')+V[v]()+(v=='chat'?'</div>':'')+(v=='onb'?'':`<nav aria-label="Main">${tabs.map(t=>`<button class="${tab==t[0]?'on':''}" ${tab==t[0]?'aria-current="page"':''} onclick="ui.stack=[];go('${t[0]}',false)"><svg viewBox="0 0 24 24">${ICON[t[0]=='patterns'?'pat':t[0]]}</svg>${t[1]}</button>`).join('')}</nav>`)+modal();
- const dc=$('.dchip.on');if(dc&&dc.scrollIntoView)dc.scrollIntoView({inline:'center',block:'nearest'});const nm=$('main');if(nm)nm.scrollTop=pt;if(ui.pend){const q=ui.pend;ui.pend=null;toast(q)}if(v=='chat'){const m=$('#msgs');if(m)m.scrollTop=m.scrollHeight;if(!ui.busy&&!ui.modal&&!ui.hist){const i=$('#ci');if(i&&matchMedia('(pointer:fine)').matches)i.focus()}}}
-if(MODE=='alex'&&!S.alexInit){S.name='Alex';ui.sum={range:7,src:{chat:1,checks:1},ex:{}};genSum();if(ui.draft){ui.draft.saved=today();S.sums.unshift(ui.draft)}ui.draft=null;ui.pend=null;ui.stack=[];S.view='home';S.ms={checkin:today(),chat:today(),sleep:today(),summary:today(),appt:today()};S.alexInit=1;save()}
-if(MODE=='alex'&&!S.introSeen){ui.modal='persona';S.introSeen=1;save()}
+ $('#app').innerHTML=(v=='chat'?'<div style="flex:1;display:flex;flex-direction:column;min-height:0">':'')+V[v]()+(v=='chat'?'</div>':'')+`<nav aria-label="Main">${tabs.map(t=>`<button class="${tab==t[0]?'on':''}" ${tab==t[0]?'aria-current="page"':''} onclick="ui.stack=[];go('${t[0]}',false)"><svg viewBox="0 0 24 24">${ICON[t[0]=='patterns'?'pat':t[0]]}</svg>${t[1]}</button>`).join('')}</nav>`+modal()+(ui.tour!=null?tourHTML():'');
+ const dc=$('.dchip.on');if(dc&&dc.scrollIntoView)dc.scrollIntoView({inline:'center',block:'nearest'});const nm=$('main');if(nm)nm.scrollTop=pt;if(ui.tour!=null)positionTour();if(ui.pend){const q=ui.pend;ui.pend=null;toast(q)}if(v=='chat'){const m=$('#msgs');if(m)m.scrollTop=m.scrollHeight;if(!ui.busy&&!ui.modal&&!ui.hist){const i=$('#ci');if(i&&matchMedia('(pointer:fine)').matches)i.focus()}}}
+function boot(){if(MODE=='alex'&&!S.alexInit){S.name='Alex';ui.sum={range:7,src:{chat:1,checks:1},ex:{}};genSum();if(ui.draft){ui.draft.saved=today();S.sums.unshift(ui.draft)}ui.draft=null;ui.pend=null;ui.stack=[];S.view='home';S.ms={checkin:today(),chat:today(),sleep:today(),summary:today(),appt:today()};S.alexInit=1;save()}if(MODE=='alex'&&!S.introSeen){ui.modal='persona';S.introSeen=1;save()}if(MODE=='fresh'&&!S.tourDone){tourGo(0)}}
+boot();
 render();
 </script></body></html>
