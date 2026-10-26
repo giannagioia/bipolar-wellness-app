@@ -302,6 +302,7 @@ function doResetDemo(){try{localStorage.removeItem(KEY)}catch(e){}S=MODE=='alex'
 // ===== Walkthrough (first-time user version) =====
 const TOUR=[
  {v:'home',h:'Welcome to Beary',t:'This is Home. Beary is a quiet place to put your days into words between visits with your care team. This is a test version, so replies are pre-written, nothing you enter is saved or sent anywhere, and refreshing the page starts over. Please use made-up details, not real health information.'},
+ {v:'home',sel:'.bubble',ask:1,h:'What should I call you?',t:'Optional. A first name or nickname is fine. You can leave it blank.'},
  {v:'home',sel:'.talk',h:'Daily Checks',t:'Log your mood, energy, sleep and medication here. You can check in more than once a day, because moods change.'},
  {v:'home',sel:'.say',h:'Talk with Beary',t:'Open the chat to reflect on your day or ask general questions. Tap Next to see it.'},
  {v:'chat',sel:'.chat-help-icon',h:'About Beary',t:'The question mark shows what Beary can and can\'t do, plus crisis resources. The menu on the left holds your past chats.'},
@@ -311,12 +312,12 @@ const TOUR=[
  {v:'care',sel:'nav button:nth-child(4)',h:'Care',t:'Add appointments and pick topics to talk about at each visit.'},
  {v:'home',sel:'.sky',h:'Your sky',last:1,t:'A star appears the first time you try something. There are no streaks, and taking a break is fine.'}];
 function tourGo(i){const st=TOUR[i];ui.tour=i;ui.stack=[];ui.hist=false;ui.modal=null;ui.f=null;ui.d=null;S.view=st.v;if(st.tab)ui.ptab=st.tab;render()}
-function tourNext(){tourGo(ui.tour+1)}
+function tourNext(){const n=$('#nick');if(n)S.name=n.value.trim().slice(0,24);tourGo(ui.tour+1)}
 function tourBack(){tourGo(Math.max(0,ui.tour-1))}
 function endTour(chk){S.tourDone=today();ui.tour=null;ui.stack=[];ui.ptab=null;S.view='home';if(chk){ui.d=null;ui.f=null;ui.modal='checkin'}save();render()}
 function tourHTML(){const i=ui.tour,st=TOUR[i];
  const btns=st.last?`<button class="btn" onclick="endTour(true)">Start with a first check-in</button><button class="btn ghost" style="margin-top:8px" onclick="endTour(false)">Explore on my own</button>`:`<div class="row" style="flex-wrap:nowrap">${i>0?'<button class="btn ghost sm" style="flex:none" onclick="tourBack()">Back</button>':''}<button class="btn sm" style="flex:1" onclick="tourNext()">Next</button></div>`;
- return `<div class="tour-block" id="tblock"></div><div class="tour-dim" id="tdim"></div><div class="tour-ring" id="tring" hidden></div><div class="tour-card" id="tcard" role="dialog" aria-label="Walkthrough, step ${i+1} of ${TOUR.length}" style="${st.crisis?'border-color:var(--bad)':''}"><div class="between"><span class="tag">Step ${i+1} of ${TOUR.length}</span>${st.last?'':'<button class="pill" style="min-height:36px;padding:4px 14px;font-size:13px" onclick="endTour(false)">Skip tour</button>'}</div><h2 style="margin:10px 0 4px">${esc(st.h)}</h2><p style="margin:0 0 12px">${esc(st.t)}</p>${btns}</div>`}
+ return `<div class="tour-block" id="tblock"></div><div class="tour-dim" id="tdim"></div><div class="tour-ring" id="tring" hidden></div><div class="tour-card" id="tcard" role="dialog" aria-label="Walkthrough, step ${i+1} of ${TOUR.length}" style="${st.crisis?'border-color:var(--bad)':''}"><div class="between"><span class="tag">Step ${i+1} of ${TOUR.length}</span>${st.last?'':'<button class="pill" style="min-height:36px;padding:4px 14px;font-size:13px" onclick="endTour(false)">Skip tour</button>'}</div><h2 style="margin:10px 0 4px">${esc(st.h)}</h2><p style="margin:0 0 12px">${esc(st.t)}</p>${st.ask?`<label for="nick">Name or nickname</label><input id="nick" maxlength="24" autocomplete="off" value="${esc(S.name||'')}" onkeydown="if(event.key=='Enter')tourNext()" style="margin-bottom:12px">`:''}${btns}</div>`}
 function positionTour(){const st=TOUR[ui.tour],ap=$('#app'),card=$('#tcard'),ring=$('#tring'),dim=$('#tdim');if(!card||!ring||!dim)return;
  const t=st.sel?$(st.sel):null,bot='calc(80px + env(safe-area-inset-bottom,0px))';
  if(t&&t.getBoundingClientRect&&ap&&ap.getBoundingClientRect){const a=ap.getBoundingClientRect(),r=t.getBoundingClientRect(),pd=6;
