@@ -138,13 +138,15 @@ function seed(){const checks={},sleep={};
  {id:1,sample:1,t:ago(9).toISOString(),title:'Stress or mood?',msgs:[U('Is it stress or is my mood changing? I can\'t tell them apart.'),B('That is a hard thing to sort out alone. I can\'t tell you which it is, but a clinician can look at it with you. Want to note it as a question for your appointment?')]}],
  appts:[{id:1,sample:1,who:'Dr. Rivera (sample)',kind:'Therapy session',date:iso(ago(-4)),time:'15:30'}],sums:[],preps:{}}}
 const blank=()=>({view:'home',v2:1,ms:{},checks:{},sleep:{},cur:0,conv:[{id:Date.now(),t:new Date().toISOString(),title:'New conversation',msgs:[]}],appts:[],sums:[],preps:{}});
-let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!S)S=MODE=='alex'?seed():blank();Object.values(S.checks).forEach(c=>{if(!c.entries){c.entries=c.mood?[{t:'12:00',mood:c.mood,note:c.note||''}]:[];delete c.mood;delete c.note}});
+// Test version: nothing is saved. Every page load starts from the beginning (walkthrough or Alex intro). Old saved data is cleared.
+try{localStorage.removeItem(KEY)}catch(e){}
+let S=MODE=='alex'?seed():blank();Object.values(S.checks).forEach(c=>{if(!c.entries){c.entries=c.mood?[{t:'12:00',mood:c.mood,note:c.note||''}]:[];delete c.mood;delete c.note}});
 if(!S.v2){const sd=seed();for(const d in sd.checks){const c=S.checks[d],e=c&&c.entries,x=sd.checks[d].entries[0];if(c&&e.length==1&&e[0].mood==x.mood&&e[0].t=='12:00'&&(e[0].note||'')==x.note){e[0].sample=1;c.msample=1}}
  for(const d in sd.sleep){const z=S.sleep[d];if(z&&z.h==sd.sleep[d].h&&z.q=='ok')z.sample=1}
  S.appts.forEach(a=>{if(a.id===1)a.sample=1});S.conv.forEach(c=>{if(c.id===1)c.sample=1});const m=S.ms={};const t=new Date().toISOString().slice(0,10);
  if(Object.values(S.checks).some(c=>c.entries.some(e=>!e.sample)))m.checkin=t;if(S.conv.some(c=>!c.sample&&c.msgs.some(x=>x.r=='u')))m.chat=t;if(Object.values(S.sleep).some(z=>!z.sample))m.sleep=t;
  if(S.sums.length)m.summary=t;if(S.appts.some(a=>!a.sample))m.appt=t;if(Object.keys(S.preps).length)m.prep=t;S.v2=1}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const save=()=>{};
 let ui={stack:[],sum:{range:3,src:{chat:1,checks:1},ex:{}},draft:null,busy:false,err:null,modal:null,hist:false};
 const closeHistory=()=>{ui.hist=false;render()};
 const openChatInfo=()=>{ui.hist=false;ui.modal='chatInfo';render()};
@@ -281,10 +283,10 @@ prep(){const id=ui.prep,a=S.appts.find(x=>x.id==id);if(!a)return `<main>${topbar
  <label for="nt">Add a topic or question</label><div class="row" style="flex-wrap:nowrap"><input id="nt" onkeydown="if(event.key=='Enter')addTopic(${id})"><button class="btn sm" onclick="addTopic(${id})">Add</button></div>
  <h2>Your prep sheet</h2><div class="card"><p class="mu">${on.length} topic${on.length==1?'':'s'} to discuss${p.sum!=null&&S.sums[p.sum]?' · from '+esc(S.sums[p.sum].title):''}</p>${on.length?'<ul style="margin:6px 0;padding-left:20px">'+on.map(t=>'<li>'+esc(t.t)+'</li>').join('')+'</ul>':''}
  <div class="row"><button class="btn sm" onclick="ui.copyText=()=>prepText(${id});ui.modal='share';render()">Copy prep notes</button>${p.sum!=null&&S.sums[p.sum]?`<button class="btn ghost sm" onclick="ui.draft=S.sums[${p.sum}];go('sumview')">Open summary</button>`:''}</div></div><p class="mu">Nothing is sent to your provider. You choose what to share.</p></main>`},
-settings(){const n=sampleCount();return `<main>${topbar('Settings & privacy')}<div class="card"><b>Where your data lives</b><p class="mu">In this prototype, entries are stored only in this browser. That is not a secure health-data store. Nothing is sent anywhere.</p></div>
+settings(){const n=sampleCount();return `<main>${topbar('Settings & privacy')}<div class="card"><b>Where your data lives</b><p class="mu">In this test version nothing is saved and nothing is sent anywhere. Refreshing the page starts over.</p></div>
  <div class="card"><b>Chat connection</b><p class="mu">${VOICEFLOW.proxyUrl?'Voiceflow proxy configured.':'Not connected. Beary uses scripted prototype replies, and summaries are built by simple rules, not AI. To connect Voiceflow, set VOICEFLOW.proxyUrl to a server proxy that keeps your API key.'}</p></div>
  <div class="card"><b>Safety</b><p class="mu">Beary doesn't diagnose or advise on medication. In an emergency call 911; in the US call or text 988. This wording is a prototype and hasn't been clinically reviewed.</p></div>
- <div class="card"><b>This test version</b><p class="mu">${MODE=='alex'?'You are exploring as Alex, a fictional person. Everything here is made up.':'You are using Beary as a first-time user. Entries stay in this browser.'}</p><div class="row">${MODE=='alex'?'':'<button class="btn ghost sm" onclick="tourGo(0)">Replay the walkthrough</button>'}<button class="btn ghost sm" onclick="resetDemo()">${MODE=='alex'?'Reset Alex':'Start over'}</button></div></div>
+ <div class="card"><b>This test version</b><p class="mu">${MODE=='alex'?'For this exercise you are Alex, a fictional person. Everything here is made up.':'You are using Beary as a first-time user. Nothing is saved, and refreshing the page starts over.'}</p><div class="row">${MODE=='alex'?'':'<button class="btn ghost sm" onclick="tourGo(0)">Replay the walkthrough</button>'}<button class="btn ghost sm" onclick="resetDemo()">${MODE=='alex'?'Reset Alex':'Start over'}</button></div></div>
  ${MODE=='alex'?`<h2>Sample data</h2><div class="card"><p class="mu">${n?n+' labelled sample item'+(n==1?'':'s')+' mixed into your records. These buttons never touch entries you made yourself.':'No sample data right now.'}</p><div class="row"><button class="btn ghost sm" ${n?'':'disabled'} onclick="removeSample()">Remove sample data</button><button class="btn ghost sm" onclick="reloadSample()">Add sample data back</button></div></div>`:''}
  <h2>Erase my data</h2><div class="card"><p class="mu">Deletes everything saved in this browser: your entries, summaries, preparation notes and stars. This can't be undone.</p><button class="btn ghost sm" style="color:var(--bad)" onclick="eraseAll()">Erase everything</button></div></main>`}
 };
@@ -299,7 +301,7 @@ function doResetDemo(){try{localStorage.removeItem(KEY)}catch(e){}S=MODE=='alex'
 
 // ===== Walkthrough (first-time user version) =====
 const TOUR=[
- {v:'home',h:'Welcome to Beary',t:'This is Home. Beary is a quiet place to put your days into words between visits with your care team. This is a test version, so replies are pre-written and your entries stay on this device. Please use made-up details, not real health information.'},
+ {v:'home',h:'Welcome to Beary',t:'This is Home. Beary is a quiet place to put your days into words between visits with your care team. This is a test version, so replies are pre-written, nothing you enter is saved or sent anywhere, and refreshing the page starts over. Please use made-up details, not real health information.'},
  {v:'home',sel:'.talk',h:'Daily Checks',t:'Log your mood, energy, sleep and medication here. You can check in more than once a day, because moods change.'},
  {v:'home',sel:'.say',h:'Talk with Beary',t:'Open the chat to reflect on your day or ask general questions. Tap Next to see it.'},
  {v:'chat',sel:'.chat-help-icon',h:'About Beary',t:'The question mark shows what Beary can and can\'t do, plus crisis resources. The menu on the left holds your past chats.'},
@@ -325,7 +327,7 @@ function positionTour(){const st=TOUR[ui.tour],ap=$('#app'),card=$('#tcard'),rin
 // ===== Modals =====
 function modal(){const m=ui.modal;if(!m)return'';let h='';
  if(m=='ask')h=`<h2>${esc(ui.askMsg)}</h2><button class="btn" onclick="const f=ui.askFn;ui.modal=null;ui.askFn=null;render();f()">${esc(ui.askLabel)}</button>`;
- if(m=='persona')h=`<h2>Meet Alex</h2><p>You are exploring Beary as Alex, a fictional person. The check-ins, chats and appointment are made up, and nothing here is real or goes anywhere.</p><p>Try it as Alex would: look at Patterns, build a summary, and prepare for the upcoming visit. You can add your own entries too.</p><p class="mu">Please don't type real health information. To start over, open Settings (the gear on Home) and choose Reset Alex.</p>`;
+ if(m=='persona')h=`<h2>For this exercise, you are Alex</h2><p>Pretend to be Alex, a fictional person using Beary. The check-ins, chats and appointment are made up, and nothing you do here is real or goes anywhere.</p><p>Try it as Alex would: look at Patterns, build a summary, and prepare for the upcoming visit. You can add entries too.</p><p class="mu">Please don't type real health information. Nothing is saved, so refreshing the page starts over.</p>`;
  if(m=='journey')h=`<h2>Your night sky</h2><p>A star lights up when you reflect, chat, make a summary or prepare for a visit. Stars never go out. Resting, skipping and coming back later are all part of the journey.</p><p class="mu">Stars show engagement, not mood or health.</p>`;
  if(m=='checkin'){const d=ui.d||today(),c=S.checks[d]||{entries:[]};if(!ui.f||ui.f.d!=d)ui.f={d,mood:null,energy:null,time:d==today()?nowT():'12:00',meds:c.meds,note:''};const f=ui.f;
   h=`<h2>${d==today()?'How are you feeling?':'Add to '+rel(d)}</h2>${strip(d,'pickDay')}
