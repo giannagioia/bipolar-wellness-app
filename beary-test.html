@@ -136,7 +136,7 @@ nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;st
 .ckd small{font-size:12px;opacity:.85}.ckd b{font-size:24px;line-height:1.1}
 .ckd.on{background:var(--lav);border-color:var(--lav);color:#17123a}
 .ckd .dots{display:flex;gap:4px;height:12px;align-items:center}.ckd .dots i{display:block;border-radius:50%;box-shadow:0 0 0 1.5px var(--panel)}.ckd.on .dots i{box-shadow:0 0 0 1.5px var(--lav)}
-.ckd em{font-style:normal;font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;min-height:16px;background:var(--peri);color:#17123a}.ckd em.no{background:none;color:transparent}.ckd.on em{background:#17123a;color:var(--lav)}
+.ckd em{font-style:normal;font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;min-height:16px;background:var(--peri);color:#17123a}.ckd em.no,.ckd.on em.no{background:none;color:transparent}.ckd.on em{background:#17123a;color:var(--lav)}
 .acc{background:var(--panel);border-radius:22px;margin:10px 0;overflow:hidden}
 .acch{width:100%;display:flex;align-items:center;gap:12px;padding:12px 16px;min-height:64px;background:none;color:var(--tx);text-align:left}
 .acch>span:first-child{flex:1}.acch b{display:block;font-size:17px}.acch .mu{display:block}
@@ -198,7 +198,7 @@ function seed(){const checks={},sleep={};
  {id:1,sample:1,t:ago(9).toISOString(),title:'Stress or mood?',msgs:[U('Is it stress or is my mood changing? I can\'t tell them apart.'),B('That is a hard thing to sort out alone. I can\'t tell you which it is, but a clinician can look at it with you. Want to note it as a question for your appointment?')]}],
  appts:[{id:1,sample:1,who:'Dr. Rivera (sample)',kind:'Therapy session',date:iso(ago(-4)),time:'15:30'}],sums:[],preps:{}}}
 const blank=()=>({view:'home',v2:1,ms:{},checks:{},sleep:{},cur:0,conv:[{id:Date.now(),t:new Date().toISOString(),title:'New conversation',msgs:[introMsg()]}],appts:[],sums:[],preps:{}});
-// Test version: nothing is saved. Every page load starts from the beginning (walkthrough or Alex intro). Old saved data is cleared.
+// Test version: nothing is saved. Every page load starts from the beginning (overview or Alex intro). Old saved data is cleared.
 try{localStorage.removeItem(KEY)}catch(e){}
 let S=MODE=='alex'?seed():blank();Object.values(S.checks).forEach(c=>{if(!c.entries){c.entries=c.mood?[{t:'12:00',mood:c.mood,note:c.note||''}]:[];delete c.mood;delete c.note}});
 if(!S.v2){const sd=seed();for(const d in sd.checks){const c=S.checks[d],e=c&&c.entries,x=sd.checks[d].entries[0];if(c&&e.length==1&&e[0].mood==x.mood&&e[0].t=='12:00'&&(e[0].note||'')==x.note){e[0].sample=1;c.msample=1}}
@@ -415,7 +415,7 @@ prep(){const id=ui.prep,a=S.appts.find(x=>x.id==id);if(!a)return `<main>${topbar
 settings(){const n=sampleCount();return `<main>${topbar('Settings & privacy')}${guide('Here you can see where your information lives and start this test over.')}<div class="card"><b>Where your data lives</b><p class="mu">In this test version nothing is saved and nothing is sent anywhere. Refreshing the page starts over.</p></div>
  <div class="card"><b>Chat connection</b><p class="mu">${VOICEFLOW.proxyUrl?'Voiceflow proxy configured.':'Not connected. Beary uses scripted prototype replies, and summaries are built by simple rules, not AI. To connect Voiceflow, set VOICEFLOW.proxyUrl to a server proxy that keeps your API key.'}</p></div>
  <div class="card"><b>Safety</b><p class="mu">Beary doesn't diagnose or advise on medication. In an emergency call 911; in the US call or text 988. This wording is a prototype and hasn't been clinically reviewed.</p></div>
- <div class="card"><b>This test version</b><p class="mu">${MODE=='alex'?'For this exercise you are Alex, a fictional person. Everything here is made up.':'You are using Beary as a first-time user. Nothing is saved, and refreshing the page starts over.'}</p><div class="row">${MODE=='alex'?'':'<button class="btn ghost sm" onclick="tourGo(0)">Replay the walkthrough</button>'}<button class="btn ghost sm" onclick="resetDemo()">${MODE=='alex'?'Reset Alex':'Start over'}</button></div></div>
+ <div class="card"><b>This test version</b><p class="mu">${MODE=='alex'?'For this exercise you are Alex, a fictional person. Everything here is made up.':'You are using Beary as a first-time user. Nothing is saved, and refreshing the page starts over.'}</p><div class="row">${MODE=='alex'?'':'<button class="btn ghost sm" onclick="tourGo(0)">Show the welcome again</button>'}<button class="btn ghost sm" onclick="resetDemo()">${MODE=='alex'?'Reset Alex':'Start over'}</button></div></div>
  ${MODE=='alex'?`<h2>Sample data</h2><div class="card"><p class="mu">${n?n+' labelled sample item'+(n==1?'':'s')+' mixed into your records. These buttons never touch entries you made yourself.':'No sample data right now.'}</p><div class="row"><button class="btn ghost sm" ${n?'':'disabled'} onclick="removeSample()">Remove sample data</button><button class="btn ghost sm" onclick="reloadSample()">Add sample data back</button></div></div>`:''}
  <h2>Erase my data</h2><div class="card"><p class="mu">Deletes everything saved in this browser: your entries, summaries, preparation notes and stars. This can't be undone.</p><button class="btn ghost sm" style="color:var(--bad)" onclick="eraseAll()">Erase everything</button></div></main>`}
 };
@@ -425,28 +425,18 @@ function crisisCard(){return `<div class="crisis"><b>You matter, and you deserve
 function ask(msg,label,fn){ui.askMsg=msg;ui.askLabel=label;ui.askFn=fn;ui.modal='ask';render()}
 // ===== Test-version helpers =====
 function ask(msg,label,fn){ui.askMsg=msg;ui.askLabel=label;ui.askFn=fn;ui.modal='ask';render()}
-function resetDemo(){ask(MODE=='alex'?'Reset Alex to the starting data? Anything you added will be removed.':'Start over? This erases what you entered in this test and replays the walkthrough.','Reset',doResetDemo)}
+function resetDemo(){ask(MODE=='alex'?'Reset Alex to the starting data? Anything you added will be removed.':'Start over? This erases what you entered in this test and shows the welcome overview again.','Reset',doResetDemo)}
 function doResetDemo(){try{localStorage.removeItem(KEY)}catch(e){}S=MODE=='alex'?seed():blank();ui.stack=[];ui.draft=null;ui.modal=null;ui.tour=null;ui.ptab=null;ui.hist=false;ui.f=null;ui.d=null;boot();render();toast(MODE=='alex'?'Alex is back to the starting data':'Started over')}
 
-// ===== Walkthrough (first-time user version) =====
+// ===== Welcome overview (first-time user version) =====
 const TOUR=[
- {v:'home',h:'Welcome to Beary',t:'This is Home. Beary is a quiet place to put your days into words between visits with your care team. This is a test version, so replies are pre-written, nothing you enter is saved or sent anywhere, and refreshing the page starts over. Please use made-up details, not real health information.'},
- {v:'home',sel:'.hero .bubble',ask:1,h:'What should I call you?',t:'Optional. A first name or nickname is fine. You can leave it blank.'},
- {v:'home',sel:'.hero .btn',h:'Daily check-in',t:'Tap here, or the Check-in tab below, to log how you are. You can check in more than once a day, because moods change.'},
- {v:'checkin',sel:'.accs',h:'Mood, sleep and medication',t:'Open a section to add to it. Pick a mood, then drag the scale for how strongly. Sleep lives here too, and medication can have several dose times with a check mark for each.'},
- {v:'home',sel:'.say',h:'Talk with Beary',t:'Open the chat to reflect on your day or ask general questions. I will introduce myself every time. Tap Next to see it.'},
- {v:'chat',sel:'.chat-icon',h:'Chats and About Beary',t:'The menu opens your past chats and the About Beary page, which shows what I can and can\'t do and lists crisis resources.'},
- {v:'chat',h:'What Beary won\'t do',crisis:1,t:'Beary doesn\'t diagnose, predict episodes, or give medication advice. If you might be in danger, call 911, or call or text 988 in the US.'},
- {v:'patterns',sel:'nav button:nth-child(4)',h:'Patterns',t:'Your mood, sleep and medication history. Days with nothing recorded are simply blank. They are not a result.'},
- {v:'sums',sel:'nav button:nth-child(5)',h:'Summaries',t:'Chats and check-ins become a note for your care team. Edit every line, then copy it or save it as a Word document. Visits and prep topics live here too.'},
- {v:'home',sel:'.sky',h:'Your sky',last:1,t:'A star appears the first time you try something. There are no streaks, and taking a break is fine.'}];
+ {v:'home',ask:1,last:1,h:'Welcome to Beary',t:'A quiet place to put your days into words between visits with your care team.',list:['Check in with your mood, energy, sleep and medication, as often as you like.','Talk with Beary to reflect or ask general questions.','Turn your check-ins and chats into a note for your care team.'],n:'This is a test version. Replies are pre-written and nothing you enter is saved or sent anywhere, so please use made-up details.'}];
 function tourGo(i){const st=TOUR[i];ui.tour=i;ui.stack=[];ui.hist=false;ui.modal=null;ui.f=null;ui.d=null;S.view=st.v;render()}
 function tourNext(){const n=$('#nick');if(n)S.name=n.value.trim().slice(0,24);tourGo(ui.tour+1)}
 function tourBack(){tourGo(Math.max(0,ui.tour-1))}
-function endTour(chk){S.tourDone=today();ui.tour=null;ui.stack=[];ui.ptab=null;S.view='home';if(chk){openCheckin();return}save();render()}
-function tourHTML(){const i=ui.tour,st=TOUR[i];
- const btns=st.last?`<button class="btn" onclick="endTour(true)">Start with a first check-in</button><button class="btn ghost" style="margin-top:8px" onclick="endTour(false)">Explore on my own</button>`:`<div class="row" style="flex-wrap:nowrap">${i>0?'<button class="btn ghost sm" style="flex:none" onclick="tourBack()">Back</button>':''}<button class="btn sm" style="flex:1" onclick="tourNext()">Next</button></div>`;
- return `<div class="tour-block" id="tblock"></div><div class="tour-dim" id="tdim"></div><div class="tour-ring" id="tring" hidden></div><div class="tour-card" id="tcard" role="dialog" aria-label="Walkthrough, step ${i+1} of ${TOUR.length}" style="${st.crisis?'border-color:var(--bad)':''}"><div class="between"><span class="tag">Step ${i+1} of ${TOUR.length}</span>${st.last?'':'<button class="pill" style="min-height:36px;padding:4px 14px;font-size:13px" onclick="endTour(false)">Skip tour</button>'}</div><h2 style="margin:10px 0 4px">${esc(st.h)}</h2><p style="margin:0 0 12px">${esc(st.t)}</p>${st.ask?`<label for="nick">Name or nickname</label><input id="nick" maxlength="24" autocomplete="off" value="${esc(S.name||'')}" onkeydown="if(event.key=='Enter')tourNext()" style="margin-bottom:12px">`:''}${btns}</div>`}
+function endTour(chk){const n=$('#nick');if(n)S.name=n.value.trim().slice(0,24);S.tourDone=today();ui.tour=null;ui.stack=[];ui.ptab=null;S.view='home';if(chk){openCheckin();return}save();render()}
+function tourHTML(){const st=TOUR[0];
+ return `<div class="tour-block" id="tblock"></div><div class="tour-dim" id="tdim"></div><div class="tour-ring" id="tring" hidden></div><div class="tour-card" id="tcard" role="dialog" aria-label="Welcome to Beary"><h2 style="margin:0 0 4px">${esc(st.h)}</h2><p style="margin:0 0 8px">${esc(st.t)}</p><ul style="margin:0 0 10px;padding-left:20px">${st.list.map(x=>`<li style="margin:4px 0">${esc(x)}</li>`).join('')}</ul><p class="mu" style="margin:0 0 10px">${esc(st.n)}</p><label for="nick" style="margin-top:0">What should I call you? (optional)</label><input id="nick" maxlength="24" autocomplete="off" value="${esc(S.name||'')}" style="margin-bottom:12px"><button class="btn" onclick="endTour(true)">Start with a first check-in</button><button class="btn ghost" style="margin-top:8px" onclick="endTour(false)">Explore on my own</button></div>`}
 function positionTour(){const st=TOUR[ui.tour],ap=$('#app'),card=$('#tcard'),ring=$('#tring'),dim=$('#tdim');if(!card||!ring||!dim)return;
  const t=st.sel?$(st.sel):null,bot='calc(80px + env(safe-area-inset-bottom,0px))';
  if(t&&t.getBoundingClientRect&&ap&&ap.getBoundingClientRect){const a=ap.getBoundingClientRect(),r=t.getBoundingClientRect(),pd=6;
