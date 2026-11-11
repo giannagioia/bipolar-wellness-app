@@ -164,7 +164,76 @@ nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;st
 .rl a{color:#cfd9ff;text-decoration:underline;text-underline-offset:3px;font-weight:700}.rl li{margin:0 0 12px}.rl ul{list-style:none;margin:0;padding:0}.rl .mu{display:block}
 .mini{display:flex;gap:6px;align-items:flex-end;height:68px;margin:10px 0 2px}.mini div{flex:1;text-align:center;font-size:11px;color:var(--mu)}.mini i{display:block;border-radius:6px;margin:0 auto 4px;width:70%}
 .sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:baseline}
-[hidden]{display:none!important}
+
+/* One-time guided Home introduction */
+.hm.guide-active {
+  position: relative;
+  isolation: isolate;
+  overflow-y: hidden;
+}
+
+.hm.guide-active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 3, 20, 0.48);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hm.guide-active .hero {
+  position: relative;
+  z-index: 3;
+}
+
+#app:has(.guide-active) nav {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.hm .hero.guide-hero {
+  width: 100%;
+  color: var(--tx);
+  text-align: left;
+  border: 2px solid var(--lav);
+  cursor: pointer;
+}
+
+.hm .hero.guide-hero:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+.guide-bear {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 128px;
+}
+
+.hm .hero .guide-bear img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.guide-mark {
+  position: absolute;
+  top: -7px;
+  right: 8px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--lav);
+  color: #17123a;
+  border: 3px solid #17123a;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+ [hidden]{display:none!important}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -212,7 +281,17 @@ if(!S.v2){const sd=seed();for(const d in sd.checks){const c=S.checks[d],e=c&&c.e
  if(Object.values(S.checks).some(c=>c.entries.some(e=>!e.sample)))m.checkin=t;if(S.conv.some(c=>!c.sample&&c.msgs.some(x=>x.r=='u')))m.chat=t;if(Object.values(S.sleep).some(z=>!z.sample))m.sleep=t;
  if(S.sums.length)m.summary=t;if(S.appts.some(a=>!a.sample))m.appt=t;if(Object.keys(S.preps).length)m.prep=t;S.v2=1}
 const save=()=>{};
-let ui={stack:[],sum:{range:3,src:{chat:1,checks:1},ex:{}},draft:null,busy:false,err:null,modal:null,hist:false};
+
+let ui = {
+  stack: [],
+  sum: {range: 3, src: {chat: 1, checks: 1}, ex: {}},
+  draft: null,
+  busy: false,
+  err: null,
+  modal: null,
+  hist: false,
+  homeGuide: false
+};
 const closeHistory=()=>{ui.hist=false;render()};
 const openChatInfo=()=>{ui.hist=false;ui.modal='chatInfo';render()};
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ui.hist){closeHistory()}else if(e.key==='Escape'&&ui.modal==='chatInfo'){ui.modal=null;render()}});
@@ -375,8 +454,51 @@ home(){const T=today(),c=S.checks[T],up=S.appts.filter(a=>a.date>=today()).sort(
  const pv=up?`<button class="pv" style="display:flex;gap:12px;align-items:center;background:var(--panel);border-radius:22px;padding:14px 16px" onclick="go('sums')">${tile(up.date)}<span><b>Next visit</b> · ${rel(up.date)}, ${ftm(up.time)}<br><span class="mu">${esc(up.who)}${tc(up.id)?' · '+tc(up.id).replace(/^ · /,'')+' ready':''}</span></span></button>`:ls?`<button class="pv" style="background:var(--panel);border-radius:22px;padding:14px 16px" onclick="ui.draft=S.sums[0];go('sumview')"><b>Latest summary</b><br><span class="mu">${esc(ls.title)}</span></button>`:'';
  const wk=[...Array(7)].map((_,i)=>iso(ago(6-i))).map(d=>{const es=(S.checks[d]||{}).entries||[],l=es[es.length-1],x=new Date(d+'T12:00'),sz=l?12+(l.level||3)*2:14,col=l?moodOf(l.mood)[2]:'';
   return `<button class="wd ${d==T?'on':''}" onclick="openCheckin('${d}')" aria-label="${fd(d)}${l?', '+ewd(l).toLowerCase():', no check-in'}${d==T?', today':''}"><small>${x.toLocaleDateString(undefined,{weekday:'narrow'})}</small><b>${x.getDate()}</b>${l?`<i style="width:${sz}px;height:${sz}px;background:${col}"></i>`:'<i class="em"></i>'}</button>`}).join('');
- return `<main class="hm"><div class="between"><h1 style="margin:0;flex:1;min-width:0">Hey${S.name?' '+esc(S.name):' there'}!</h1><button class="back" onclick="go('settings')" aria-label="Settings">⚙</button></div>
- <div class="hero"><div style="flex:1;min-width:0"><h2>How are you feeling today?</h2><div class="bubble">${c&&c.entries.length?'Thanks for checking in.':'Check in when you want to.'}</div><button class="btn sm" onclick="openCheckin()">Daily check-in →</button></div><img src="beary-home-bear.png" alt="Beary sitting with a blue scarf"></div>
+ return `<main class="hm ${ui.homeGuide?'guide-active':''}"><div class="between"><h1 style="margin:0;flex:1;min-width:0">Hey${S.name?' '+esc(S.name):' there'}!</h1><button class="back" onclick="go('settings')" aria-label="Settings">⚙</button></div>
+
+${ui.homeGuide
+  ? `
+    <button
+      class="hero guide-hero"
+      onclick="finishHomeGuide()"
+      aria-label="Click here to enter your daily feelings. Opens Daily check-in."
+    >
+      <div style="flex:1;min-width:0">
+        <h2>Click here to enter your daily feelings</h2>
+        <div class="bubble">
+          Tap to begin your first check-in.
+        </div>
+      </div>
+
+      <span class="guide-bear">
+        <img
+          src="beary-home-bear.png"
+          alt=""
+        >
+        <span class="guide-mark" aria-hidden="true">!</span>
+      </span>
+    </button>
+  `
+  : `
+    <div class="hero">
+      <div style="flex:1;min-width:0">
+        <h2>How are you feeling today?</h2>
+        <div class="bubble">
+          ${c&&c.entries.length
+            ? 'Thanks for checking in.'
+            : 'Check in when you want to.'}
+        </div>
+        <button class="btn sm" onclick="openCheckin()">
+          Daily check-in →
+        </button>
+      </div>
+      <img
+        src="beary-home-bear.png"
+        alt="Beary sitting with a blue scarf"
+      >
+    </div>
+  `
+}
  ${(()=>{const w=weekInsight();return `<div class="card" style="margin:0 0 14px"><p class="mu" style="margin:0">${w&&w.n?'From your entries, last '+w.n+' days':'From your entries this week'}</p>${w?`<p style="font-size:18px;font-weight:700;margin:4px 0">${esc(w.t)}</p>${w.d?`<p class="mu" style="margin:0">${esc(w.d)}</p>`:''}${miniHTML(w)}`:'<p style="margin:4px 0">Nothing recorded this week yet.</p>'}<p class="mu" style="margin:8px 0 0;font-size:13px">Recorded entries only. This does not explain why.</p></div>`})()}
  <div class="card" style="padding:14px 12px"><div class="between" style="padding:0 6px 8px"><h2 style="margin:0">This week</h2><button class="pill" style="min-height:36px;padding:4px 14px;font-size:14px;background:none;color:var(--peri)" onclick="go('patterns')">See patterns</button></div><div class="wk" role="group" aria-label="This week">${wk}</div></div>
  <button class="card tap" style="display:flex;align-items:center;gap:12px;margin:0 0 10px" onclick="go('resources')"><span style="flex:1"><b>Resources</b><br><span class="mu">Insurance, providers, support groups and learning</span></span><span aria-hidden="true" style="font-size:22px;color:var(--lav)">›</span></button>
@@ -499,7 +621,37 @@ const TOUR=[
 function tourGo(i){const st=TOUR[i];ui.tour=i;ui.stack=[];ui.hist=false;ui.modal=null;ui.f=null;ui.d=null;S.view=st.v;render()}
 function tourNext(){const n=$('#nick');if(n)S.name=n.value.trim().slice(0,24);tourGo(ui.tour+1)}
 function tourBack(){tourGo(Math.max(0,ui.tour-1))}
-function endTour(chk){const n=$('#nick');if(n)S.name=n.value.trim().slice(0,24);S.tourDone=today();ui.tour=null;ui.stack=[];ui.ptab=null;S.view='home';if(chk){openCheckin();return}save();render()}
+
+function endTour(chk) {
+  const n = $('#nick');
+
+  if (n) {
+    S.name = n.value.trim().slice(0, 24);
+  }
+
+  S.tourDone = today();
+  ui.tour = null;
+  ui.stack = [];
+  ui.ptab = null;
+
+  // Always go to Home after onboarding.
+  S.view = 'home';
+
+  // Show the guided Home screen only when the user
+  // chooses to start their first check-in.
+  ui.homeGuide = !!chk;
+
+  save();
+  render();
+}
+
+function finishHomeGuide() {
+  // Restore the regular Home screen.
+  ui.homeGuide = false;
+
+  // Open Daily check-in.
+  openCheckin();
+}
 function tourHTML(){const st=TOUR[0];
  return `<div class="tour-block" id="tblock"></div><div class="tour-dim" id="tdim"></div><div class="tour-ring" id="tring" hidden></div><div class="tour-card" id="tcard" role="dialog" aria-label="Welcome to Beary"><h2 style="margin:0 0 4px">${esc(st.h)}</h2><p style="margin:0 0 8px">${esc(st.t)}</p><ul style="margin:0 0 10px;padding-left:20px">${st.list.map(x=>`<li style="margin:4px 0">${esc(x)}</li>`).join('')}</ul><label for="nick" style="margin-top:0">What should I call you? (optional)</label><input id="nick" maxlength="24" autocomplete="off" value="${esc(S.name||'')}" style="margin-bottom:12px"><button class="btn" onclick="endTour(true)">Start with a first check-in</button><button class="btn ghost" style="margin-top:8px" onclick="endTour(false)">Explore on my own</button></div>`}
 function positionTour(){const st=TOUR[ui.tour],ap=$('#app'),card=$('#tcard'),ring=$('#tring'),dim=$('#tdim');if(!card||!ring||!dim)return;
