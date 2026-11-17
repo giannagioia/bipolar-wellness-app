@@ -689,7 +689,7 @@ function saveAppt(){apSync();const a=ui.ap,o={who:(a.who||'').trim(),kind:(a.kin
 function delAppt(){S.appts=S.appts.filter(a=>a.id!=ui.edit);save();ui.modal=null;ui.ap=null;render();toast('Removed')}
 function newChat(){S.conv.unshift({id:Date.now(),t:new Date().toISOString(),title:'New conversation',excl:false,msgs:[introMsg()]});S.cur=0;ui.hist=false;save();render()}
 var vfReady=false;
-function vfOpen(){try{if(vfPop&&vfReady&&window.voiceflow&&window.voiceflow.chat){window.voiceflow.chat.show();window.voiceflow.chat.open();return true}}catch(e){}return false}
+function vfOpen(){try{if(vfPop&&vfReady&&window.voiceflow&&window.voiceflow.chat){window.voiceflow.chat.open();return true}}catch(e){}return false}
 function openChat(){if(vfOpen())return;ui.stack=[];go('chat',false)}
 function talkToBeary(){if(vfOpen())return;const c=S.conv[S.cur];if(c&&c.msgs.some(m=>m.r=='u'))newChat();go('chat')}
 async function sendMsg(t){t=(t||'').trim();if(!t||ui.busy)return;const c=S.conv[S.cur];c.msgs.push({r:'u',t});if(c.title=='New conversation')c.title=t.slice(0,32);ui.err=null;save();await reply(c)}
@@ -749,5 +749,11 @@ function render(){const v=S.view;if(v=='patterns'&&ui.ptab!='sum'&&ui.tour==null
 function boot(){if(MODE=='alex'&&!S.alexInit){S.name='';ui.pend=null;ui.stack=[];S.view='home';S.ms={checkin:today(),chat:today(),sleep:today(),summary:today(),appt:today()};S.alexInit=1;save()}if(MODE=='alex'&&!S.introSeen){ui.modal='persona';S.introSeen=1;save()}if(MODE=='fresh'&&!S.tourDone){ui.splash=1;S.view='home'}}
 boot();
 render();
+</script>
+<script>
+/* ?chat=popup shows Voiceflow's own pop-up chat window. Default is Beary's built-in screen connected to Voiceflow. */
+if(vfPop){(function(d,t){var v=d.createElement(t),s=d.getElementsByTagName(t)[0];
+v.onload=function(){try{window.voiceflow.chat.load({verify:{projectID:'6ad4cb08d3b959dce46e9278'},url:'https://general-runtime.voiceflow.com',voice:{url:'https://runtime-api.voiceflow.com'}});vfReady=true}catch(e){console.error('Voiceflow widget failed',e)}};
+v.src='https://cdn.voiceflow.com/widget-next/bundle.mjs';v.type='text/javascript';v.onerror=function(){console.error('Voiceflow script blocked')};s.parentNode.insertBefore(v,s)})(document,'script');}
 </script>
 </body></html>
