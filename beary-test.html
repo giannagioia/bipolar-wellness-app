@@ -433,7 +433,7 @@ function cgPicker(k){return `<div class="cgw"><div class="cga" style="left:50%;t
  <div class="q" style="left:0;top:0;background:${CGQ[0][2]}2e"></div><div class="q" style="left:50%;top:0;background:${CGQ[1][2]}2e"></div><div class="q" style="left:0;top:50%;background:${CGQ[2][2]}2e"></div><div class="q" style="left:50%;top:50%;background:${CGQ[3][2]}2e"></div><div class="ax1"></div><div class="ax2"></div><span class="cgf" style="left:6px;top:6px">${faceSVG('hn',26)}</span><span class="cgf" style="right:6px;top:6px">${faceSVG('hp',26)}</span><span class="cgf" style="left:6px;bottom:6px">${faceSVG('ln',26)}</span><span class="cgf" style="right:6px;bottom:6px">${faceSVG('lp',26)}</span>
  ${CGW.map(w=>`<span class="wl${w[3]?' x':''}" style="left:${(w[1]+1)/2*100}%;top:${(1-w[2])/2*100}%">${w[0]}</span>`).join('')}<div id="cgd" class="dot" style="${k.v==null?'':`display:block;left:${(k.v+1)/2*100}%;top:${(1-k.a)/2*100}%`}"></div></div></div>
  <div id="cgr" class="cgr" aria-live="polite">${k.v==null?'Tap or drag on the grid to place how you feel.':`Closest word: <b style="font-size:20px">${k.w}</b><br><span class="mu">${cgDesc(k.v,k.a)}</span>`}</div>
- <label for="cko" style="margin-top:12px">Or type your own word</label><input id="cko" maxlength="40" autocomplete="off" placeholder="Other, in your own words" value="${esc(k.words)}" oninput="ckWords(this.value)">`}
+ <input id="cko" aria-label="Other word" style="margin-top:12px" maxlength="40" autocomplete="off" placeholder="Other" value="${esc(k.words)}" oninput="ckWords(this.value)">`}
 
 const mapDef=()=>ui.map||(ui.map={range:14,view:'points'});
 const mapRange=n=>{mapDef().range=n;render()},mapView=v=>{mapDef().view=v;render()};
