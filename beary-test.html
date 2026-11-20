@@ -223,6 +223,7 @@ nav{background:linear-gradient(135deg,#34439ccc,#232a78cc)!important;border:1px 
 .sp-note{position:absolute;left:50%;transform:translateX(-50%);bottom:max(24px,4%);width:min(86%,330px);padding:12px 16px;border-radius:20px;background:linear-gradient(135deg,#4258b8e6,#252f86e6);border:1px solid #ffffff59;box-shadow:inset 0 1px 0 #ffffff59,0 8px 22px #1d276673;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;font-size:14px;line-height:1.4;text-align:center}
 .ck3{gap:12px!important;margin-bottom:8px}.ckhd{margin:0 0 14px!important}.ckwk{gap:6px!important}
 .ckwk .ckc{min-height:80px!important;padding:10px 0 12px!important;gap:6px!important}.ckmn .ckc{min-height:64px!important;padding:8px 0 10px!important;gap:4px!important}.ckc .dots{height:12px!important;gap:3px!important}
+.ckwk .ckc{min-height:96px!important;padding:14px 0 16px!important;gap:10px!important}.ckmn .ckc{min-height:70px!important;padding:10px 0 12px!important;gap:6px!important}.ckwk{gap:8px!important}.ckc .dots{height:10px!important;gap:3px!important}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -681,7 +682,7 @@ const ckShift=n=>{const k=ckS(),v=ui.ckvw||'3';if(v=='m')ui.ckmo=Math.min(0,(ui.
 function ckSetView(v){const k=ckS(),n=dayDiff(k.d);ui.ckvw=v;if(v=='3')k.off=Math.min(5,n-1);if(v=='w')k.off=Math.min(1,n-3);if(v=='m'){const a=new Date(k.d+'T12:00'),t=new Date(today()+'T12:00');ui.ckmo=Math.min(0,(a.getFullYear()-t.getFullYear())*12+a.getMonth()-t.getMonth())}render()}
 function ckNav(k,d,T,days,dayBtn){const v=ui.ckvw||'3',lim=iso(ago(-7));
  const tg=`<div class="ckvw" role="group" aria-label="How many days to show">${[['3','3 days'],['w','Week'],['m','Month']].map(x=>`<button class="pill ${v==x[0]?'on':''}" aria-pressed="${v==x[0]}" onclick="ckSetView('${x[0]}')">${x[1]}</button>`).join('')}</div>`;
- const dots=x=>((S.checks[x]||{}).entries||[]).slice(0,4).map(y=>{const q=5+(y.level||3)*1.2;return `<i style="width:${q}px;height:${q}px;background:${moodOf(y.mood)[2]}"></i>`}).join('');
+ const dots=x=>((S.checks[x]||{}).entries||[]).slice(0,4).map(y=>{const q=3.5+(y.level||3)*.9;return `<i style="width:${q}px;height:${q}px;background:${moodOf(y.mood)[2]}"></i>`}).join('');
  const cell=(x,wd)=>{const dt=new Date(x+'T12:00'),off=x>lim,on=x==d,e=((S.checks[x]||{}).entries||[]).length;return `<button class="ckc ${on?'on':''} ${off?'off':''}" ${off?'disabled':''} aria-pressed="${on}" aria-label="${rel(x)}${e?', '+e+' check-in'+(e==1?'':'s'):', no check-ins'}" onclick="ckPick('${x}')">${wd?`<small>${dt.toLocaleDateString(undefined,{weekday:'short'})}</small>`:''}<b>${dt.getDate()}</b><span class="dots">${dots(x)}</span></button>`};
  const hd=(t,lab)=>`<div class="ckhd"><button class="ckar" aria-label="Earlier ${lab}" onclick="ckShift(-1)">‹</button><b>${t}</b><button class="ckar" aria-label="Later ${lab}" ${(v=='m'?(ui.ckmo||0)>=0:v=='w'?k.off>=1:k.off>=5)?'disabled':''} onclick="ckShift(1)">›</button></div>`;
  if(v=='w'){const w=[...Array(7)].map((_,i)=>iso(ago(-(k.off+i)))),f=x=>new Date(x+'T12:00').toLocaleDateString(undefined,{month:'short',day:'numeric'});return tg+hd(f(w[0])+' – '+f(w[6]),'week')+`<div class="ckwk">${w.map(x=>cell(x,1)).join('')}</div>`}
