@@ -413,7 +413,8 @@ function dashHTML(){const D=dashDef(),n=D.range,ds=[...Array(n)].map((_,i)=>iso(
  ${chart}<p class="mu" style="margin:8px 0 0;font-size:13px">Each item is scaled from its lowest to its highest possible value so they fit in one graph. This shows what was recorded, not why.</p></div>`}
 
 const CGQ=[['hn','High energy, negative','#f19a93'],['hp','High energy, positive','#f2c46b'],['ln','Low energy, negative','#8fb4f2'],['lp','Low energy, positive','#8fd0b0']];
-const CGW=[['Energized',.3,.8],['Excited',.7,.72],['Happy',.78,.32],['Tense',-.3,.8],['Irritable',-.7,.68],['Anxious',-.82,.28],['Sad',-.78,-.3],['Low',-.55,-.65],['Drained',-.2,-.82],['Calm',.2,-.78],['Relaxed',.55,-.58],['Content',.78,-.26],['Okay',0,0],['God-like',.5,.93,1],['Euphoric',.8,.52,1],['Furious',-.4,.93,1],['Panicked',-.8,.52,1],['Hopeless',-.62,-.93,1],['Serene',.45,-.93,1]];
+const CGW=[['Energized',.32,.52],['Excited',.56,.3],['Happy',.52,.1],['Tense',-.32,.52],['Irritable',-.56,.3],['Anxious',-.52,.1],['Sad',-.52,-.12],['Low',-.45,-.32],['Drained',-.28,-.52],['Calm',.28,-.52],['Relaxed',.45,-.32],['Content',.52,-.12],['Okay',0,0],
+['God-like',.45,.9,1],['Euphoric',.8,.55,1],['Furious',-.4,.9,1],['Panicked',-.8,.55,1],['Hopeless',-.55,-.9,1],['Empty',-.78,-.52,1],['Serene',.45,-.9,1],['Blissful',.78,-.55,1]];
 const qOf=(v,a)=>(a>=0?(v<0?'hn':'hp'):(v<0?'ln':'lp')),qInfo=id=>CGQ.find(x=>x[0]==id);
 function cgNear(v,a){let b=CGW[12],d=9;CGW.forEach(w=>{const q=Math.hypot(w[1]-v,w[2]-a);if(q<d){d=q;b=w}});return b[0]}
 function cgDesc(v,a){const e=a<-.2?'low energy':a>.2?'high energy':'middle energy',p=v<-.2?'negative':v>.2?'positive':'in the middle';return e+', '+p}
