@@ -429,7 +429,7 @@ function cgPicker(k){return `<div class="cgw"><div class="cga" style="left:50%;t
  <div class="q" style="left:0;top:0;background:${CGQ[0][2]}2e"></div><div class="q" style="left:50%;top:0;background:${CGQ[1][2]}2e"></div><div class="q" style="left:0;top:50%;background:${CGQ[2][2]}2e"></div><div class="q" style="left:50%;top:50%;background:${CGQ[3][2]}2e"></div><div class="ax1"></div><div class="ax2"></div><span class="cgf" style="left:6px;top:6px">${faceSVG('hn',26)}</span><span class="cgf" style="right:6px;top:6px">${faceSVG('hp',26)}</span><span class="cgf" style="left:6px;bottom:6px">${faceSVG('ln',26)}</span><span class="cgf" style="right:6px;bottom:6px">${faceSVG('lp',26)}</span>
  ${CGW.map(w=>`<span class="wl" style="left:${(w[1]+1)/2*100}%;top:${(1-w[2])/2*100}%">${w[0]}</span>`).join('')}<div id="cgd" class="dot" style="${k.v==null?'':`display:block;left:${(k.v+1)/2*100}%;top:${(1-k.a)/2*100}%`}"></div></div></div>
  <div id="cgr" class="cgr" aria-live="polite">${k.v==null?'Tap or drag on the grid to place how you feel.':`Closest word: <b style="font-size:20px">${k.w}</b><br><span class="mu">${cgDesc(k.v,k.a)}</span>`}</div>
- <div class="row" style="margin-top:10px"><button class="pill ${k.other?'on':''}" aria-pressed="${!!k.other}" onclick="ckOther()">Other</button></div>${k.other?`<label for="cko">Type your own word</label><input id="cko" maxlength="40" autocomplete="off" value="${esc(k.words)}" oninput="ckWords(this.value)">`:''}`}
+ <label for="cko" style="margin-top:12px">Or type your own word</label><input id="cko" maxlength="40" autocomplete="off" placeholder="Other, in your own words" value="${esc(k.words)}" oninput="ckWords(this.value)">`}
 
 const mapDef=()=>ui.map||(ui.map={range:14,view:'points'});
 const mapRange=n=>{mapDef().range=n;render()},mapView=v=>{mapDef().view=v;render()};
@@ -660,7 +660,7 @@ const ckSm=m=>{ui.sm=m;render()};
 const tmin=t=>{const a=(t||'').split(':');return (+a[0])*60+(+a[1]||0)};
 function ckSleepT(){const d=ckS().d,b=$('#slb').value,w=$('#slw').value;if(!b||!w)return;const z=S.sleep[d],m=(tmin(w)-tmin(b)+1440)%1440,h=Math.round(m/60*4)/4;S.sleep[d]={h,bed:b,wake:w,q:z?z.q:'ok',qw:z?z.qw:undefined};award('sleep');render()}
 const ckQ=q=>{const d=ckS().d,z=S.sleep[d];S.sleep[d]={h:z?z.h:7,bed:z?z.bed:undefined,wake:z?z.wake:undefined,q,qw:z?z.qw:undefined};award('sleep');render()};
-const ckWords=v=>{ckS().words=v;cgBtn(ckS())},ckEw=v=>{ckS().ew=v},ckExN=v=>{ckS().exn=v},ckMo=()=>{const k=ckS();k.mo=!k.mo;render()};
+const ckWords=v=>{const k=ckS();k.words=v;k.other=!!(v||'').trim();cgBtn(k)},ckEw=v=>{ckS().ew=v},ckExN=v=>{ckS().exn=v},ckMo=()=>{const k=ckS();k.mo=!k.mo;render()};
 const ckSleepW=v=>{const z=S.sleep[ckS().d];if(z)z.qw=v};
 const ckMedNote=v=>{const d=ckS().d,c=S.checks[d]||(S.checks[d]={entries:[]});c.mednote=v};
 const ckFood=key=>{const k=ckS(),c=S.checks[k.d]||(S.checks[k.d]={entries:[]});c.food=c.food||{};const f=c.food[key]||(c.food[key]={});f.done=!f.done;if(!f.done&&!f.note)delete c.food[key];if(!Object.keys(c.food).length)delete c.food;ckClean(k.d);render()};
