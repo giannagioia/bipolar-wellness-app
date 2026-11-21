@@ -13,60 +13,60 @@
 }
 *{box-sizing:border-box}
 html{color-scheme:dark}
-body{margin:0;background:var(--bg1);color:var(--tx);font:400 16px/1.5 var(--sans);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px;background-image:linear-gradient(180deg,var(--bg1),var(--bg2) 90%);background-attachment:fixed}
+body{margin:0;background:linear-gradient(180deg,#0d0a2e 0,#1c1450 50%,#241a5c 100%) no-repeat;background-color:#241a5c;color:var(--tx);font:400 16px/1.5 var(--sans);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
 .wrap{max-width:960px;margin:0 auto}
 header{padding:56px 0 24px}
 header p.k{margin:0 0 8px;font-size:14px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--peri)}
-h1{font:700 40px/1.15 var(--serif);margin:0 0 12px;text-wrap:balance}
-header p.lead{max-width:60ch;color:var(--mu);margin:0;font-size:18px}
-nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 0}
-nav.toc a{color:var(--tx);text-decoration:none;font-size:14px;font-weight:500;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#ffffff0f}
+h1{font:700 32px/1.15 var(--serif);margin:0 0 8px;text-wrap:balance}
+header p.lead{max-width:60ch;color:var(--mu);margin:0;font-size:16px}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+nav.toc a{color:var(--tx);text-decoration:none;font-size:14px;font-weight:500;padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:#ffffff0f}
 nav.toc a:hover,nav.toc a:focus-visible{background:#ffffff1f;outline:2px solid #fff;outline-offset:2px}
 section{padding-top:56px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px 40px;align-items:start}
 section>h2,section>.intro{grid-column:1}
 section>.demo{grid-column:2;grid-row:1 / span 3}
-h2{font:700 28px/1.2 var(--serif);margin:0 0 12px;text-wrap:balance}
-.intro p{margin:0 0 12px;color:var(--mu)}
-.intro ul{margin:0;padding-left:20px;color:var(--mu)}.intro li{margin-bottom:8px}
+h2{font:700 24px/1.25 var(--serif);margin:0 0 8px;text-wrap:balance}
+.intro p{margin:0 0 8px;color:var(--mu)}
+.intro ul{margin:0;padding-left:16px;color:var(--mu)}.intro li{margin-bottom:8px}
 .intro b{color:var(--tx)}
-.rule{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px;color:var(--mu)}
-.rule i{flex:none;font-style:normal;font-weight:700;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;margin-top:2px}
+.rule{display:flex;gap:8px;align-items:flex-start;margin:0 0 8px;color:var(--mu)}
+.rule i{flex:none;font-style:normal;font-weight:700;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:14px;margin-top:0px}
 .rule.do i{background:#8fd0b033;color:#8fd0b0}.rule.dont i{background:#f19a9333;color:#f19a93}
 .demo{min-width:0}
-.panel{border:1px solid var(--line);border-radius:24px;padding:24px;background:linear-gradient(135deg,#3a49a899,#2a3585aa);box-shadow:inset 0 1px 0 #ffffff40,0 10px 28px #05031e59;backdrop-filter:blur(14px)}
+.panel{border:1px solid var(--line);border-radius:24px;padding:24px;background:linear-gradient(135deg,#3a49a899,#2a3585aa);box-shadow:inset 0 1px 0 #ffffff40,0 10px 28px #05031e59}
 .panel+.panel{margin-top:16px}
-.cap{font-size:12px;color:var(--mu);margin:12px 0 0}
-.lbl{font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--peri);font-weight:600;margin:0 0 12px}
+.cap{font-size:12px;color:var(--mu);margin:8px 0 0}
+.lbl{font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--peri);font-weight:600;margin:0 0 8px}
 /* swatches */
-.sw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.sw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
 .sw{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#0d0a2e80}
 .sw .c{height:64px}
-.sw .t{padding:10px 12px}.sw b{display:block;font-size:14px}.sw span{display:block;font-size:12px;color:var(--mu);font-variant-numeric:tabular-nums}
+.sw .t{padding:8px 8px}.sw b{display:block;font-size:14px}.sw span{display:block;font-size:12px;color:var(--mu);font-variant-numeric:tabular-nums}
 /* type */
-.ty{display:grid;grid-template-columns:76px 1fr;gap:4px 16px;align-items:baseline;padding:14px 0;border-top:1px solid #ffffff1a}
+.ty{display:grid;grid-template-columns:76px 1fr;gap:0px 16px;align-items:baseline;padding:16px 0;border-top:1px solid #ffffff1a}
 .ty:first-of-type{border-top:0;padding-top:0}
 .ty small{color:var(--mu);font-size:12px;font-variant-numeric:tabular-nums}
-.ty .s1{font:700 32px/1.2 var(--serif)}.ty .s2{font:700 24px/1.25 var(--serif)}.ty .s3{font:600 20px/1.3 var(--serif)}
+.ty .s1{font:700 32px/1.2 var(--serif)}.ty .s2{font:700 24px/1.25 var(--serif)}.ty .s3{font:600 24px/1.3 var(--serif)}
 .ty .s4{font:400 16px/1.5 var(--sans)}.ty .s5{font:500 14px/1.4 var(--sans)}.ty .s6{font:400 12px/1.4 var(--sans);color:var(--mu)}
 .ty em{grid-column:2;font-style:normal;font-size:12px;color:var(--mu)}
 /* buttons */
-.btn{font:700 14px/1 var(--sans);min-height:44px;padding:0 20px;border-radius:999px;border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:var(--ink)}
+.btn{font:700 14px/1 var(--sans);min-height:44px;padding:0 16px;border-radius:999px;border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:8px;color:var(--ink)}
 .btn.p{background:linear-gradient(135deg,var(--lav1),var(--lav2));border-color:#ffffff80;box-shadow:inset 0 1px 0 #fff,0 4px 14px #05031e4d}
 .btn.s{background:linear-gradient(135deg,#6a84e657,#4a63c43d);border-color:#9fb2f66b;color:var(--tx);font-weight:500;box-shadow:inset 0 1px 0 #ffffff40}
 .btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
-.chip{font:500 14px/1 var(--sans);min-height:44px;padding:0 18px;border-radius:999px;border:1px solid #9fb2f66b;background:linear-gradient(135deg,#6a84e657,#4a63c43d);color:var(--tx);display:inline-flex;align-items:center;gap:8px}
+.chip{font:500 14px/1 var(--sans);min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #9fb2f66b;background:linear-gradient(135deg,#6a84e657,#4a63c43d);color:var(--tx);display:inline-flex;align-items:center;gap:8px}
 .chip.on{background:linear-gradient(135deg,var(--lav1),var(--lav2));color:var(--ink);font-weight:700;border-color:#ffffff80}
 .chip i{width:10px;height:10px;border-radius:50%}
-.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.stack{display:flex;flex-direction:column;gap:20px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stack{display:flex;flex-direction:column;gap:16px}
 /* cards */
 .card{border-radius:24px;padding:24px;border:1px solid var(--line);box-shadow:inset 0 1px 0 #ffffff40,0 10px 28px #05031e59}
-.card h3{font:600 20px/1.3 var(--serif);margin:0 0 16px}
+.card h3{font:600 24px/1.3 var(--serif);margin:0 0 16px}
 .card p{margin:0}
 .c1{background:linear-gradient(135deg,var(--g1a),var(--g1b))}.c2{background:linear-gradient(135deg,var(--g2a),var(--g2b))}
 .c3{background:linear-gradient(135deg,var(--g3a),var(--g3b))}.c4{background:linear-gradient(135deg,var(--g4a),var(--g4b))}
 .ins .l{font-size:14px;font-weight:600;color:#e4e8ff;margin:0 0 8px}.ins .o{font:600 24px/1.28 var(--serif);margin:0 0 8px}
-.ins .x{font-size:16px;margin:0}.ins .m{font-size:12px;color:#e4e8ff;margin:10px 0 16px}
+.ins .x{font-size:16px;margin:0}.ins .m{font-size:12px;color:#e4e8ff;margin:8px 0 16px}
 /* spacing phone */
 .phone{max-width:340px;margin:0 auto;border:2px solid #ffffff55;border-radius:36px;padding:16px 0;background:linear-gradient(180deg,var(--bg1),var(--bg2));position:relative}
 .phone .in{margin:0 24px;position:relative}
@@ -76,34 +76,34 @@ h2{font:700 28px/1.2 var(--serif);margin:0 0 12px;text-wrap:balance}
 .phone .ln{height:8px;border-radius:4px;background:#ffffffb0;margin-bottom:8px;width:80%}
 .phone .bt{height:28px;width:90px;border-radius:14px;background:var(--lav1);margin-top:16px}
 .phone .sec{height:32px}
-.phone .tag{position:absolute;right:-8px;font-size:11px;font-weight:600;background:#fff;color:var(--ink);padding:2px 8px;border-radius:999px;transform:translateX(100%);white-space:nowrap}
-@media(max-width:800px){.phone .tag{position:static;transform:none;display:inline-block;margin:4px 0}}
+.phone .tag{position:absolute;right:-8px;font-size:12px;font-weight:600;background:#fff;color:var(--ink);padding:0px 8px;border-radius:999px;transform:translateX(100%);white-space:nowrap}
+@media(max-width:800px){.phone .tag{position:static;transform:none;display:inline-block;margin:0px 0}}
 .annot{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
-.annot li{display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:8px 12px;border-radius:12px;background:#ffffff12}
+.annot li{display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:8px 8px;border-radius:12px;background:#ffffff12}
 .annot b{font-variant-numeric:tabular-nums}
 /* calendar cell */
-.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
-.cal .d{display:flex;flex-direction:column;align-items:center;gap:4px;min-height:56px;padding:6px 0;border-radius:14px;background:linear-gradient(135deg,#6a84e657,#4a63c43d);border:1px solid #9fb2f66b;font-size:12px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;text-align:center}
+.cal .d{display:flex;flex-direction:column;align-items:center;gap:0px;min-height:56px;padding:8px 0;border-radius:14px;background:linear-gradient(135deg,#6a84e657,#4a63c43d);border:1px solid #9fb2f66b;font-size:12px}
 .cal .d i{width:20px;height:20px;border-radius:50%;display:block}
 .cal .d.e i{background:none;border:1.5px dashed #ffffff77}
 .cal .d.now{outline:2px solid #fff;outline-offset:1px}
-.key{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--mu);margin-top:16px}
-.key span{display:inline-flex;align-items:center;gap:6px}.key i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.key{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px;color:var(--mu);margin-top:16px}
+.key span{display:inline-flex;align-items:center;gap:8px}.key i{width:12px;height:12px;border-radius:50%;display:inline-block}
 /* drawer */
-.drawer{max-width:300px;background:#171230;border-radius:20px;padding:20px 14px;border:1px solid #ffffff22}
+.drawer{max-width:300px;background:#171230;border-radius:20px;padding:16px 16px;border:1px solid #ffffff22}
 .drawer .new{width:100%;justify-content:center}
-.drawer .about{display:flex;align-items:center;gap:10px;min-height:44px;padding:10px 6px;color:#e4e8ff;font-weight:500;margin-top:6px}
-.drawer hr{border:0;border-top:1px solid #ffffff26;margin:10px 4px 16px}
-.drawer .sl{font-size:12px;color:var(--mu);margin:0 4px 8px;letter-spacing:.4px}
-.drawer .se{border:1px solid #484167;border-radius:14px;min-height:44px;padding:10px 12px;color:var(--mu);background:#ffffff0f;margin-bottom:10px;font-size:14px}
-.drawer .cv{display:flex;align-items:center;border-radius:13px;padding:6px 6px 6px 10px;gap:8px}
-.drawer .cv.on{background:#393154}.drawer .cv div{flex:1;font-size:14px}.drawer .cv small{display:block;font-size:11px;color:var(--mu)}
+.drawer .about{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 8px;color:#e4e8ff;font-weight:500;margin-top:8px}
+.drawer hr{border:0;border-top:1px solid #ffffff26;margin:8px 0px 16px}
+.drawer .sl{font-size:12px;color:var(--mu);margin:0 0px 8px;letter-spacing:.4px}
+.drawer .se{border:1px solid #484167;border-radius:14px;min-height:44px;padding:8px 8px;color:var(--mu);background:#ffffff0f;margin-bottom:8px;font-size:14px}
+.drawer .cv{display:flex;align-items:center;border-radius:13px;padding:8px 8px 8px 8px;gap:8px}
+.drawer .cv.on{background:#393154}.drawer .cv div{flex:1;font-size:14px}.drawer .cv small{display:block;font-size:12px;color:var(--mu)}
 .drawer .cv svg{color:var(--mu)}
 table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{text-align:left;padding:10px 8px;border-top:1px solid #ffffff1a;vertical-align:top}th{font-size:12px;color:var(--mu);font-weight:600;letter-spacing:.4px;text-transform:uppercase;border-top:0}
-.check{margin:0;padding:0;list-style:none;display:grid;gap:10px}
-.check li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:#ffffff12}
-.check li:before{content:"";flex:none;width:18px;height:18px;border:2px solid var(--peri);border-radius:6px;margin-top:2px}
+th,td{text-align:left;padding:8px 8px;border-top:1px solid #ffffff1a;vertical-align:top}th{font-size:12px;color:var(--mu);font-weight:600;letter-spacing:.4px;text-transform:uppercase;border-top:0}
+.check{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.check li{display:flex;gap:8px;align-items:flex-start;padding:8px 16px;border-radius:14px;background:#ffffff12}
+.check li:before{content:"";flex:none;width:18px;height:18px;border:2px solid var(--peri);border-radius:6px;margin-top:0px}
 footer{margin-top:72px;padding-top:24px;border-top:1px solid #ffffff22;color:var(--mu);font-size:14px}
 @media(max-width:800px){
   header{padding-top:32px}h1{font-size:32px}
@@ -178,17 +178,16 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid #ffffff22;color:var
 <section id="type">
   <h2>Type</h2>
   <div class="intro">
-    <p>Playfair Display for titles and headings, Figtree for everything people read or tap. Six sizes, no others.</p>
+    <p>Playfair Display for titles and headings, Figtree for everything people read or tap. Five sizes, no others.</p>
     <p class="rule do"><i>✓</i><span>16px is the smallest size for body text people need to read.</span></p>
     <p class="rule do"><i>✓</i><span>Put 16px between a heading and the text below it.</span></p>
-    <p class="rule dont"><i>×</i><span>Do not invent in-between sizes. Pick the nearest step.</span></p>
+    <p class="rule dont"><i>×</i><span>Do not add a sixth size. Pick the nearest step.</span></p>
   </div>
   <div class="demo">
     <div class="panel">
       <div class="ty"><small>H1 · 32</small><div class="s1">Page title</div><em>Playfair Display, bold. One per screen.</em></div>
-      <div class="ty"><small>H2 · 24</small><div class="s2">Section heading</div><em>Playfair Display, bold. Starts a section, 32px above.</em></div>
-      <div class="ty"><small>H3 · 20</small><div class="s3">Card title</div><em>Playfair Display, semibold. First line inside a card.</em></div>
-      <div class="ty"><small>Body · 16</small><div class="s4">Pick what you want to talk about. I have started a list from your entries.</div><em>Figtree, regular. Sentences and explanations.</em></div>
+      <div class="ty"><small>H2 · 24</small><div class="s2">Section heading</div><em>Playfair Display, bold. Starts a section, and titles a card.</em></div>
+            <div class="ty"><small>Body · 16</small><div class="s4">Pick what you want to talk about. I have started a list from your entries.</div><em>Figtree, regular. Sentences and explanations.</em></div>
       <div class="ty"><small>Label · 14</small><div class="s5">Last 14 days · Check-ins</div><em>Figtree, medium. Controls, metadata, chart text.</em></div>
       <div class="ty"><small>Caption · 12</small><div class="s6">Recorded entries only. This does not explain why.</div><em>Figtree, regular. Notes and fine print, in muted color.</em></div>
     </div>
@@ -198,8 +197,8 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid #ffffff22;color:var
 <section id="space">
   <h2>Spacing</h2>
   <div class="intro">
-    <p>A short scale on a 4px grid. Screens use only these values.</p>
-    <p class="rule do"><i>✓</i><span>Between sections, use the 32px. Between cards, 24px. Never squeeze them together.</span></p>
+    <p>Four spacings, all multiples of 8: 8, 16, 24 and 32. Screens use only these values.</p>
+    <p class="rule do"><i>✓</i><span>Between sections, use 32. Between cards, 24. Never squeeze them together.</span></p>
     <p class="rule do"><i>✓</i><span>Every tap target is at least 44px tall.</span></p>
   </div>
   <div class="demo">
@@ -219,8 +218,10 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid #ffffff22;color:var
       </div>
       <ul class="annot">
         <li>Screen sides <b>24</b></li><li>Between sections <b>32</b></li><li>Between cards <b>24</b></li>
-        <li>Inside cards <b>24</b></li><li>Heading to body <b>16</b></li><li>Between buttons <b>12</b></li>
+        <li>Inside cards <b>24</b></li><li>Heading to body <b>16</b></li><li>Between buttons <b>8</b></li>
       </ul>
+      <p class="lbl" style="margin-top:24px">The four spacings</p>
+      <div class="row" style="gap:16px;align-items:flex-end"><div style="text-align:center"><div style="width:8px;height:8px;background:var(--peri);margin:0 auto 8px"></div><small class="cap">8<br>related items, buttons</small></div><div style="text-align:center"><div style="width:16px;height:16px;background:var(--peri);margin:0 auto 8px"></div><small class="cap">16<br>heading to body</small></div><div style="text-align:center"><div style="width:24px;height:24px;background:var(--peri);margin:0 auto 8px"></div><small class="cap">24<br>sides, cards, padding</small></div><div style="text-align:center"><div style="width:32px;height:32px;background:var(--peri);margin:0 auto 8px"></div><small class="cap">32<br>between sections</small></div></div>
     </div>
   </div>
 </section>
@@ -278,7 +279,7 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid #ffffff22;color:var
     <div class="panel">
       <p class="lbl">Review by date</p>
       <div class="cal" role="img" aria-label="Example calendar row with colored dots">
-        <div class="d">S<i style="background:var(--q-ln)"></i></div><div class="d">M<i style="background:var(--q-hn)"></i></div><div class="d">T<i style="background:var(--q-hp)"></i></div><div class="d">W<i style="background:var(--q-hp)"></i></div><div class="d">T<i style="background:var(--q-lp)"></i></div><div class="d">F<i style="background:#e4e8ff;width:8px;height:8px;margin:6px 6px"></i></div><div class="d e now">S<i></i></div>
+        <div class="d">S<i style="background:var(--q-ln)"></i></div><div class="d">M<i style="background:var(--q-hn)"></i></div><div class="d">T<i style="background:var(--q-hp)"></i></div><div class="d">W<i style="background:var(--q-hp)"></i></div><div class="d">T<i style="background:var(--q-lp)"></i></div><div class="d">F<i style="background:#e4e8ff;width:8px;height:8px;margin:8px 8px"></i></div><div class="d e now">S<i></i></div>
       </div>
       <div class="key"><span><i style="background:var(--q-hn)"></i>High energy, negative</span><span><i style="background:var(--q-hp)"></i>High energy, positive</span><span><i style="background:var(--q-ln)"></i>Low energy, negative</span><span><i style="background:var(--q-lp)"></i>Low energy, positive</span><span><i style="background:#e4e8ff;width:8px;height:8px"></i>Other entries only</span><span><i style="border:1.5px dashed #fff9;width:12px;height:12px"></i>Nothing recorded</span></div>
       <p class="lbl" style="margin-top:24px">Medication log</p>
@@ -331,8 +332,8 @@ footer{margin-top:72px;padding-top:24px;border-top:1px solid #ffffff22;color:var
   <div class="intro"><p>Run through this list for every new or changed screen.</p></div>
   <div class="demo">
     <ul class="check">
-      <li>Screen sides are 24px, sections 32px apart, cards 24px apart.</li>
-      <li>Only the six type sizes are used, and headings sit 16px above their text.</li>
+      <li>Spacing is only 8, 16, 24 or 32. Screen sides are 24, sections 32 apart, cards 24 apart.</li>
+      <li>Only the five type sizes are used, and headings sit 16px above their text.</li>
       <li>There is one primary button, and no action appears twice.</li>
       <li>Every tap target is at least 44px tall, with a visible focus ring.</li>
       <li>Colors come from the tokens, nothing is darker than the background, and meaning never depends on color alone.</li>
