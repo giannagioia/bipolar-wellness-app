@@ -276,7 +276,7 @@ main a:not(.insgo){display:inline-block;padding:8px 0;min-height:44px}
 .drawer-empty{color:var(--mu);font-size:14px;padding:8px 8px}
 .drawer-note{font-size:12px;color:var(--mu);margin:8px 0px 0}
 /* Layout scale (Hannah's guide): screen sides 24, between sections 32, between cards 24, inside cards 24, heading to body 16 */
-:root{--s1:8px;--s2:16px;--s3:24px;--s4:32px;--side:24px;--sec:32px;--gap:24px;--pad:24px;--hb:16px;--fs-h1:32px;--fs-h2:24px;--fs-body:16px;--fs-label:14px;--fs-cap:12px}
+:root{--s1:8px;--s2:16px;--s3:24px;--s4:32px;--side:24px;--sec:32px;--gap:16px;--pad:24px;--hb:16px;--fs-h1:32px;--fs-h2:24px;--fs-body:16px;--fs-label:14px;--fs-cap:12px}
 main{padding:24px var(--side) 24px}
 .subbar{margin:8px calc(-1*var(--side)) -24px;padding:16px var(--side) 16px}
 h1{font-size:var(--fs-h1);font-weight:700}
@@ -300,7 +300,7 @@ button.back,button.chat-icon,button.ckar,button.drawer-close,button.send{padding
 .ckar{width:44px;height:56px}.ckhd .ckar{height:44px}
 input,select{min-height:44px}input[type=checkbox]{min-height:0;margin:0 8px 0 0}
 .sheet a{display:inline-block;padding:8px 0}
-main.hm>*+.card{margin-top:var(--s2)!important}
+.card>:last-child{margin-bottom:0!important}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
