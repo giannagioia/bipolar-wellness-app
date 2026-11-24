@@ -473,6 +473,12 @@ nav button.on{border-color:var(--accent)!important}
 .h5tile .c44{margin:0!important}
 .h5tile .h5grow{flex:none}
 .h5tile .h5step{margin-left:-8px}
+
+.h5ti{width:36px;height:36px;border-radius:12px;background:#ffffff1f;display:grid;place-items:center}
+.h5ti svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.h5log{align-self:stretch;min-height:44px;border-radius:999px;border:0;background:linear-gradient(135deg,#e6e3f7,#b7b1dc);color:#17123a;font:700 14px Inter,system-ui,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.h5log.on{background:#ffffff1f;color:#fff;border:1px solid #ffffff66}
+.h5log svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -825,10 +831,10 @@ function nudge(){const T=today(),nw=new Date(),h=nw.getHours(),nm=h*60+nw.getMin
  ['food',h>=14&&!foodN(c)&&used(d=>foodN(S.checks[d])),'No meals logged yet today. Have you had a chance to eat?','Log food',`openCheckin(today(),'food')`]];
  let n=L.find(x=>x[1]&&!off[x[0]]);
  if(S.view=='home'){const CK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',all=dosesFor(T),dueL=all.map((o,i)=>({...o,i})).filter(o=>tmin(o.t)<=nm),z=S.sleep[T],rows=[];
-  if(!off.meds&&((dueL.some(o=>!o.done))||ui.medKeep)&&dueL.length)rows.push(...dueL.map(o=>`<div class="dose h5dose h5tile"><button class="c44 ${o.done?'on':''}" aria-pressed="${!!o.done}" aria-label="${o.name?esc(o.name)+', ':''}${ftm(o.t)} dose, ${o.done?'taken':'not logged yet'}. Tap to change." onclick="homeDose(${o.i})">${o.done?CK:''}</button><span class="h5grow"><b>${o.name?esc(o.name):ftm(o.t)+' dose'}</b><span class="h5m">${o.done?'Taken':'Not logged yet'}${o.name?' · '+ftm(o.t):''}</span></span></div>`));
-  else if(!off.meds&&oldMeds)rows.push(`<div class="dose h5dose h5tile"><button class="c44" aria-label="Log medication" onclick="openCheckin(today(),'meds')"></button><span class="h5grow"><b>Medication</b><span class="h5m">Not logged yet</span></span></div>`);
-  if(!off.sleep&&h>=6&&(!z||ui.sleepKeep))rows.push(`<div class="dose h5dose h5tile h5sl"><span class="h5grow"><b>Last night's sleep</b><span class="h5m">${z?'Logged':'Tap − or + to log'}</span></span><div class="h5step"><button class="back" aria-label="Half an hour less" onclick="homeSleep(-.5)">−</button><b>${z?z.h:7} h</b><button class="back" aria-label="Half an hour more" onclick="homeSleep(.5)">+</button></div></div>`);
-  if(!rows.length&&n&&n[0]=='food'&&!off.food)rows.push(`<div class="dose h5dose h5tile"><button class="c44" aria-label="Log food" onclick="openCheckin(today(),'food')"></button><span class="h5grow"><b>Meals today</b><span class="h5m">Not logged yet</span></span></div>`);
+  if(!off.meds&&((dueL.some(o=>!o.done))||ui.medKeep)&&dueL.length)rows.push(...dueL.map(o=>`<div class="dose h5dose h5tile"><span class="h5ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="7" rx="3.5" transform="rotate(-35 12 12.5)"/><path d="M9.6 8.2l4.1 5.8"/></svg></span><span class="h5grow"><b>${o.name?esc(o.name):ftm(o.t)+' dose'}</b><span class="h5m">${o.done?'Taken':'Not logged yet'}${o.name?' · '+ftm(o.t):''}</span></span><button class="h5log ${o.done?'on':''}" aria-pressed="${!!o.done}" aria-label="${o.done?'Taken. Tap to undo':'Log the '+ftm(o.t)+' dose as taken'}" onclick="homeDose(${o.i})">${o.done?CK+'Taken':'Log dose'}</button></div>`));
+  else if(!off.meds&&oldMeds)rows.push(`<div class="dose h5dose h5tile"><span class="h5ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="7" rx="3.5" transform="rotate(-35 12 12.5)"/><path d="M9.6 8.2l4.1 5.8"/></svg></span><span class="h5grow"><b>Medication</b><span class="h5m">Not logged yet</span></span><button class="h5log" onclick="openCheckin(today(),'meds')">Log medication</button></div>`);
+  if(!off.sleep&&h>=6&&(!z||ui.sleepKeep))rows.push(`<div class="dose h5dose h5tile h5sl"><span class="h5ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></svg></span><span class="h5grow"><b>Sleep</b><span class="h5m">${z?'Logged':'Not logged yet'}</span></span><div class="h5step"><button class="back" aria-label="Half an hour less" onclick="homeSleep(-.5)">−</button><b>${z?z.h:7} h</b><button class="back" aria-label="Half an hour more" onclick="homeSleep(.5)">+</button></div></div>`);
+  if(!rows.length&&n&&n[0]=='food'&&!off.food)rows.push(`<div class="dose h5dose h5tile"><span class="h5grow"><b>Meals today</b><span class="h5m">Not logged yet</span></span><button class="h5log" onclick="openCheckin(today(),'food')">Log food</button></div>`);
   if(!rows.length)return '';
   return `<div class="h5grp h5alerts" role="status"><div class="h5labrow"><h2 class="h5lab">Reminders</h2><button class="h5hide" aria-label="Hide reminders for today" onclick="['meds','sleep','food'].forEach(nudgeOffQ);render()">Hide</button></div><div class="h5tiles">${rows.join('')}</div></div>`}
  if(!n)return '';
