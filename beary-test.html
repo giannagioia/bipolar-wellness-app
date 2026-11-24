@@ -458,7 +458,9 @@ nav button.on{border-color:var(--accent)!important}
 .dmt{background:#0b0d3a40!important}
 :is(.pill.on,.ckd.on,.wd.on,.chip.on) :is(i,.sw,.dots i){filter:brightness(.45) saturate(1.8)}
 .h5step{display:flex;align-items:center;gap:8px}
-.h5step .back{width:44px;height:44px;font-size:24px}
+.h5step .back{width:28px;height:28px;margin:8px;padding:0;font-size:18px;line-height:1;position:relative;display:grid;place-items:center;border:2px solid #ffffff99!important;background:var(--pan2)!important;box-shadow:none!important;backdrop-filter:none!important}
+.h5step .back::after{content:"";position:absolute;inset:-10px}
+.h5step{gap:0}
 .h5step b{min-width:48px;text-align:center;font-size:16px}
 .h5sl{flex-wrap:nowrap}
 .rvc{background:#0b0d3a40!important;border-color:#ffffff33!important}
