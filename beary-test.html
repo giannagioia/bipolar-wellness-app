@@ -327,44 +327,48 @@ nav button.on{border-color:var(--accent)!important}
 .insl{color:#fff!important}
 .bubble b,.bubble strong,.gsay b{color:#fff!important}
 
-/* Home v3: one lead, three surface levels, plain text on the page */
-.hm3{display:flex;flex-direction:column;gap:16px}
-.hm3>*{margin:0!important}
-.h3hd{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
-.h3hd h1{margin:0}
-.h3date{margin:0;font-size:14px;line-height:1.5;color:var(--mu)}
-.h3hero{position:relative;margin-top:40px!important;padding:24px 16px 16px;border-radius:28px;background:linear-gradient(150deg,#5d79e2,#3c53b6);border:1px solid #ffffff38;box-shadow:inset 0 1px 0 #ffffff4d,0 16px 32px #050826a6}
-.h3hero h2{margin:0;padding-right:128px;font-size:24px;line-height:1.3}
-.h3sub{margin:0 0 16px;padding-right:128px;font-size:14px;line-height:1.5;color:#f4f6ff}
-.h3bear{position:absolute;right:8px;top:-64px;width:128px;height:auto;pointer-events:none;filter:drop-shadow(0 8px 10px #05082666)}
-.h3hero .wk{margin:0 -8px}
-.h3hero .wd.on{background:#ffffff26;border-color:#fff}
-.h3hero .wd small{color:#f4f6ff}
-.h3go{width:100%;margin:16px 0 0!important}
-.h3lab{margin:8px 0 -8px!important;font-family:Inter,system-ui,sans-serif!important;font-size:12px!important;line-height:16px!important;font-weight:700!important;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
-.h3card{display:block;width:100%;box-sizing:border-box;text-align:left;color:var(--tx);font:inherit;padding:16px;border-radius:24px;background:linear-gradient(180deg,#2b3786,#222c70);border:1px solid #ffffff1f;box-shadow:inset 0 1px 0 #ffffff1a,0 8px 20px #0508268c}
-.h3row{display:flex;align-items:center;gap:16px}
-.h3grow{flex:1;min-width:0;display:flex;flex-direction:column}
-.h3meta{display:block;font-size:14px;line-height:1.5;color:var(--mu)}
-.h3edit{min-height:44px;font-size:14px;align-self:flex-start}
-.h3hint{margin:16px 0;font-size:14px;line-height:1.5;color:var(--mu)}
-.h3acts{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.h3acts .btn{margin:0}
-.h3link{min-height:44px;padding:0;border:0;background:none;color:#fff;font:600 14px Inter,system-ui,sans-serif;display:inline-flex;align-items:center;gap:8px;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--accent);cursor:pointer}
-.h3nudge{display:block;padding:16px 16px 16px 24px;border-radius:20px;background:#ffffff14;border:1px solid #ffffff1f;box-shadow:inset 4px 0 0 var(--accent)}
-.h3hero .wd i.em{border-color:#ffffffb3}
-.h3ins{padding:0 0 0 16px;border-left:4px solid var(--accent);display:flex;flex-direction:column;gap:8px}
-.h3ins .h3lab{margin:0!important}
-.h3ins .ins{margin:0;font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:24px;line-height:1.3;color:#fff}
-.h3ins .insx{margin:0;font-size:16px;line-height:1.5;color:#fff}
-.h3ins .insm{margin:0;font-size:12px;line-height:1.5;color:var(--mu)}
-.h3ins .h3link{align-self:flex-start;text-decoration:none}
-.h3res{display:flex;align-items:center;gap:16px;cursor:pointer}
-.h3chev{font-size:24px;color:#fff}
-.h3note{display:flex;gap:16px;align-items:flex-start;padding:8px 0}
-.h3note svg{flex:none;width:24px;height:24px;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.h3note p{margin:0 0 8px;font-size:14px;line-height:1.5}
-.h3disc{font-size:12px!important;line-height:1.5;color:var(--mu)}
+/* Home v5: original layout, refreshed palette, varied sizes, titles outside cards */
+#app[data-v=home]{background:linear-gradient(180deg,#0E1034 0%,#1B1C57 55%,#2A2470 100%)}
+.hm5{display:flex;flex-direction:column;gap:32px}
+.hm5>*{margin:0!important}
+.h5hd{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.h5hd h1{margin:0}
+.h5date{margin:0;font-size:14px;line-height:1.5;color:#C9CEF5}
+.h5grp{display:flex;flex-direction:column;gap:16px}
+.h5lab{margin:0!important;font-family:Inter,system-ui,sans-serif!important;font-size:12px!important;line-height:16px!important;font-weight:700!important;letter-spacing:.08em;text-transform:uppercase;color:#C9CEF5}
+.h5visit{padding:24px;border-radius:28px;background:linear-gradient(145deg,#4C66D0,#3A4FB0);border:1px solid #ffffff3d;box-shadow:inset 0 1px 0 #ffffff59,0 18px 36px #04061f99;display:flex;flex-direction:column;gap:16px}
+.h5visit .tile{background:#ffffff2e!important;border:1px solid #ffffff59!important}
+.h5visit .h5m{color:#fff}
+.h5row{display:flex;align-items:center;gap:16px}
+.h5grow{flex:1;min-width:0;display:flex;flex-direction:column}
+.h5big{font-size:16px;line-height:1.4}
+.h5m{display:block;font-size:14px;line-height:1.5;color:#C9CEF5}
+.h5edit{align-self:flex-start;min-height:44px;font-size:14px}
+.h5hint{margin:0}
+.h5acts{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.h5acts .btn{margin:0}
+.h5link{min-height:44px;padding:0;border:0;background:none;color:#fff;font:600 14px Inter,system-ui,sans-serif;display:inline-flex;align-items:center;gap:8px;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--accent);cursor:pointer}
+.h5plain{text-decoration:none;align-self:flex-start}
+.h5nudge{margin-top:-16px!important;display:grid;grid-template-columns:auto 1fr;gap:8px 16px;align-items:center;padding:16px;border-radius:20px;background:linear-gradient(135deg,#3B2A72,#2E2366);border:1px solid #ffb3e340;box-shadow:0 10px 24px #04061f80}
+.h5nudge b{font-size:16px;line-height:1.4}
+.h5nico{width:44px;height:44px;border-radius:50%;background:#ffb3e329;display:grid;place-items:center}
+.h5nico svg{width:24px;height:24px;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.h5nb{grid-column:2;display:flex;gap:8px;align-items:center}
+.h5yes{min-height:44px;padding:0 16px;border-radius:999px;border:0;background:var(--accent);color:#2A1240;font:700 14px Inter,system-ui,sans-serif;cursor:pointer}
+.h5no{min-height:44px;padding:0 16px;border-radius:999px;border:0;background:none;color:#fff;font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
+.h5cal{padding:16px 8px;border-radius:24px;background:linear-gradient(180deg,#252A72,#1F2363);border:1px solid #ffffff1f;box-shadow:inset 0 1px 0 #ffffff1a,0 10px 24px #04061f80}
+.h5cal .wd.on{background:#ffffff1f;border-color:var(--accent)}
+.h5cal .wd i.em{border-color:#ffffff99}
+.h5ins{display:flex;flex-direction:column;gap:8px}
+.h5ins .ins{margin:8px 0 0;font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:24px;line-height:1.3;color:#fff}
+.h5ins .insx{margin:0;font-size:16px;line-height:1.5;color:#fff}
+.h5ins .insm{margin:0;font-size:12px;line-height:1.5;color:#C9CEF5}
+.h5res{display:flex;align-items:center;gap:16px;width:100%;padding:16px 24px;border-radius:20px;border:1px solid #ffffff1f;background:#ffffff0f;color:#fff;font:inherit;text-align:left;cursor:pointer}
+.h5chev{font-size:24px;color:#fff}
+.h5note{display:flex;gap:16px;align-items:flex-start}
+.h5note svg{flex:none;width:24px;height:24px;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.h5note p{margin:0 0 8px;font-size:14px;line-height:1.5}
+.h5disc{font-size:12px!important;line-height:1.5;color:#C9CEF5}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -711,24 +715,25 @@ function nudge(){const T=today(),nw=new Date(),h=nw.getHours(),nm=h*60+nw.getMin
  ['sleep',h>=9&&!S.sleep[T]&&used(d=>S.sleep[d]),'You have not logged how you slept last night. Want to add it?','Log sleep',`openCheckin(today(),'sleep')`],
  ['food',h>=14&&!foodN(c)&&used(d=>foodN(S.checks[d])),'No meals logged yet today. Have you had a chance to eat?','Log food',`openCheckin(today(),'food')`]];
  const n=L.find(x=>x[1]&&!off[x[0]]);if(!n)return '';
- return `<div class="${S.view=='home'?'h3nudge':'card g2'}" role="status" style="margin:0 0 8px"><p style="margin:0 0 8px;font-size:16px;line-height:1.45">${n[2]}</p><div class="row"><button class="btn sm" onclick="${n[4]}">${n[3]}</button><button class="pill" style="min-height:40px" onclick="nudgeOff('${n[0]}')">Not now</button></div></div>`}
+ if(S.view=='home'){const ti={meds:due?ftm(due.t)+' dose':'Medication',sleep:'Last night\'s sleep',food:'Meals today'}[n[0]],ic={meds:'<rect x="3" y="9" width="18" height="7" rx="3.5" transform="rotate(-35 12 12.5)"/><path d="M9.6 8.2l4.1 5.8"/>',sleep:'<path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/>',food:'<path d="M4 12h16a8 8 0 01-16 0zM12 4v4M8 5v3M16 5v3"/>'}[n[0]],q={meds:'Not logged yet. Did you take it?'}[n[0]]||n[2];return `<div class="h5nudge" role="status"><span class="h5nico"><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg></span><div class="h5grow"><b>${ti}</b><span class="h5m">${q}</span></div><div class="h5nb"><button class="h5yes" onclick="${n[4]}">${n[3]}</button><button class="h5no" onclick="nudgeOff('${n[0]}')">Not now</button></div></div>`}
+ return `<div class="card g2" role="status" style="margin:0 0 8px"><p style="margin:0 0 8px;font-size:16px;line-height:1.45">${n[2]}</p><div class="row"><button class="btn sm" onclick="${n[4]}">${n[3]}</button><button class="pill" style="min-height:40px" onclick="nudgeOff('${n[0]}')">Not now</button></div></div>`}
 function nudgeDose(t){const T=today();setDoses(T,dosesFor(T).map(o=>o.t==t?{...o,done:true}:o));toast('Logged')}
 function nudgeOff(k){const T=today();S.nudgeOff=S.nudgeOff||{};(S.nudgeOff[T]=S.nudgeOff[T]||{})[k]=1;save();render()}
 const V={
-home(){const T=today(),c=S.checks[T],n=c?c.entries.length:0,up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0];
+home(){const T=today(),c=S.checks[T],up=S.appts.filter(a=>a.date>=today()).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0];
  const dl=new Date().toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'});
- const pv=up?`<h2 class="h3lab">Up next</h2><div class="h3card"><div class="h3row">${tile(up.date)}<span class="h3grow"><b>${esc(up.kind)}</b><span class="h3meta">with ${esc(up.who)}<br>${rel(up.date)}, ${ftm(up.time)}${tc(up.id)?' · '+tc(up.id).replace(/^ · /,'')+' ready':''}</span></span><button class="pill h3edit" aria-label="Edit this visit" onclick="ui.edit=${up.id};ui.ap=null;ui.modal='appt';render()">Edit</button></div><p class="h3hint">Pick what you want to talk about. I have started a list from your entries.</p><div class="h3acts"><button class="btn sm" onclick="ui.prep=${up.id};go('prep')">Prepare</button><button class="h3link" onclick="ui.edit=null;ui.ap=null;ui.modal='appt';render()">Add a visit</button></div></div>`:`<h2 class="h3lab">Up next</h2><div class="h3card"><p class="h3hint" style="margin-top:0">Prep help starts once you add a visit that is already scheduled. Add it here and I will help you get ready for it. I will not book anything.</p><div class="h3acts"><button class="btn sm" onclick="ui.edit=null;ui.ap=null;ui.modal='appt';render()">Add a visit</button></div></div>`;
+ const pv=up?`<h2 class="h5lab">Your next visit</h2><div class="h5visit"><div class="h5row">${tile(up.date)}<span class="h5grow"><b class="h5big">${esc(up.kind)}</b><span class="h5m">with ${esc(up.who)}</span><span class="h5m">${rel(up.date)}, ${ftm(up.time)}${tc(up.id)?' · '+tc(up.id).replace(/^ · /,'')+' ready':''}</span></span><button class="pill h5edit" aria-label="Edit this visit" onclick="ui.edit=${up.id};ui.ap=null;ui.modal='appt';render()">Edit</button></div><p class="h5m h5hint">Pick what you want to talk about. I have started a list from your entries.</p><div class="h5acts"><button class="btn sm" onclick="ui.prep=${up.id};go('prep')">Prepare</button><button class="h5link" onclick="ui.edit=null;ui.ap=null;ui.modal='appt';render()">Add a visit</button></div></div>`:`<h2 class="h5lab">Your next visit</h2><div class="h5visit"><p class="h5m h5hint" style="margin-top:0">Prep help starts once you add a visit that is already scheduled. Add it here and I will help you get ready for it. I will not book anything.</p><div class="h5acts"><button class="btn sm" onclick="ui.edit=null;ui.ap=null;ui.modal='appt';render()">Add a visit</button></div></div>`;
  const wk=[...Array(7)].map((_,i)=>iso(ago(6-i))).map(d=>{const q=dayQ(d),x=new Date(d+'T12:00');
   return `<button class="wd ${d==T?'on':''}" onclick="openCheckin('${d}')" aria-label="${fd(d)}${q?', '+qInfo(q)[1].toLowerCase():', no check-in'}${d==T?', today':''}"><small>${x.toLocaleDateString(undefined,{weekday:'narrow'})}</small><b>${x.getDate()}</b>${q?faceSVG(q,34):'<i class="em" style="width:28px;height:28px"></i>'}</button>`}).join('');
- const ins=(()=>{const w=weekInsight(1),src=!w?'':w.viz=='sleep'?'Sleep and check-ins':w.viz=='meds'?'Medication and check-ins':/^Exercise/.test(w.t)?'Exercise entries':'Check-ins',ctx=w&&w.x&&!/episode/i.test(w.x)?w.x:'';return `<section class="h3ins" aria-labelledby="insl"><h2 class="h3lab" id="insl">A little something we've noticed</h2>${w?`<p class="ins">${esc(w.t)}</p>${ctx?`<p class="insx">${esc(ctx)}</p>`:''}<p class="insm">Last ${w.n||7} days · ${src}. Recorded entries only. This does not explain why.</p>`:'<p class="insx">Nothing recorded this week yet.</p><p class="insm">When you start recording entries this will populate.</p>'}<button class="h3link" onclick="go('patterns')">See patterns <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></section>`})();
- return `<main class="hm hm3"><div class="h3hd"><div><h1>Hey${S.name?' '+esc(S.name):' there'}!</h1><p class="h3date">${dl}</p></div><button class="back" onclick="go('settings')" aria-label="Settings">⚙</button></div>
- <section class="h3hero" aria-labelledby="wkh"><img class="h3bear" src="beary-home-bear.png" alt="" aria-hidden="true"><h2 id="wkh">This week</h2><p class="h3sub">${n?n+(n==1?' check-in':' check-ins')+' today':'No check-in yet today'}</p><div class="wk" role="group" aria-label="Mood calendar, this week. Tap a day to see or add a check-in.">${wk}</div><button class="btn h3go" onclick="openCheckin(today())">${n?'Add another check-in':'Check in now'}</button></section>
+ const ins=(()=>{const w=weekInsight(1),src=!w?'':w.viz=='sleep'?'Sleep and check-ins':w.viz=='meds'?'Medication and check-ins':/^Exercise/.test(w.t)?'Exercise entries':'Check-ins',ctx=w&&w.x&&!/episode/i.test(w.x)?w.x:'';return `<section class="h5ins" aria-labelledby="insl"><h2 class="h5lab" id="insl">A little something we've noticed</h2>${w?`<p class="ins">${esc(w.t)}</p>${ctx?`<p class="insx">${esc(ctx)}</p>`:''}<p class="insm">Last ${w.n||7} days · ${src}. Recorded entries only. This does not explain why.</p>`:'<p class="insx">Nothing recorded this week yet.</p><p class="insm">When you start recording entries this will populate.</p>'}<button class="h5link h5plain" onclick="go('patterns')">See patterns <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></section>`})();
+ return `<main class="hm hm5"><div class="h5hd"><div><h1>Hey${S.name?' '+esc(S.name):' there'}!</h1><p class="h5date">${dl}</p></div><button class="back" onclick="go('settings')" aria-label="Settings">⚙</button></div>
+ <div class="h5grp">${pv}</div>
  ${nudge()}
- ${pv}
+ <div class="h5grp"><h2 class="h5lab">Mood calendar</h2><div class="h5cal"><div class="wk" role="group" aria-label="Mood calendar, this week. Tap a day to see or add a check-in.">${wk}</div></div></div>
  ${ins}
- <button class="h3card h3res" onclick="go('resources')"><span class="h3grow"><b>Resources</b><span class="h3meta">Insurance, providers, support groups, family and learning</span></span><span aria-hidden="true" class="h3chev">›</span></button>
- <div class="h3note"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON.care}</svg><div><p>Keeping in touch with your care team is part of looking after yourself. If something feels different lately, consider contacting them.</p><p class="h3meta">Beary has not contacted anyone. Nothing is shared unless you choose to copy it yourself. Reminders are not sent in this prototype.</p></div></div>
- <p class="h3disc">Beary is a reflection tool, not medical advice or an emergency service. In the US, call or text 988, or call 911.</p></main>`},
+ <button class="h5res" onclick="go('resources')"><span class="h5grow"><b>Resources</b><span class="h5m">Insurance, providers, support groups, family and learning</span></span><span aria-hidden="true" class="h5chev">›</span></button>
+ <div class="h5note"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON.care}</svg><div><p>Keeping in touch with your care team is part of looking after yourself. If something feels different lately, consider contacting them.</p><p class="h5m">Beary has not contacted anyone. Nothing is shared unless you choose to copy it yourself. Reminders are not sent in this prototype.</p></div></div>
+ <p class="h5disc">Beary is a reflection tool, not medical advice or an emergency service. In the US, call or text 988, or call 911.</p></main>`},
 checkin(){const k=ckS(),d=k.d,T=today(),c=S.checks[d]||{entries:[]},z=S.sleep[d],ds=dosesFor(d),fut=d>T,n=c.entries.length;
  const days=[0,1,2].map(i=>iso(ago(-(k.off+i))));
  const dayBtn=x=>{const e=((S.checks[x]||{}).entries||[]),ap=S.appts.some(a=>a.date==x),on=x==d,dt=new Date(x+'T12:00'),lab=x==T?'Today':x==iso(ago(1))?'Yesterday':x==iso(ago(-1))?'Tomorrow':dt.toLocaleDateString(undefined,{weekday:'short'});
@@ -1002,7 +1007,7 @@ function saveSum(){if(!S.sums.includes(ui.draft)){ui.draft.saved=today();S.sums.
 async function copyIt(){const t=ui.copyText();try{await navigator.clipboard.writeText(t)}catch(e){const x=document.createElement('textarea');x.value=t;document.body.append(x);x.select();document.execCommand('copy');x.remove()}ui.modal=null;render();toast('Copied. Paste it where you choose.')}
 
 // ===== Render =====
-function render(){const v=S.view;if(v=='patterns'&&ui.ptab!='sum'&&ui.tour==null)award('patterns');const pm=$('main'),pt=pm&&ui.lv==v?pm.scrollTop:0;ui.lv=v;const full=v=='home',tab={home:'home',resources:'home',checkin:'checkin',chat:'chat',patterns:'patterns',sums:'patterns',sumsetup:'patterns',sumview:'patterns',prep:'patterns',journey:'home',settings:'home'}[v]||'';
+function render(){const v=S.view;$('#app').dataset.v=v;if(v=='patterns'&&ui.ptab!='sum'&&ui.tour==null)award('patterns');const pm=$('main'),pt=pm&&ui.lv==v?pm.scrollTop:0;ui.lv=v;const full=v=='home',tab={home:'home',resources:'home',checkin:'checkin',chat:'chat',patterns:'patterns',sums:'patterns',sumsetup:'patterns',sumview:'patterns',prep:'patterns',journey:'home',settings:'home'}[v]||'';
  const tabs=[['home','Home'],['checkin','Check-in'],['chat','Beary'],['patterns','Patterns']];
  $('#app').innerHTML=(v=='chat'?'<div style="flex:1;display:flex;flex-direction:column;min-height:0">':'')+V[v]()+(v=='chat'?'</div>':'')+`<nav aria-label="Main">${tabs.map(t=>`<button class="${tab==t[0]?'on':''}" ${tab==t[0]?'aria-current="page"':''} onclick="${t[0]=='chat'?'openChat()':`ui.stack=[];go('${t[0]}',false)`}"><svg viewBox="0 0 24 24">${ICON[t[0]=='patterns'?'pat':t[0]]}</svg>${t[1]}</button>`).join('')}</nav>`+modal()+(ui.tour!=null?tourHTML():'')+(ui.splash?splashHTML():'');
  const dc=$('.dchip.on');if(dc&&dc.scrollIntoView)dc.scrollIntoView({inline:'center',block:'nearest'});const nm=$('main');if(nm)nm.scrollTop=pt;if(ui.tour!=null)positionTour();if(ui.pend){const q=ui.pend;ui.pend=null;toast(q)}if(v=='chat'&&vfOn()&&!(vfPop&&0)){const cc=S.conv[S.cur];if(cc&&!cc.msgs.length&&!ui.busy&&!ui.err)setTimeout(()=>{if(S.view=='chat'&&!ui.busy&&!cc.msgs.length&&!ui.err)launchVF(cc)},0)}if(v=='chat'){const m=$('#msgs');if(m){const f=$('#fbm');if(ui.sfb&&f&&!ui.busy){m.scrollTop=Math.max(0,f.offsetTop-m.offsetTop-12)}else m.scrollTop=m.scrollHeight;if(!ui.busy)ui.sfb=0}if(!ui.busy&&!ui.modal&&!ui.hist){const i=$('#ci');if(i&&matchMedia('(pointer:fine)').matches)i.focus()}}}
