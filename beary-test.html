@@ -411,6 +411,14 @@ nav button.on{border-color:var(--accent)!important}
 .chbrand img{width:48px;height:auto;flex:none;filter:drop-shadow(0 4px 6px #04061f80)}
 .chbrand h1{margin:0!important;font-size:24px!important;line-height:1.1!important}
 .chbrand span{display:block;font-size:12px;line-height:16px;color:#E1E5FB}
+
+.trgrp{padding:16px;border-radius:20px;background:#ffffff12;border:1px solid #ffffff26;margin:0 0 16px}
+.trlab{margin:0 0 8px;font-size:12px;line-height:16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#E1E5FB}
+.trgrp .row{margin:0}
+.trseg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:4px;border-radius:999px;background:#0e103466}
+.trseg button{min-height:44px;border:0;border-radius:999px;background:none;color:#fff;font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
+.trseg button.on{background:linear-gradient(135deg,#e6e3f7,#b7b1dc);color:#17123a;font-weight:700}
+.trchart{padding-top:8px}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -681,7 +689,7 @@ function insightViz(w){const N=w.n||7,ds=[...Array(N)].map((_,i)=>iso(ago(N-1-i)
 function miniHTML(w){const N=w.n||7,ds=[...Array(N)].map((_,i)=>iso(ago(N-1-i)));
  return `<div class="mini" role="img" aria-label="${esc(w.t)}">${ds.map(d=>{const on=w.hl.includes(d),v=w.f?w.f(d):(on?1:0),h=v==null?4:Math.max(6,Math.round(v*46));return `<div><i style="height:${h}px;background:${on?'#fff':'#8f9ad8'}"></i>${new Date(d+'T12:00').toLocaleDateString(undefined,{weekday:'narrow'})}</div>`}).join('')}</div>`}
 const rng=()=>ui.rng||7;
-const dashDef=()=>{const d=ui.dash||(ui.dash={on:{mood:1,energy:1,sleep:1},view:'lines'});d.range=rng();return d};
+const dashDef=()=>{const d=ui.dash||(ui.dash={on:{mood:1,energy:1,sleep:1}});d.view='heat';d.range=rng();return d};
 const dashTog=k=>{const d=dashDef();d.on[k]=!d.on[k];render()},dashRange=n=>{ui.rng=n;render()},dashView=v=>{dashDef().view=v;render()};
 function wordMap(n){const ds=[...Array(n)].map((_,i)=>iso(ago(n-1-i))),W={},col={},STOP=new Set('the and that this with have just from what when they them then than been were was are for but not you your feel feeling felt today really very much some more like into about after before still also over had has its it\'s i\'m dont don\'t didnt didn\'t got get our out all can could would should will one two lot bit day days'.split(' '));
  ds.forEach(d=>((S.checks[d]||{}).entries||[]).forEach(e=>{const o=vaOf(e,d),mw=(e.w||e.words||'').trim();if(mw){const k=mw.toLowerCase();W[k]=(W[k]||0)+2;if(o)col[k]=qInfo(qOf(o.v,o.a))[2]}(e.note||'').toLowerCase().replace(/[^a-z\s']/g,' ').split(/\s+/).filter(w=>w.length>3&&!STOP.has(w)).forEach(w=>{W[w]=(W[w]||0)+1})}));
@@ -697,9 +705,9 @@ function dashHTML(){const D=dashDef(),n=D.range,ds=[...Array(n)].map((_,i)=>iso(
    const hit=segs.flat().map(o=>`<circle cx="${o.X.toFixed(1)}" cy="${o.Y.toFixed(1)}" r="9" fill="transparent"><title>${fd(ds[o.i])}: ${esc(x[1])} ${esc(o.q.raw)}</title></circle>`).join('');
    const lp=segs.flat().slice(-1)[0];return segs.map(a=>`<path d="${sm(a)}" fill="none" stroke="${x[2]}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`).join('')+hit+(lp?`<circle cx="${lp.X.toFixed(1)}" cy="${lp.Y.toFixed(1)}" r="4" fill="${x[2]}" stroke="#fff" stroke-width="1.5"/>`:'')}).join('')+lab+'</svg>'+`<div class="row" style="gap:8px;margin-top:8px">${sel.map(x=>`<span class="mu"><i class="sw" style="background:${x[2]}"></i>${x[1]}</span>`).join('')}</div>`}
  else{const lw=70,cw=(W-lw)/n,rh=26,rg=Object.fromEntries(sel.map(x=>{const f=vals.map(v=>v[x[0]]).filter(Boolean).map(q=>q.v);return [x[0],[Math.min(...f),Math.max(...f)]]}));chart=`<svg viewBox="0 0 ${W} ${sel.length*rh+16}" width="100%" role="img" aria-label="Heat map of ${sel.map(x=>x[1]).join(', ')} over the last ${n} days">`+sel.map((x,r)=>`<text x="0" y="${r*rh+17}" fill="#fff" font-size="11">${x[1]}</text>`+vals.map((v,i)=>{const q=v[x[0]],X=lw+i*cw;return q?`<rect x="${(X+1).toFixed(1)}" y="${r*rh+3}" width="${(cw-2).toFixed(1)}" height="${rh-6}" rx="4" fill="${mixc('#34459f',x[2].length==7?x[2]:'#a9b4e6',.08+.92*(rg[x[0]][1]>rg[x[0]][0]?(q.v-rg[x[0]][0])/(rg[x[0]][1]-rg[x[0]][0]):.7))}"><title>${fd(ds[i])}: ${esc(x[1])} ${esc(q.raw)}</title></rect>`:`<rect x="${(X+1).toFixed(1)}" y="${r*rh+3}" width="${(cw-2).toFixed(1)}" height="${rh-6}" rx="4" fill="none" stroke="#ffffff80" stroke-dasharray="2 3"><title>${fd(ds[i])}: nothing recorded</title></rect>`}).join('')).join('')+[0,Math.floor((n-1)/2),n-1].filter((x,i,a)=>a.indexOf(x)==i).map(i=>`<text x="${(lw+i*cw+cw/2).toFixed(1)}" y="${sel.length*rh+12}" fill="#fff" font-size="10" text-anchor="${i==0?'start':i==n-1?'end':'middle'}">${fd(ds[i])}</text>`).join('')+'</svg>'+'<p class="mu" style="margin:8px 0 0;font-size:14px">Brighter squares mean higher. Dashed means nothing recorded.</p>'}
- return `<h2>Trends</h2><div class="card"><p class="mu" style="margin:0 0 8px">Choose what to show together.</p><div class="row" role="group" aria-label="What to show">${DS.map(x=>`<button class="pill ${D.on[x[0]]?'on':''}" aria-pressed="${!!D.on[x[0]]}" onclick="dashTog('${x[0]}')"><i class="sw" style="background:${x[2]}"></i>${x[1]}</button>`).join('')}</div>
- <div class="row" style="margin:8px 0" role="group" aria-label="Time range">${[7,14,30].map(r=>`<button class="pill ${n==r?'on':''}" style="min-height:40px;padding:8px 16px" aria-pressed="${n==r}" onclick="dashRange(${r})">${r} days</button>`).join('')}<span style="flex:1"></span>${[['lines','Lines'],['heat','Heat map']].map(v=>`<button class="pill ${D.view==v[0]?'on':''}" style="min-height:40px;padding:8px 16px" aria-pressed="${D.view==v[0]}" onclick="dashView('${v[0]}')">${v[1]}</button>`).join('')}</div>
- ${chart}<p class="mu" style="margin:8px 0 0;font-size:14px">Each line is scaled so they all fit on one graph.</p></div>`}
+ return `<h2>Trends</h2><div class="card"><div class="trgrp"><p class="trlab">Show</p><div class="row" role="group" aria-label="What to show">${DS.map(x=>`<button class="pill ${D.on[x[0]]?'on':''}" aria-pressed="${!!D.on[x[0]]}" onclick="dashTog('${x[0]}')"><i class="sw" style="background:${x[2]}"></i>${x[1]}</button>`).join('')}</div></div>
+ <div class="trgrp"><p class="trlab">Time range</p><div class="trseg" role="group" aria-label="Time range">${[7,14,30].map(r=>`<button class="${n==r?'on':''}" aria-pressed="${n==r}" onclick="dashRange(${r})">${r} days</button>`).join('')}</div></div>
+ <div class="trchart">${chart}</div></div>`}
 
 const CGQ=[['hn','High energy, negative','#ff7468'],['hp','High energy, positive','#ffc42e'],['ln','Low energy, negative','#5b92ff'],['lp','Low energy, positive','#2fd39a']];
 const CGW=[['Energized',.16,.76],['Excited',.62,.56],['Happy',.6,.24],['Tense',-.22,.6],['Irritable',-.62,.6],['Anxious',-.6,.24],['Sad',-.6,-.2],['Low',-.54,-.56],['Drained',-.18,-.74],['Calm',.18,-.78],['Relaxed',.46,-.56],['Content',.58,-.14],['Okay',0,0],
