@@ -440,6 +440,12 @@ nav button.on{border-color:var(--accent)!important}
 .h5dose .c44{border-color:#ffffff99}
 .h5dose b{font-size:16px;line-height:1.4}
 .h5x{position:absolute;right:8px;top:8px;width:44px;height:44px;color:#E1E5FB}
+
+.h5rows{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+.h5rr{display:flex;gap:8px;font-size:14px;line-height:1.4}
+.h5rl{flex:none;width:88px;color:#E8E4FF}
+.h5rv{flex:1;min-width:0;font-weight:700;display:flex;align-items:center;gap:6px}
+.h5rv .edot{display:inline-block;flex:none;width:10px;height:10px;border-radius:50%}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -808,11 +814,10 @@ home(){const T=today(),c=S.checks[T],ups=S.appts.filter(a=>a.date>=today()).sort
  const ins=(()=>{const w=weekInsight(1),src=!w?'':w.viz=='sleep'?'Sleep and check-ins':w.viz=='meds'?'Medication and check-ins':/^Exercise/.test(w.t)?'Exercise entries':'Check-ins',ctx=w&&w.x&&!/episode/i.test(w.x)?w.x:'';return `<section class="h5ins" aria-labelledby="insl"><h2 class="h5lab" id="insl">A little something we've noticed</h2>${w?`<p class="ins">${esc(w.t)}</p>${ctx?`<p class="insx">${esc(ctx)}</p>`:''}`:'<p class="insx">Nothing recorded this week yet. When you start recording entries this will fill in.</p>'}<button class="h5link h5plain" onclick="go('patterns')">See patterns <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></section>`})();
  return `<main class="hm hm5"><div class="h5hd"><div><h1>Hey${S.name?' '+esc(S.name):' there'}!</h1><p class="h5date">${dl}</p></div><button class="back" onclick="go('settings')" aria-label="Settings">⚙</button></div>
  ${(()=>{const Y=iso(ago(1)),yc=S.checks[Y],ye=(yc&&yc.entries)||[],yd=dosesOf(yc),yz=S.sleep[Y]||S.sleep[T],hr=new Date().getHours(),gr=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening',ch=[];
-  const OK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',NO='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg>';
-  if(ye.length){const l=ye[ye.length-1];ch.push([1,'Mood '+ewd(l).toLowerCase()])}else ch.push([0,'No check-in']);
-  if(yd.length){const dn=yd.filter(o=>o.done).length;ch.push([dn==yd.length?1:0,dn==yd.length?'Medication taken':dn?dn+' of '+yd.length+' doses':'Medication missed'])}
-  if(yz){const hh=Math.floor(yz.h),mm=Math.round((yz.h-hh)*60);ch.push([1,hh+'h'+(mm?' '+mm+'m':'')+' sleep'])}
-  return `<section class="h5recap" aria-label="Yesterday's recap"><img src="beary-home-bear.png" alt="Beary"><div class="h5grow"><b class="h5gr">${gr}</b><span class="h5m">Yesterday's recap</span><div class="h5chips">${ch.map(c=>`<span class="h5chip ${c[0]?'ok':'no'}">${c[0]?OK:NO}${esc(c[1])}</span>`).join('')}</div></div></section>`})()}
+  if(ye.length){const l=ye[ye.length-1];ch.push(['Mood',`<i class="edot" style="background:${moodOf(l.mood)[2]}"></i>${esc(ewd(l))}`])}else ch.push(['Mood','Not logged']);
+  ch.push(['Medication',yd.length?yd.filter(o=>o.done).length+' of '+yd.length+' doses taken':'Not logged']);
+  ch.push(['Sleep',yz?yz.h+' h'+(yz.q?', '+qLbl(yz).toLowerCase():''):'Not logged']);
+  return `<section class="h5recap" aria-label="Yesterday's recap"><img src="beary-home-bear.png" alt="Beary"><div class="h5grow"><b class="h5gr">${gr}</b><span class="h5m">Yesterday's recap</span><div class="h5rows">${ch.map(c=>`<span class="h5rr"><span class="h5rl">${c[0]}</span><span class="h5rv">${c[1]}</span></span>`).join('')}</div></div></section>`})()}
  <div class="h5grp h5first">${pv}</div>
  ${nudge()}
  <div class="h5grp"><h2 class="h5lab">Mood calendar</h2><div class="h5cal"><div class="wk" role="group" aria-label="Mood calendar, this week. Tap a day to see or add a check-in.">${wk}</div></div></div>
