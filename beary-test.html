@@ -312,15 +312,15 @@ main :is(.card,.acc,.sec) .mu,.modal .mu,.mu{color:#f4f6ff!important}
 input,select,textarea{border:1px solid #ffffff66!important}
 .rl a{color:var(--accent)}
 .chat-drawer{padding:32px 24px calc(32px + env(safe-area-inset-bottom,0px))}
-.drawer-heading{padding:0 0 16px}
-.drawer-new{margin:16px 0 !important}
-.drawer-about{margin:0 0 8px}
-.drawer-sep{margin:16px 0 24px}
-.drawer-lbl{margin:0 0 16px}
-.drawer-search{margin:0 0 24px}
-.crow{margin:0 0 8px}
+.drawer-heading{padding:0 0 24px}
+.drawer-new{margin:24px 0 !important}
+.drawer-about{margin:0 0 16px}
+.drawer-sep{margin:24px 0 32px}
+.drawer-lbl{margin:0 0 24px}
+.drawer-search{margin:0 0 32px}
+.crow{margin:0 0 16px}
 .cmain{padding-top:16px;padding-bottom:16px}
-.pill .sw{box-shadow:0 0 0 2px #17123a}
+.pill.on .sw{filter:brightness(.7) saturate(2)}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 nav button.on{border-color:var(--accent)!important}
 .rvc.now{outline-color:var(--accent)}
@@ -539,7 +539,7 @@ const today=()=>iso(new Date());const ftm=t=>new Date('2000-01-01T'+t).toLocaleT
 
 // ===== Views =====
 const ENV={drained:1,low:2,steady:3,high:4,vhigh:5},MVV={good:3,okay:2,low:1,irr:0};
-const DS=[['mood','Mood','#ffffff'],['energy','Energy','#ffb02e'],['sleep','Sleep','#38d9d0'],['ex','Exercise','#5fe08a'],['meds','Medication','#ff8ad4'],['food','Food','#f0e442']];
+const DS=[['mood','Mood','#c58bff'],['energy','Energy','#ffb02e'],['sleep','Sleep','#38d9d0'],['ex','Exercise','#5fe08a'],['meds','Medication','#ff8ad4'],['food','Food','#f0e442']];
 const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
 function dayVals(d){const c=S.checks[d]||{entries:[]},es=c.entries||[],z=S.sleep[d],dd=dosesOf(c),mo=es.filter(e=>MVV[e.mood]!=null),en=es.filter(e=>ENV[e.energy]!=null),xm=exMin(c),fn=foodN(c);
  return{mood:mo.length?{v:avg(mo.map(e=>MVV[e.mood]))/3,raw:mo.map(ewd).join(', ')}:null,
