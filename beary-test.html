@@ -901,10 +901,10 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .dose .c44:not(.o
 
 /* Category colors: same color for the same kind of data on every screen */
 [data-cat=mood]{--cc:#C9B6F2;--cd:#3E3388}
-[data-cat=sleep]{--cc:#A3AEFF;--cd:#2B3592}
+[data-cat=sleep]{--cc:#6FE0EE;--cd:#154A68}
 [data-cat=meds]{--cc:#F7A1D9;--cd:#5C2C6E}
-[data-cat=food]{--cc:#7FE3EA;--cd:#1B4D6E}
-[data-cat=ex]{--cc:#FFBFA3;--cd:#5A3456}
+[data-cat=food]{--cc:#FFBFA3;--cd:#5A3450}
+[data-cat=ex]{--cc:#A3AEFF;--cd:#2B3592}
 [data-cat=notes]{--cc:#CFD6FA;--cd:#2E3470}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app :is(.card[data-cat],.h8b[data-cat],.h5tile[data-cat],.h5cal[data-cat],.h5ins[data-cat],[data-cat]>.acc){background:linear-gradient(165deg,var(--cd) 0%,#1E2260 85%)!important;border:1px solid color-mix(in srgb,var(--cc) 45%,transparent)!important;box-shadow:inset 0 1px 0 #ffffff26,0 14px 30px #05071ca6!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app :is(h2[data-cat],[data-cat]>.h5lab,[data-cat] .ckhd .h5lab){color:var(--cc)!important}
@@ -1141,7 +1141,7 @@ const today=()=>iso(new Date());const ftm=t=>new Date('2000-01-01T'+t).toLocaleT
 
 // ===== Views =====
 const ENV={drained:1,low:2,steady:3,high:4,vhigh:5},MVV={good:3,okay:2,low:1,irr:0};
-const DS=[['mood','Mood','#C9B6F2'],['energy','Energy','#A98EEB'],['sleep','Sleep','#A3AEFF'],['ex','Exercise','#FFBFA3'],['meds','Medication','#F7A1D9'],['food','Food','#7FE3EA']];
+const DS=[['mood','Mood','#C9B6F2'],['energy','Energy','#A98EEB'],['sleep','Sleep','#6FE0EE'],['ex','Exercise','#A3AEFF'],['meds','Medication','#F7A1D9'],['food','Food','#FFBFA3']];
 const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
 function dayVals(d){const c=S.checks[d]||{entries:[]},es=c.entries||[],z=S.sleep[d],dd=dosesOf(c),mo=es.filter(e=>MVV[e.mood]!=null),en=es.filter(e=>ENV[e.energy]!=null),xm=exMin(c),fn=foodN(c);
  return{mood:mo.length?{v:avg(mo.map(e=>MVV[e.mood]))/3,raw:mo.map(ewd).join(', ')}:null,
