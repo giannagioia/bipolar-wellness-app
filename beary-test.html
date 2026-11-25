@@ -900,11 +900,11 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .dose .c44 svg{wi
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .dose .c44:not(.on){background:transparent!important;border:2px solid #CFD6FA!important}
 
 /* Category colors: same color for the same kind of data on every screen */
-[data-cat=mood]{--cc:#C3B4E8;--cd:#3B3486}
-[data-cat=sleep]{--cc:#9AC9EC;--cd:#1F4A80}
-[data-cat=meds]{--cc:#FFB3E3;--cd:#5E2E6A}
-[data-cat=food]{--cc:#F5D98A;--cd:#5A4A2A}
-[data-cat=ex]{--cc:#8EE6C4;--cd:#1E5A57}
+[data-cat=mood]{--cc:#C9B6F2;--cd:#3E3388}
+[data-cat=sleep]{--cc:#A3AEFF;--cd:#2B3592}
+[data-cat=meds]{--cc:#F7A1D9;--cd:#5C2C6E}
+[data-cat=food]{--cc:#7FE3EA;--cd:#1B4D6E}
+[data-cat=ex]{--cc:#FFBFA3;--cd:#5A3456}
 [data-cat=notes]{--cc:#CFD6FA;--cd:#2E3470}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app :is(.card[data-cat],.h8b[data-cat],.h5tile[data-cat],.h5cal[data-cat],.h5ins[data-cat],[data-cat]>.acc){background:linear-gradient(165deg,var(--cd) 0%,#1E2260 85%)!important;border:1px solid color-mix(in srgb,var(--cc) 45%,transparent)!important;box-shadow:inset 0 1px 0 #ffffff26,0 14px 30px #05071ca6!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app :is(h2[data-cat],[data-cat]>.h5lab,[data-cat] .ckhd .h5lab){color:var(--cc)!important}
@@ -917,6 +917,14 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app [data-cat] .h5
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app [data-cat]>.acc .acsum{color:#fff}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app [data-cat] .c44.on,html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app [data-cat] .pill.on{background:var(--cc)!important;color:#1E2560!important;border-color:transparent!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .card.mapc[data-cat] .pill.on{background:var(--cc)!important;color:#1E2560!important}
+
+/* Prepare topics: tag sits under the text, aligned */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .chk{display:flex!important;align-items:flex-start!important;gap:16px!important;padding:12px 0!important;margin:0!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .chk input[type=checkbox]{margin:0!important;flex:none}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .chk>span{display:flex!important;flex-direction:column;align-items:flex-start;gap:6px;padding-top:1px;line-height:1.4;font-size:16px}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .chk .tag{margin:0!important;padding:3px 10px!important;font-size:11px!important;line-height:14px;border-radius:999px;background:#ffffff1a!important;color:#CFD6FA!important;border:1px solid #CFD6FA55;font-weight:600}
+/* Sleep chart bars and food meal dots follow their category */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .card[data-cat=sleep] svg rect[fill="#e6e3f7"],html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .card[data-cat=sleep] svg rect[fill="#ffffff"]{fill:var(--cc)}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -1133,7 +1141,7 @@ const today=()=>iso(new Date());const ftm=t=>new Date('2000-01-01T'+t).toLocaleT
 
 // ===== Views =====
 const ENV={drained:1,low:2,steady:3,high:4,vhigh:5},MVV={good:3,okay:2,low:1,irr:0};
-const DS=[['mood','Mood','#C3B4E8'],['energy','Energy','#FFB3E3'],['sleep','Sleep','#9AC9EC'],['ex','Exercise','#8EE6C4'],['meds','Medication','#FFC7A0'],['food','Food','#F5E58A']];
+const DS=[['mood','Mood','#C9B6F2'],['energy','Energy','#A98EEB'],['sleep','Sleep','#A3AEFF'],['ex','Exercise','#FFBFA3'],['meds','Medication','#F7A1D9'],['food','Food','#7FE3EA']];
 const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
 function dayVals(d){const c=S.checks[d]||{entries:[]},es=c.entries||[],z=S.sleep[d],dd=dosesOf(c),mo=es.filter(e=>MVV[e.mood]!=null),en=es.filter(e=>ENV[e.energy]!=null),xm=exMin(c),fn=foodN(c);
  return{mood:mo.length?{v:avg(mo.map(e=>MVV[e.mood]))/3,raw:mo.map(ewd).join(', ')}:null,
