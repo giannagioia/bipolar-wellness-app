@@ -956,6 +956,31 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .h
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .pill.on:not([data-cat] .pill):not(.trgrp .pill),html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .ckd.on{background:#9AC9EC!important;color:#1E2560!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .ckd.on :is(small,b){color:#1E2560!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app :is(.h5lab,main>h2):not([data-cat]):not([data-cat] *){color:#9AC9EC!important}
+
+/* Beary avatar background */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .gface{background:radial-gradient(circle at 40% 35%,#3E4BB0,#232A78)!important;border:2px solid #9AC9EC80!important;box-shadow:0 6px 14px #05071c80!important;overflow:hidden}
+/* Week and month cells match the 3-day buttons */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .ckc{background:#1F2559!important;border:1px solid #9FA8D555!important;color:#fff!important;box-shadow:inset 0 1px 0 #ffffff14!important;opacity:1!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .ckc b{color:#fff!important;opacity:1!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .ckc.on{background:#9AC9EC!important;border-color:transparent!important;color:#1E2560!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .ckc.on b{color:#1E2560!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .ckc[disabled],html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .ckc.fut{opacity:.45!important}
+/* Chat composer: one surface with the page */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose{background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose input{background:#1F2559!important;border:1px solid #9FA8D555!important;color:#fff!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose .send{background:#9AC9EC!important;color:#1E2560!important}
+
+/* Composer and nav like a floating dark pill */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose{margin:0 16px 8px!important;padding:6px 6px 6px 20px!important;border-radius:999px!important;background:#232A63!important;border:1px solid #ffffff1a!important;box-shadow:0 8px 24px #05071c99!important;align-items:center}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose input{flex:1;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;min-height:44px;color:#fff!important;font-size:16px}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose input::placeholder{color:#AEB6E0}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose .send{width:44px!important;height:44px!important;border-radius:50%!important;background:#9AC9EC!important;color:#1E2560!important;font-size:18px!important;box-shadow:none!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app nav{background:#232A63!important;border:1px solid #ffffff1a!important;box-shadow:0 10px 28px #05071ccc!important;backdrop-filter:none!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app nav button{color:#E6E9FA!important;background:transparent!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app nav button svg{stroke:#E6E9FA!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app nav button.on{background:#141945!important;color:#fff!important;border:0!important;box-shadow:inset 0 1px 0 #ffffff14!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app nav button.on svg{stroke:#fff!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose #ci{background:none!important;background-color:transparent!important;border:0!important;outline-offset:4px;-webkit-appearance:none;appearance:none}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -1393,7 +1418,7 @@ chat(){const c=S.conv[S.cur];
  const ms=c.msgs.map((m,i)=>m.crisis?crisisCard():`<div ${i==fbI?'id="fbm" ':''}class="m ${m.r}">${m.r=='b'?'<small style="margin:0 0 0px;color:var(--peri)">Beary</small>':''}${esc(m.t)}</div>`+(m.r=='b'&&i==lastB&&i==c.msgs.length-1&&m.btns&&m.btns.length&&!ui.busy?`<div class="chips" style="margin:0px 0 8px">${m.btns.map((b,j)=>`<button class="pill" onclick="sendChip(${j})">${esc(b.name)}</button>`).join('')}</div>`:'')).join('');
  const empty='';
  const drawer=ui.hist?`<div class="chat-overlay" aria-hidden="true" onclick="closeHistory()"></div><aside class="chat-drawer" role="dialog" aria-modal="true" aria-label="Conversation history"><div class="drawer-heading"><h2>Chats</h2><button class="drawer-close" aria-label="Close history" onclick="closeHistory()">×</button></div><button class="drawer-new" onclick="newChat()">＋ New conversation</button><button class="drawer-about" onclick="openChatInfo()"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5M12 7.8v.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>About Beary</button><div class="drawer-sep"></div><label class="drawer-lbl" for="dq">Recent conversations</label><input id="dq" class="drawer-search" type="search" placeholder="Search conversations" value="${esc(ui.dq||'')}" oninput="drawerSearch(this.value)" autocomplete="off"><div class="drawer-history">${drawerList()}</div><p class="drawer-note">Deleting removes a conversation from this device.</p></aside>`:'';
- return `<header class="chat-header"><button class="chat-icon" aria-label="Open conversation history" aria-expanded="${ui.hist}" onclick="ui.hist=!ui.hist;render()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div class="chbrand"><img src="beary-home-bear.png" alt=""><div><h1>Beary</h1><span>Your reflection companion</span></div></div></header>
+ return `<header class="chat-header"><button class="chat-icon" aria-label="Open conversation history" aria-expanded="${ui.hist}" onclick="ui.hist=!ui.hist;render()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><div class="chbrand"><img src="beary-home-bear.png" alt=""><div><h1>Beary</h1></div></div></header>
  <main id="msgs"><p class="mu" style="text-align:center">${fd(c.t)} · Beary is for reflection, not medical advice or emergencies.</p><div class="msgs">${ms}${empty}${ui.busy?'<div class="m"><span class="dots" aria-label="Beary is typing"><span></span><span></span><span></span></span></div>':''}${ui.err?`<div class="m" style="border:1px solid var(--bad)">Couldn't reach Beary. Check your connection. <button class="pill" style="min-height:36px;padding:8px 16px" onclick="retry()">Retry</button></div>`:''}</div></main>
  <form class="compose" onsubmit="event.preventDefault();sendMsg($('#ci').value)"><input id="ci" aria-label="Message Beary" placeholder="Type here…" autocomplete="off"><button class="send" aria-label="Send">➤</button></form>${drawer}`},
 patterns(){return V.trends()},
