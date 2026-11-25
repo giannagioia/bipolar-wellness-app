@@ -1023,6 +1023,20 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun
 
 @keyframes flashring{0%{box-shadow:0 0 0 0 #8EB4F5cc}100%{box-shadow:0 0 0 14px #8EB4F500}}
 #app main .card.flash{animation:flashring 1.2s ease-out 1}
+
+/* Food log bars */
+.fdsum{display:flex;flex-direction:column;gap:4px;margin-bottom:16px}
+.fdsum b{font-size:16px}
+.fdbars{display:grid;gap:6px;align-items:end}
+.fdday{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 0;border:0;border-radius:14px;background:none;color:#fff;font:inherit;cursor:pointer}
+.fdday.lo{background:#FFBFA31f;box-shadow:inset 0 0 0 1.5px #FFBFA399}
+.fdn{font-size:14px;font-weight:700}
+.fdday.lo .fdn{color:#FFBFA3}
+.fdstack{display:flex;flex-direction:column;gap:3px;width:22px}
+.fdstack i{display:block;height:14px;border-radius:5px;background:#ffffff1a}
+.fdstack i.on{background:#FFBFA3}
+.fdl{font-size:12px;color:#E1E5FB}
+.fdkey{margin:12px 0 0!important;font-size:13px}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -1480,8 +1494,8 @@ trends(){const R=rng(),dates=[...Array(R)].map((_,i)=>iso(ago(R-1-i)));const W=3
  <h2 data-cat="sleep">Sleep hours</h2><div class="card" data-cat="sleep"><svg viewBox="0 0 ${W+10} ${H+16}" width="100%" role="img" aria-label="Sleep hours by day">${sb}<g transform="translate(0,${H+14})">${lab.replace(/y="12"/g,'y="0"')}</g></svg>
  <p class="mu">Dashed outline means no sleep logged that night.</p><button class="btn ghost sm" onclick="openCheckin(today(),'sleep')">Log sleep</button></div>
  <h2 data-cat="ex">Exercise minutes, last ${R} days</h2><div class="card" data-cat="ex"><svg viewBox="0 0 ${W+10} ${H+16}" width="100%" role="img" aria-label="Exercise minutes by day">${dates.map((d,i)=>{const m=exMin(S.checks[d]);if(!m)return `<rect x="${(cx(i)-bw/2)}" y="${H-8}" width="${bw}" height="8" rx="4" fill="none" stroke="#aab2e8" stroke-dasharray="3 3"/>`;const h=Math.min(H-14,m*(H-14)/90);return `<rect x="${(cx(i)-bw/2)}" y="${H-h}" width="${bw}" height="${h}" rx="6" fill="#5fe08a"/>${R>14?'':`<text x="${cx(i)}" y="${H-h-4}" fill="#fff" font-size="11" text-anchor="middle">${m}</text>`}`}).join('')}<g transform="translate(0,${H+14})">${lab.replace(/y="12"/g,'y="0"')}</g></svg><p class="mu">Minutes of exercise you recorded. Dashed outline = nothing recorded that day.</p><button class="btn ghost sm" onclick="openCheckin(today(),'ex')">Log exercise</button></div>
- <h2 data-cat="meds">Medication log</h2><div class="card" data-cat="meds">${med}<div class="medleg" aria-hidden="true"><span><svg width="16" height="16" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#cfcbea"/></svg>Taken</span><span><svg width="16" height="16" viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="#cfcbea" stroke-width="3"/><path d="M16 5a11 11 0 0 1 0 22z" fill="#cfcbea"/></svg>Some taken</span><span><svg width="16" height="16" viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="#cfcbea" stroke-width="3"/></svg>Not taken</span><span><svg width="16" height="16" viewBox="0 0 32 32"><circle cx="16" cy="16" r="4" fill="#aab2e8"/></svg>No entry</span></div><p class="mu">Tap any day to see it or add to it.</p></div>
- <h2 data-cat="food">Food log, last ${R} days</h2><div class="card" data-cat="food"><div style="display:grid;grid-template-columns:${R>14?64:78}px repeat(${R},minmax(0,1fr));gap:8px 0;align-items:center;text-align:center">${'<span></span>'+dates.map(d=>`<span class="mu" style="font-size:12px">${R>14?'':new Date(d+'T12:00').toLocaleDateString(undefined,{weekday:'narrow'})}</span>`).join('')}${FD.map(f=>`<span class="mu" style="text-align:left;font-size:14px">${f[1]}</span>`+dates.map(d=>{const x=foodOf(S.checks[d])[f[0]]||{},on=x.done||x.note;return `<span style="display:flex;justify-content:center" title="${fd(d)}: ${f[1]} ${on?(x.note?esc(x.note):'logged'):'not logged'}"><i style="width:${Math.min(22,Math.floor(255/R)-2)}px;height:${Math.min(22,Math.floor(255/R)-2)}px;border-radius:50%;${on?'background:#f0e442':'border:1.5px dashed #6a64a0'}"></i></span>`}).join('')).join('')}</div><p class="mu" style="margin:8px 0 0">Filled circle = that meal was logged. Dashed = nothing logged. ${dates.filter(d=>foodN(S.checks[d])>=3).length} of the last ${R} days had three or more meals or snacks logged.</p></div>
+ <h2 data-cat="meds">Medication log</h2><div class="card" data-cat="meds">${med}<p class="mu">Tap any day to see it or add to it.</p></div>
+ <h2 data-cat="food">Food log, last ${R} days</h2><div class="card" data-cat="food">${(()=>{const L=dates.filter(d=>foodN(S.checks[d])<3);return `<div class="fdsum"><b>${L.length?L.length+(L.length==1?' day':' days')+' with fewer than 3 meals':'Every day had 3 or more meals'}</b><span class="mu">Those days are outlined.</span></div><div class="fdbars" style="grid-template-columns:repeat(${R},minmax(0,1fr))">${dates.map(d=>{const n=foodN(S.checks[d]),fo=foodOf(S.checks[d]),lo=n<3;return `<button class="fdday${lo?' lo':''}" onclick="ui.modal='day';ui.d='${d}';render()" aria-label="${fd(d)}: ${n} of 4 meals logged${lo?', fewer than 3':''}"><span class="fdn">${n}</span><span class="fdstack">${FD.slice().reverse().map(f=>{const x=fo[f[0]]||{};return `<i class="${x.done||x.note?'on':''}" title="${f[1]}"></i>`}).join('')}</span><span class="fdl">${R>14?'':new Date(d+'T12:00').toLocaleDateString(undefined,{weekday:'narrow'})}</span></button>`}).join('')}</div><p class="mu fdkey">Bottom to top: breakfast, lunch, dinner, snacks. Tap a day to see it.</p>`})()}</div>
  ${wordMap(R)}
  <h2>Review by date</h2>${reviewCal()}
  <p class="mu">These are recorded entries only. They don't show cause and effect, and the app can't identify or predict episodes.</p></main>`},
