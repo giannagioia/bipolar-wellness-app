@@ -869,6 +869,21 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun .dchip:not(.on) :is(small,b){color:
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun .dchip:not(.on) small{color:#CFD6FA!important}
 html.sun :is(.pill.on,.chip.on) :is(i,.sw){filter:none!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .trgrp .pill.on{background:#ffffff1f!important;color:#fff!important;border:1px solid #fff!important}
+
+/* Check-in: section titles outside the cards */
+.cksec{margin:32px 0 0}
+.cksec:first-of-type{margin-top:24px}
+.ckhd{width:100%;display:flex;align-items:center;justify-content:space-between;min-height:36px;padding:0 4px;margin:0 0 4px;background:none;border:0;cursor:pointer;color:#CFD6FA;font:600 13px Inter,system-ui,sans-serif}
+.ckhd .h5lab{margin:0!important}
+.ckhd-r{display:inline-flex;align-items:center;gap:6px}
+.ckhd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.ckhd svg.up{transform:rotate(180deg)}
+.cksec .acc{margin:0!important}
+.accsum{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding:16px 24px;background:none;border:0;color:#fff;font:600 16px Inter,system-ui,sans-serif;text-align:left;cursor:pointer}
+.accsum span:last-child{font-size:22px;color:#CFD6FA}
+.cksec .accb{padding:24px!important}
+.cksec+p,.cksec~p:last-of-type{margin-top:32px!important}
+.acsum{margin:0 0 16px!important;font-size:16px;font-weight:700;color:#fff}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -1266,7 +1281,7 @@ checkin(){const k=ckS(),d=k.d,T=today(),c=S.checks[d]||{entries:[]},z=S.sleep[d]
   return `<button class="ckd ${on?'on':''}" aria-pressed="${on}" aria-label="${rel(x)}${e.length?', '+e.length+' check-in'+(e.length==1?'':'s'):', no check-ins'}${ap?', visit planned':''}" onclick="ckPick('${x}')"><small>${lab}</small><b>${dt.getDate()}</b><span class="dots">${e.slice(0,4).map(y=>{const q=5+(y.level||3)*1.6;return `<i style="width:${q}px;height:${q}px;background:${eCol(y,x)}"></i>`}).join('')}</span><em class="${ap?'':'no'}">Visit</em></button>`};
  const longD=(d==T?'Today, ':'')+new Date(d+'T12:00').toLocaleDateString(undefined,{weekday:d==T?undefined:'long',month:'short',day:'numeric'});
  let status;if(fut){status=S.appts.some(a=>a.date==d)?'1 visit planned':'Nothing planned'}else{const b=[n+(n==1?' check-in':' check-ins')];if(z)b.push(z.h+' h sleep');if(ds.length)b.push(ds.filter(o=>o.done).length+' of '+ds.length+' doses taken');if(exOf(c).length)b.push(exMin(c)+' min exercise');if(foodN(c))b.push(foodN(c)+' of 4 food entries');status=b.join(', ')}
- const sec=(key,title,sum,body)=>{const o=!!k.open[key];return `<div class="acc"><button class="acch" aria-expanded="${o}" onclick="ckTog('${key}')"><span><b>${title}</b><span class="mu">${sum}</span></span><svg viewBox="0 0 24 24" class="${o?'up':''}" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>${o?`<div class="accb">${body}</div>`:''}</div>`};
+ const sec=(key,title,sum,body)=>{const o=!!k.open[key];return `<section class="cksec"><button class="ckhd" aria-expanded="${o}" onclick="ckTog('${key}')"><span class="h5lab">${title}</span><span class="ckhd-r">${o?'Hide':'Show'}<svg viewBox="0 0 24 24" class="${o?'up':''}" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button><div class="acc">${o?'':`<button class="accsum" onclick="ckTog('${key}')"><span>${sum}</span><span aria-hidden="true">›</span></button>`}${o?`<div class="accb"><p class="acsum">${sum}</p>${body}</div>`:''}</div></section>`};
  const mc=k.mood&&k.mood!='other'?moodOf(k.mood):null;
  const moodBody=`${c.entries.map((e,i)=>{const col=eCol(e,k.d);return `<div class="tl" style="gap:8px"><i class="edot" style="background:${col}"></i><span>${ewd(e)}${e.energy?', '+enLbl(e).toLowerCase()+' energy':''}${e.note?'<br><span class="mu">“'+esc(e.note)+'”</span>':''}</span><span aria-hidden="true" style="white-space:nowrap">${[1,2,3,4,5].map(j=>`<span class="mb" style="${j<=(e.level||3)?'background:'+col:''}"></span>`).join('')}</span><span class="mu" style="white-space:nowrap">${e.late?'Added later':ftm(e.t)}</span><button class="xs" aria-label="Remove the ${e.late?'later':ftm(e.t)} entry" onclick="ckDel(${i})">×</button></div>`}).join('')}
   <p class="mu" style="margin:8px 0 8px">Add a check-in. You can add more than one a day.</p>
@@ -1318,7 +1333,6 @@ trends(){const R=rng(),dates=[...Array(R)].map((_,i)=>iso(ago(R-1-i)));const W=3
  return `<main><h1>My Patterns</h1>${guide('These pictures show what you chose to record. They are a mirror, not a rulebook, so please do not follow them blindly. They only show patterns, and you know your days best. Blank days mean nothing was logged.')}
  <div class="row" style="margin:0px 0 0"><button class="btn ghost sm" onclick="openExport()">Export as PDF</button></div>
  ${mapHTML()}
- ${wordMap(R)}
  ${dashHTML()}
  <h2>Mood, last ${R} days</h2><div class="card scroll"><svg viewBox="0 0 350 100" width="100%" role="img" aria-label="Mood by day">${mc}<g transform="translate(0,90)">${lab.replace(/y="12"/g,'y="8"')}</g></svg><p class="mu">Higher dot means a better mood. The color matches the mood and energy map. Empty circle means no entry.</p></div>
  <h2>Energy, last ${R} days</h2><div class="card scroll"><svg viewBox="0 0 350 100" width="100%" role="img" aria-label="Energy by day">${dates.map((d,i)=>{const es=((S.checks[d]||{}).entries||[]).filter(e=>ENV[e.energy]!=null);if(!es.length)return `<circle cx="${cx(i)}" cy="45" r="${Math.min(3,rr)}" fill="none" stroke="#aab2e8"/>`;const n=es.length;return es.map((e,k)=>{const lv=ENV[e.energy],hi=lv>=4;return `<circle cx="${cx(i)+(n>1?(k-(n-1)/2)*(Math.min(16,36/(n-1))):0)}" cy="${15+(5-lv)*17}" r="${n>1?Math.max(2.5,rr*.75):rr}" fill="${(()=>{const o=vaOf(e,d);return o?qInfo(qOf(o.v,o.a))[2]:'#cfcbea'})()}" ${hi?'stroke="#fff" stroke-width="2.5"':''}><title>${fd(d)}: ${esc(enLbl(e))}</title></circle>`}).join('')}).join('')}<g transform="translate(0,90)">${lab.replace(/y="12"/g,'y="8"')}</g></svg><p class="mu">Higher dot means more energy. A white ring marks high energy. Empty circle means no entry.</p></div>
@@ -1327,6 +1341,7 @@ trends(){const R=rng(),dates=[...Array(R)].map((_,i)=>iso(ago(R-1-i)));const W=3
  <h2>Exercise minutes, last ${R} days</h2><div class="card"><svg viewBox="0 0 ${W+10} ${H+16}" width="100%" role="img" aria-label="Exercise minutes by day">${dates.map((d,i)=>{const m=exMin(S.checks[d]);if(!m)return `<rect x="${(cx(i)-bw/2)}" y="${H-8}" width="${bw}" height="8" rx="4" fill="none" stroke="#aab2e8" stroke-dasharray="3 3"/>`;const h=Math.min(H-14,m*(H-14)/90);return `<rect x="${(cx(i)-bw/2)}" y="${H-h}" width="${bw}" height="${h}" rx="6" fill="#5fe08a"/>${R>14?'':`<text x="${cx(i)}" y="${H-h-4}" fill="#fff" font-size="11" text-anchor="middle">${m}</text>`}`}).join('')}<g transform="translate(0,${H+14})">${lab.replace(/y="12"/g,'y="0"')}</g></svg><p class="mu">Minutes of exercise you recorded. Dashed outline = nothing recorded that day.</p><button class="btn ghost sm" onclick="openCheckin(today(),'ex')">Log exercise</button></div>
  <h2>Medication log</h2><div class="card">${med}<div class="medleg" aria-hidden="true"><span><svg width="16" height="16" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#cfcbea"/></svg>Taken</span><span><svg width="16" height="16" viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="#cfcbea" stroke-width="3"/><path d="M16 5a11 11 0 0 1 0 22z" fill="#cfcbea"/></svg>Some taken</span><span><svg width="16" height="16" viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="#cfcbea" stroke-width="3"/></svg>Not taken</span><span><svg width="16" height="16" viewBox="0 0 32 32"><circle cx="16" cy="16" r="4" fill="#aab2e8"/></svg>No entry</span></div><p class="mu">Tap any day to see it or add to it.</p></div>
  <h2>Food log, last ${R} days</h2><div class="card"><div style="display:grid;grid-template-columns:${R>14?64:78}px repeat(${R},minmax(0,1fr));gap:8px 0;align-items:center;text-align:center">${'<span></span>'+dates.map(d=>`<span class="mu" style="font-size:12px">${R>14?'':new Date(d+'T12:00').toLocaleDateString(undefined,{weekday:'narrow'})}</span>`).join('')}${FD.map(f=>`<span class="mu" style="text-align:left;font-size:14px">${f[1]}</span>`+dates.map(d=>{const x=foodOf(S.checks[d])[f[0]]||{},on=x.done||x.note;return `<span style="display:flex;justify-content:center" title="${fd(d)}: ${f[1]} ${on?(x.note?esc(x.note):'logged'):'not logged'}"><i style="width:${Math.min(22,Math.floor(255/R)-2)}px;height:${Math.min(22,Math.floor(255/R)-2)}px;border-radius:50%;${on?'background:#f0e442':'border:1.5px dashed #6a64a0'}"></i></span>`}).join('')).join('')}</div><p class="mu" style="margin:8px 0 0">Filled circle = that meal was logged. Dashed = nothing logged. ${dates.filter(d=>foodN(S.checks[d])>=3).length} of the last ${R} days had three or more meals or snacks logged.</p></div>
+ ${wordMap(R)}
  <h2>Review by date</h2>${reviewCal()}
  <p class="mu">These are recorded entries only. They don't show cause and effect, and the app can't identify or predict episodes.</p></main>`},
 sums(){return V.patterns()},
