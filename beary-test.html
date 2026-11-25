@@ -622,9 +622,11 @@ html.sun .rvc{background:#1E304799!important;border-color:#ffffff26!important}
 .h7greet .h6sub{display:block;font-size:14px;color:#C9D7E8}
 .h7{margin-top:-16px!important}
 .h7tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.h7t{aspect-ratio:1;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;padding:16px 12px;border-radius:24px;border:0;background:linear-gradient(160deg,#35506F,#2F4762);box-shadow:inset 0 1px 0 #ffffff14,0 12px 26px #0a142466;color:#fff;font:inherit;text-align:left;cursor:pointer;min-width:0}
+.h7c{display:flex;flex-direction:column;gap:8px;min-width:0}
+.h7lab{font-size:13px;line-height:16px;font-weight:700;color:#F5CF82;padding-left:4px}
+.h7t{min-height:64px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:12px;border-radius:24px;border:0;background:linear-gradient(160deg,#35506F,#2F4762);box-shadow:inset 0 1px 0 #ffffff14,0 12px 26px #0a142466;color:#fff;font:inherit;text-align:left;cursor:pointer;min-width:0}
 .h7t .h6l{align-self:stretch;display:flex;justify-content:space-between;align-items:center;color:#F5CF82!important;font-size:13px;font-weight:700}
-.h7t .h6v{font-size:15px;font-weight:700;line-height:1.3;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.h7t .h6v{font-size:15px;flex-wrap:nowrap!important;white-space:nowrap;font-weight:700;line-height:1.3;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .h7t .h6v.none{font-weight:600;color:#C9D7E8}
 .h7t .edot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none}
 </style></head><body><div id="app"></div>
@@ -1005,7 +1007,7 @@ home(){const T=today(),c=S.checks[T],ups=S.appts.filter(a=>a.date>=today()).sort
   if(ye.length){const l=ye[ye.length-1];ch.push([`Mood<i class="edot" style="background:${moodOf(l.mood)[2]}"></i>`,esc(ewd(l))])}else ch.push(['Mood','Not logged']);
   ch.push(['Medication',yd.length?yd.filter(o=>o.done).length+' of '+yd.length+' taken':'Not logged']);
   ch.push(['Sleep',yz?yz.h+' h':'Not logged']);
-  return `<div class="h7greet"><img src="beary-home-bear.png" alt="Beary"><div><b class="h6gr">${gr}</b><span class="h6sub">Here's how yesterday went</span></div></div><section class="h5grp h7" aria-labelledby="yck"><h2 class="h5lab" id="yck">Yesterday's check-in</h2><div class="h7tiles">${ch.map(c=>`<button class="h7t" onclick="openCheckin(iso(ago(1)),'${c[0].startsWith('Mood')?'mood':c[0]=='Medication'?'meds':'sleep'}')" aria-label="${c[0].replace(/<[^>]*>/g,'')}: ${c[1].replace(/<[^>]*>/g,'')}. Open yesterday in Daily check-in"><span class="h6l">${c[0]}</span><span class="h6v${c[1]=='Not logged'?' none':''}">${c[1]}</span></button>`).join('')}</div></section>`})()}
+  return `<div class="h7greet"><img src="beary-home-bear.png" alt="Beary"><div><b class="h6gr">${gr}</b><span class="h6sub">Here's how yesterday went</span></div></div><section class="h5grp h7" aria-labelledby="yck"><h2 class="h5lab" id="yck">Yesterday's check-in</h2><div class="h7tiles">${ch.map(c=>`<div class="h7c"><span class="h7lab">${c[0].replace(/<i class="edot"[^>]*><\/i>/,'')}</span><button class="h7t" onclick="openCheckin(iso(ago(1)),'${c[0].startsWith('Mood')?'mood':c[0]=='Medication'?'meds':'sleep'}')" aria-label="${c[0].replace(/<[^>]*>/g,'')}: ${c[1].replace(/<[^>]*>/g,'')}. Open yesterday in Daily check-in"><span class="h6v${c[1]=='Not logged'?' none':''}">${(c[0].match(/<i class="edot"[^>]*><\/i>/)||[''])[0]}${c[1]}</span></button></div>`).join('')}</div></section>`})()}
  <div class="h5grp h5first">${pv}</div>
  ${nudge()}
  <div class="h5grp"><h2 class="h5lab">Mood calendar</h2><div class="h5cal"><div class="wk" role="group" aria-label="Mood calendar, this week. Tap a day to see or add a check-in.">${wk}</div></div></div>
