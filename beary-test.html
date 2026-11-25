@@ -1555,7 +1555,7 @@ const err=m=>{const e=$('#fe');if(e)e.textContent=m};
 const ckNew=d=>({d:d||today(),off:-1,open:{mood:1,sleep:0,meds:0,ex:0,notes:0},mood:null,level:3,energy:null,v:null,a:null,w:null,other:false,note:'',words:'',ew:'',mo:false,fo:{},exn:'',ek:'walk',em:20});
 const ckS=()=>ui.ck||(ui.ck=ckNew());
 const trackBg=(v,col)=>`linear-gradient(90deg,${col} ${(v-1)*25}%,#3a3466 ${(v-1)*25}%)`;
-function openCheckin(d,sec){const k=ckNew(d);if(d){const n=Math.round((new Date(d+'T12:00')-new Date(today()+'T12:00'))/864e5);k.off=Math.min(5,n-1)}if(sec){k.open={mood:0,sleep:0,meds:0,ex:0,notes:0};k.open[sec]=1}ui.ck=k;ui.modal=null;ui.d=null;ui.f=null;go('checkin',false)}
+function openCheckin(d,sec){const k=ckNew(d);if(d){const n=Math.round((new Date(d+'T12:00')-new Date(today()+'T12:00'))/864e5);k.off=Math.min(5,n-1)}if(sec){k.open={mood:0,sleep:0,meds:0,ex:0,food:0,notes:0};k.open[sec]=1}ui.ck=k;ui.modal=null;ui.d=null;ui.f=null;go('checkin',false);if(sec)setTimeout(()=>{const e=document.querySelector('.cksec[data-cat="'+sec+'"]'),m=document.querySelector('main');if(e&&m){m.scrollTo({top:Math.max(0,e.offsetTop-16),behavior:'smooth'})}},60)}
 const dayDiff=d=>Math.round((new Date(d+'T12:00')-new Date(today()+'T12:00'))/864e5);
 const ckShift=n=>{const k=ckS(),v=ui.ckvw||'3';if(v=='m')ui.ckmo=Math.min(0,(ui.ckmo||0)+n);else if(v=='w')k.off=Math.min(1,k.off+n*7);else k.off=Math.min(5,k.off+n);render()};
 function ckSetView(v){const k=ckS(),n=dayDiff(k.d);ui.ckvw=v;if(v=='3')k.off=Math.min(5,n-1);if(v=='w')k.off=Math.min(1,n-3);if(v=='m'){const a=new Date(k.d+'T12:00'),t=new Date(today()+'T12:00');ui.ckmo=Math.min(0,(a.getFullYear()-t.getFullYear())*12+a.getMonth()-t.getMonth())}render()}
