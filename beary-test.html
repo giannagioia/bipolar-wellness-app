@@ -653,6 +653,55 @@ html.sun #app main .acc.acc .cgw svg text,html.sun #app main .card.mapc.mapc svg
 
 html.sun .sp h1,html.sun .sp-title,html.sun [class*="sp"] h1{color:#fff!important}
 html.sun .h8 .h6sub{color:#FFB3E3!important}
+
+/* Beary dark: same layout, dark page */
+html.sun.sun body{background:#0D1030}
+html.sun.sun #app,html.sun.sun #app[data-v]{background:linear-gradient(180deg,#141945,#10143A)!important;color:#fff!important}
+html.sun.sun #app :is(h1,h2,h3){color:#fff}
+html.sun.sun .h5hd h1{color:#fff!important}
+html.sun.sun :is(.h5lab,.trlab){color:#B7C3F7!important}
+html.sun.sun :is(.h5date,.h5disc){color:#CFD6FA!important}
+html.sun.sun #app main .mu{color:#CFD6FA!important}
+/* dark tiles (were snow) */
+html.sun.sun :is(.h5tile,.h5rt,.h5mrow,.h5res),html.sun.sun #app main .card.mapc.mapc.mapc,html.sun.sun #app main .acc.acc:has(.cgw){background:#1F2559!important;border:1px solid #ffffff14!important;box-shadow:0 12px 28px #05071c80!important;color:#fff!important}
+html.sun.sun :is(.h5tile,.h5rt,.h5mrow,.h5res) :is(b,.h5m,span){color:#fff!important}
+html.sun.sun :is(.h5tile,.h5mrow) .h5m{color:#CFD6FA!important}
+html.sun.sun #app main .card.mapc.mapc.mapc :is(b,h2,span,p,strong){color:#fff!important}
+html.sun.sun #app main .card.mapc.mapc.mapc .mu,html.sun.sun #app main .acc.acc:has(.cgw) .mu{color:#CFD6FA!important}
+html.sun.sun #app main .acc.acc:has(.cgw) :is(b,h2,h3,span,p,label,strong,.acch,.acch b){color:#fff!important}
+html.sun.sun .h5ti{background:#B7C3F726!important}html.sun.sun .h5ti svg{stroke:#B7C3F7!important}
+html.sun.sun :is(.h5tc,.h5chev){color:#B7C3F7!important}
+html.sun.sun .h5tile .h5step{background:#141945!important}html.sun.sun .h5tile .h5step b{color:#fff!important}
+html.sun.sun .h5step .back{background:#1F2559!important;border:2px solid #B7C3F799!important;color:#fff!important}
+/* data cards: brighter indigo */
+html.sun.sun #app main :is(.card,.acc,.sec):not(.h5visit):not(.mapc):not(:has(.cgw)),html.sun.sun :is(.h8,.h5cal,.h5ins){background:linear-gradient(160deg,#3442A6,#2A3590)!important;border:1px solid #ffffff1f!important;box-shadow:0 14px 30px #05071c80!important}
+html.sun.sun .h8b{background:#1F2870!important}html.sun.sun .h8i{background:#2A3590!important}
+/* buttons and chips */
+html.sun.sun :is(.btn:not(.ghost),.h5log:not(.on)){background:#B7C3F7!important;color:#1E2560!important}
+html.sun.sun .h5visit .btn:not(.ghost){background:#1E2560!important;color:#fff!important}
+html.sun.sun :is(.btn.ghost,.pill:not(.on),.back,.ckd:not(.on),.ckar,.dchip:not(.on)),html.sun.sun #app main .card.mapc.mapc.mapc .pill:not(.on),html.sun.sun #app main .acc.acc:has(.cgw) :is(.pill:not(.on),.btn.ghost){background:#ffffff12!important;border:1px solid #ffffff38!important;color:#fff!important}
+html.sun.sun .h5visit .h5sec{background:#ffffff80!important;color:#1E2560!important}
+html.sun.sun :is(.pill.on,.ckc.on,.ckd.on,.dchip.on,.trseg button.on,.send){background:#B7C3F7!important;color:#1E2560!important}
+html.sun.sun .ckd:not(.on) :is(small,b){color:#fff!important}
+html.sun.sun .h5log.on{background:#2fd39a26!important;color:#9EF0CF!important}
+/* nav, bubbles, modal, inputs */
+html.sun.sun nav{background:#1F2559!important;border:1px solid #ffffff14!important;box-shadow:0 10px 28px #05071ccc!important}
+html.sun.sun nav button{color:#CFD6FA!important}
+html.sun.sun nav button.on{background:#B7C3F7!important;color:#1E2560!important}
+html.sun.sun :is(.gsay,.bubble){background:#1F2559!important;color:#fff!important;box-shadow:none}
+html.sun.sun .gsay b{color:#fff!important}
+html.sun.sun .modal{background:linear-gradient(170deg,#2A3590,#141945)!important;color:#fff!important}
+html.sun.sun .modal :is(h2,p,b,span,label){color:#fff}
+html.sun.sun :is(.dme,.dmt){background:#ffffff12!important;box-shadow:none}
+html.sun.sun :is(.dmt b,.dme b){color:#fff!important}html.sun.sun :is(.dml,.dms){color:#CFD6FA!important}html.sun.sun .dmi svg{stroke:#fff!important}
+html.sun.sun :is(input,textarea,select),html.sun.sun #app main .acc.acc:has(.cgw) input{background:#ffffff12!important;color:#fff!important;border:1px solid #ffffff4d!important}
+html.sun.sun .rvc{background:#ffffff0f!important;border-color:#ffffff26!important}
+html.sun.sun .wd.on,html.sun.sun .h5cal .wd.on{border-color:#FFB3E3!important;background:#FFB3E31a!important}
+/* map: light rounded panel so the pastels stay pastel */
+html.sun.sun .cgw svg,html.sun.sun #app main .card.mapc svg[role=img]{background:transparent}
+html.sun.sun #app main .acc.acc .cgw svg text,html.sun.sun #app main .card.mapc.mapc svg text{fill:#fff}
+html.sun.sun .chat-header h1{color:#fff!important}
+html.sun.sun #app main :is(.acc.acc .cgw,.card.mapc.mapc) svg g[font-size="9"] text{fill:#0e1440!important}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -962,7 +1011,7 @@ function cgUp(){const k=ckS(),was=k.drag;k.drag=0;if(was&&k.v!=null){ckAuto();re
 function cgKey(ev){const k=ckS(),m={ArrowLeft:[-.1,0],ArrowRight:[.1,0],ArrowUp:[0,.1],ArrowDown:[0,-.1]}[ev.key];if(!m)return;ev.preventDefault();cgSet(k,(k.v==null?0:k.v)+m[0],(k.a==null?0:k.a)+m[1]);cgPaint();clearTimeout(ui.cgt);ui.cgt=setTimeout(ckAuto,700)}
 const ckOther=()=>{const k=ckS();k.other=!k.other;render()};
 function cgPicker(k){const Z=300,AX=SUN()?'#263B53':'#e8ecff',LN=SUN()?'#ffffff':'#ffffff55',X=v=>(v+1)/2*Z,Y=a=>(1-a)/2*Z;
- const base=`<svg viewBox="-34 -22 ${Z+68} ${Z+44}" width="100%" aria-hidden="true" style="display:block">`+(ui.printMap||SUN()?'':`<rect x="0" y="0" width="${Z}" height="${Z}" fill="#10163f" fill-opacity=".25"/>`)+`<defs><clipPath id="cgr0"><rect width="${Z}" height="${Z}" rx="${SUN()?18:0}"/></clipPath></defs><g clip-path="url(#cgr0)">`+CGQ.map((x,i)=>`<rect x="${i%2?Z/2:0}" y="${i<2?0:Z/2}" width="${Z/2}" height="${Z/2}" fill="${x[2]}" fill-opacity="${ui.printMap?.14:(SUN()?.32:.5)}"/>`).join('')+'</g>'+`<line x1="${Z/2}" x2="${Z/2}" y1="0" y2="${Z}" stroke="${LN}"/><line y1="${Z/2}" y2="${Z/2}" x1="0" x2="${Z}" stroke="${LN}"/><g aria-hidden="true"><g transform="translate(6 6) scale(.7)">${FACES.hn}</g><g transform="translate(${Z-34} 6) scale(.7)">${FACES.hp}</g><g transform="translate(6 ${Z-34}) scale(.7)">${FACES.ln}</g><g transform="translate(${Z-34} ${Z-34}) scale(.7)">${FACES.lp}</g></g><g font-size="${SUN()?13:10}" font-weight="${SUN()?600:400}" fill="${AX}"><text x="${Z/2}" y="-8" text-anchor="middle">High energy</text><text x="${Z/2}" y="${Z+16}" text-anchor="middle">Low energy</text><text transform="translate(-12 ${Z/2}) rotate(-90)" text-anchor="middle">More negative</text><text transform="translate(${Z+22} ${Z/2}) rotate(90)" text-anchor="middle">More positive</text></g><g aria-hidden="true" font-size="9" text-anchor="middle" fill="${ui.printMap||SUN()?'#0e1440':'#fff'}" font-weight="600">${CGW.map(w=>`<text x="${X(w[1]*.97).toFixed(1)}" y="${(Y(w[2]*.97)+3).toFixed(1)}" fill-opacity="1">${w[0]}</text>`).join('')}</g></svg>`;
+ const base=`<svg viewBox="-34 -22 ${Z+68} ${Z+44}" width="100%" aria-hidden="true" style="display:block">`+(ui.printMap||SUN()?'':`<rect x="0" y="0" width="${Z}" height="${Z}" fill="#10163f" fill-opacity=".25"/>`)+`<defs><clipPath id="cgr0"><rect width="${Z}" height="${Z}" rx="${SUN()?18:0}"/></clipPath></defs><g clip-path="url(#cgr0)">${SUN()?`<rect width="${Z}" height="${Z}" fill="#F7F8FE"/>`:''}`+CGQ.map((x,i)=>`<rect x="${i%2?Z/2:0}" y="${i<2?0:Z/2}" width="${Z/2}" height="${Z/2}" fill="${x[2]}" fill-opacity="${ui.printMap?.14:(SUN()?.32:.5)}"/>`).join('')+'</g>'+`<line x1="${Z/2}" x2="${Z/2}" y1="0" y2="${Z}" stroke="${LN}"/><line y1="${Z/2}" y2="${Z/2}" x1="0" x2="${Z}" stroke="${LN}"/><g aria-hidden="true"><g transform="translate(6 6) scale(.7)">${FACES.hn}</g><g transform="translate(${Z-34} 6) scale(.7)">${FACES.hp}</g><g transform="translate(6 ${Z-34}) scale(.7)">${FACES.ln}</g><g transform="translate(${Z-34} ${Z-34}) scale(.7)">${FACES.lp}</g></g><g font-size="${SUN()?13:10}" font-weight="${SUN()?600:400}" fill="${AX}"><text x="${Z/2}" y="-8" text-anchor="middle">High energy</text><text x="${Z/2}" y="${Z+16}" text-anchor="middle">Low energy</text><text transform="translate(-12 ${Z/2}) rotate(-90)" text-anchor="middle">More negative</text><text transform="translate(${Z+22} ${Z/2}) rotate(90)" text-anchor="middle">More positive</text></g><g aria-hidden="true" font-size="9" text-anchor="middle" fill="${ui.printMap||SUN()?'#0e1440':'#fff'}" font-weight="600">${CGW.map(w=>`<text x="${X(w[1]*.97).toFixed(1)}" y="${(Y(w[2]*.97)+3).toFixed(1)}" fill-opacity="1">${w[0]}</text>`).join('')}</g></svg>`;
  return `<div class="cgw" style="margin:8px 0 0">${base}
  <div id="cg" class="cg" tabindex="0" role="application" aria-label="Mood and energy grid. Use the arrow keys, or tap or drag, to place how you feel. Left to right goes from more negative to more positive. Bottom to top goes from low energy to high energy." style="position:absolute;left:9.24%;top:6.4%;width:81.52%;height:87.2%;aspect-ratio:auto;border:0;border-radius:0;overflow:visible;background:none" onpointerdown="cgDown(event)" onpointermove="cgMove(event)" onpointerup="cgUp()" onpointercancel="cgUp()" onkeydown="cgKey(event)"><div id="cgd" class="dot" style="${k.v==null?'':`display:block;background:${qInfo(qOf(k.v,k.a))[2]};border-color:#fff;left:${(k.v+1)/2*100}%;top:${(1-k.a)/2*100}%`}"></div></div></div>
  <div id="cgr" class="cgr" aria-live="polite">${k.v==null?'Tap or drag on the grid to place how you feel.':`Closest word: <b style="font-size:24px">${k.w}</b><br><span class="mu">${cgDesc(k.v,k.a)}</span>`}</div>
@@ -978,7 +1027,7 @@ function mapPts(n){const out=[];for(let i=n-1;i>=0;i--){const d=iso(ago(i));((S.
 function mapHTML(){const M=mapDef(),n=M.range,P=mapPts(n),Z=300,X=v=>(v+1)/2*Z,Y=a=>(1-a)/2*Z;
  const cnt={hn:0,hp:0,ln:0,lp:0};P.forEach(o=>cnt[qOf(o.v,o.a)]++);
  const PR=!!ui.printMap,bg=PR?`<rect x="-34" y="-22" width="${Z+68}" height="${Z+44}" rx="16" fill="#f6f4ff"/>`:'',AX=PR?'#5b5680':SUN()?'#263B53':'#e8ecff',LN=PR||SUN()?'#ffffff':'#ffffff55',qc=(q,t)=>PR?rampC(q,t):qInfo(q)[2];
- const tint=(PR||SUN()?'':`<rect x="0" y="0" width="${Z}" height="${Z}" fill="#10163f" fill-opacity=".25"/>`)+`<defs><clipPath id="mpr0"><rect width="${Z}" height="${Z}" rx="${SUN()&&!PR?18:0}"/></clipPath></defs><g clip-path="url(#mpr0)">`+CGQ.map((x,i)=>`<rect x="${i%2?Z/2:0}" y="${i<2?0:Z/2}" width="${Z/2}" height="${Z/2}" fill="${PR?RAMP[x[0]][0]:x[2]}" fill-opacity="${PR?.55:(SUN()?.32:.5)}"/>`).join('')+'</g>'+`<line x1="${Z/2}" x2="${Z/2}" y1="0" y2="${Z}" stroke="${LN}" stroke-width="${PR?2:1}"/><line y1="${Z/2}" y2="${Z/2}" x1="0" x2="${Z}" stroke="${LN}" stroke-width="${PR?2:1}"/>`;
+ const tint=(PR||SUN()?'':`<rect x="0" y="0" width="${Z}" height="${Z}" fill="#10163f" fill-opacity=".25"/>`)+`<defs><clipPath id="mpr0"><rect width="${Z}" height="${Z}" rx="${SUN()&&!PR?18:0}"/></clipPath></defs><g clip-path="url(#mpr0)">${SUN()&&!PR?`<rect width="${Z}" height="${Z}" fill="#F7F8FE"/>`:''}`+CGQ.map((x,i)=>`<rect x="${i%2?Z/2:0}" y="${i<2?0:Z/2}" width="${Z/2}" height="${Z/2}" fill="${PR?RAMP[x[0]][0]:x[2]}" fill-opacity="${PR?.55:(SUN()?.32:.5)}"/>`).join('')+'</g>'+`<line x1="${Z/2}" x2="${Z/2}" y1="0" y2="${Z}" stroke="${LN}" stroke-width="${PR?2:1}"/><line y1="${Z/2}" y2="${Z/2}" x1="0" x2="${Z}" stroke="${LN}" stroke-width="${PR?2:1}"/>`;
  const axes=`<g font-size="${SUN()?13:10}" font-weight="${SUN()?600:400}" fill="${AX}"><text x="${Z/2}" y="-8" text-anchor="middle">High energy</text><text x="${Z/2}" y="${Z+16}" text-anchor="middle">Low energy</text><text transform="translate(-12 ${Z/2}) rotate(-90)" text-anchor="middle">More negative</text><text transform="translate(${Z+22} ${Z/2}) rotate(90)" text-anchor="middle">More positive</text></g>`;
  const faces=`<g aria-hidden="true"><g transform="translate(6 6) scale(.7)">${FACES.hn}</g><g transform="translate(${Z-34} 6) scale(.7)">${FACES.hp}</g><g transform="translate(6 ${Z-34}) scale(.7)">${FACES.ln}</g><g transform="translate(${Z-34} ${Z-34}) scale(.7)">${FACES.lp}</g></g>`;
  const legend=`<div style="display:flex;align-items:center;gap:8px;margin:8px 0 0;font-size:14px" class="mu"><span>Fewer</span><i style="flex:0 0 120px;height:10px;border-radius:5px;background:linear-gradient(90deg,#ffffff1f,#c9c3f5)"></i><span>More</span></div>`;
