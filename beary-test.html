@@ -774,6 +774,11 @@ html.sun.sun.sun.sun.sun .mkl{color:#C3B4E8!important}
 html.sun.sun.sun.sun.sun .h8 .h6sub{color:#C3B4E8!important}
 html.sun.sun.sun.sun.sun .h8bar i{background:#C3B4E8!important}
 html.sun.sun.sun.sun.sun .wd.on,html.sun.sun.sun.sun.sun .h5cal .wd.on{border-color:#C3B4E8!important;background:#C3B4E81a!important}
+
+/* Reminders scroll sideways */
+.h5tiles{display:flex!important;gap:16px;overflow-x:auto;margin:-8px -24px -16px;padding:8px 24px 24px;scroll-padding:0 24px;scroll-snap-type:x mandatory;scrollbar-width:none;grid-template-columns:none!important}
+.h5tiles::-webkit-scrollbar{display:none}
+.h5tiles>.h5tile{flex:none;width:156px;scroll-snap-align:start}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
