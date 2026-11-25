@@ -884,6 +884,20 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .trgrp .pill.on{backg
 .cksec .accb{padding:24px!important}
 .cksec+p,.cksec~p:last-of-type{margin-top:32px!important}
 .acsum{margin:0 0 16px!important;font-size:16px;font-weight:700;color:#fff}
+
+/* Settings buttons: light grey-white */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app[data-v=settings] main .btn.ghost{background:linear-gradient(180deg,#F2F3FA,#DCDFF0)!important;color:#1E2560!important;border:0!important;box-shadow:inset 0 1px 0 #fff,0 6px 14px #05071c66!important;font-weight:700}
+/* Trends group labels small */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun .trlab{font-size:12px!important;line-height:16px!important;letter-spacing:.08em!important}
+/* Prepare: round check circles */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .chk input[type=checkbox]{padding:0!important;min-height:0!important;box-shadow:none!important;background:transparent!important;border:2px solid #CFD6FA!important;appearance:none;-webkit-appearance:none;flex:none;width:24px!important;height:24px!important;margin:0 12px 0 0;border-radius:50%;border:2px solid #CFD6FA;background:transparent;display:inline-grid;place-items:center;cursor:pointer;vertical-align:middle}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .chk input[type=checkbox]:checked{background:#9FA8D5!important;border-color:#9FA8D5!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .chk input[type=checkbox]:checked::after{content:"";width:10px;height:6px;border-left:2.5px solid #1E2560;border-bottom:2.5px solid #1E2560;transform:rotate(-45deg) translate(1px,-1px)}
+/* Check-in food and medication circles smaller */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .dose .c44:not(.h5dose .c44){width:30px!important;height:30px!important;min-width:30px!important;border-width:2px!important;position:relative;margin:7px}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .dose .c44::after{content:"";position:absolute;inset:-7px}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .dose .c44 svg{width:16px!important;height:16px!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .dose .c44:not(.on){background:transparent!important;border:2px solid #CFD6FA!important}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -1359,8 +1373,8 @@ prep(){const id=ui.prep,a=S.appts.find(x=>x.id==id);if(!a)return `<main>${topbar
 settings(){const n=sampleCount();return `<main>${topbar('Settings & privacy')}${guide('Here you can see where your information lives and start this test over.')}<div class="card"><b>Where your data lives</b><p class="mu">In this test version nothing is saved and nothing is sent anywhere. Refreshing the page starts over.</p></div>
  <div class="card"><b>Chat connection</b><p class="mu">${VOICEFLOW.proxyUrl?'Voiceflow proxy configured.':vfOn()?'Connected to Voiceflow.':'Not connected. To connect Voiceflow, set VOICEFLOW.proxyUrl to a server proxy that keeps your API key.'}</p></div>
  <div class="card"><b>Safety</b><p class="mu">Beary doesn't diagnose or advise on medication. In an emergency call 911; in the US call or text 988. This wording is a prototype and hasn't been clinically reviewed.</p></div>
- <div class="card"><b>This test version</b><p class="mu">${MODE=='alex'?'You are using the prefilled version. It holds a fictional person\'s example records. Everything here is made up.':'You are using Beary as a first-time user. Nothing is saved, and refreshing the page starts over.'}</p><div class="row">${MODE=='alex'?'':'<button class="btn ghost sm" onclick="tourGo(0)">Show the welcome again</button>'}<button class="btn ghost sm" onclick="resetDemo()">${MODE=='alex'?'Reset Alex':'Start over'}</button></div></div>
- <h2>Erase my data</h2><div class="card"><p class="mu">Deletes everything saved in this browser: your entries, preparation notes. This can't be undone.</p><button class="btn ghost sm" style="color:var(--bad)" onclick="eraseAll()">Erase everything</button></div></main>`}
+ <div class="card"><b>This test version</b><p class="mu">${MODE=='alex'?'You are using the prefilled version. It holds a fictional person\'s example records. Everything here is made up.':'You are using Beary as a first-time user. Nothing is saved, and refreshing the page starts over.'}</p><div class="row">${MODE=='alex'?'':'<button class="btn ghost sm" onclick="tourGo(0)">Show the welcome again</button>'}<button class="btn ghost sm" onclick="resetDemo()">${MODE=='alex'?'Reset':'Start over'}</button></div></div>
+ <h2>Erase my data</h2><div class="card"><p class="mu">Deletes everything saved in this browser: your entries, preparation notes. This can't be undone.</p><button class="btn ghost sm" onclick="eraseAll()">Erase everything</button></div></main>`}
 };
 function crisisCard(){return `<div class="crisis"><b>You matter, and you deserve support from a person right now.</b><p>If you might be in danger, call <b>911</b>. In the US you can call or text <b>988</b> to reach the Suicide & Crisis Lifeline, any time.</p><p>You could also contact your therapist or someone you trust.</p><p class="mu">Prototype wording, pending clinical review.</p></div>`}
 
