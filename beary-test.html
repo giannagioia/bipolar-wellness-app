@@ -1078,6 +1078,10 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main>section.patsec{margin:32px 0 0!important}
 html.phone,html.phone body{overflow:hidden!important;overscroll-behavior:none;position:fixed;inset:0;width:100%;height:100%}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.phone #app,html.phone #app{max-width:none!important;width:100%!important;margin:0!important}
+html.splashon,html.splashon body{background:#3442A6!important}
+html.phone .splash{position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:auto!important;height:100lvh!important}
+html.phone .splash .sp-note{bottom:calc(100lvh - 100dvh + 24px)!important}
+html.phone .splash .sp-bear{bottom:calc(100lvh - 100dvh + 16%)!important}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -1779,7 +1783,8 @@ function patSec(){const m=document.querySelector('main');if(!m)return;const st=m
   el.before(sec);if(el!==card)el.remove();
   if(o)sec.append(card);else{card.hidden=true;sec.append(card);const c=document.createElement('div');c.className='card patsum';c.style.cssText='padding:0;margin:0';if(cat)c.dataset.cat=cat;c.innerHTML=`<button class="accsum" onclick="patTog('${k}')"><span>${SUMS[k]||'Show this chart'}</span><span aria-hidden="true">›</span></button>`;sec.append(c)}
  });m.scrollTop=st}
-const _r=render;render=function(){if(S.view=='patterns'&&ui.patLast!='patterns')ui.patC={};ui.patLast=S.view;const r=_r.apply(this,arguments);if(S.view=='patterns'&&ui.ptab!='sum')patSec();return r};
+function spTint(){try{const on=!!document.querySelector('.splash');document.documentElement.classList.toggle('splashon',on);const tm=document.querySelector('meta[name=theme-color]');if(tm)tm.content=on?'#3442A6':'#141945'}catch(e){}}spTint();new MutationObserver(spTint).observe(document.getElementById('app'),{childList:true});
+const _r=render;render=function(){if(S.view=='patterns'&&ui.patLast!='patterns')ui.patC={};ui.patLast=S.view;const r=_r.apply(this,arguments);spTint();if(S.view=='patterns'&&ui.ptab!='sum')patSec();return r};
 const _pg=patGo;patGo=function(cat){ui.patC=ui.patC||{};const k=cat=='mood'?'mood and energy map':{sleep:'sleep hours',ex:'exercise minutes',meds:'medication log',food:'food log'}[cat];if(k)delete ui.patC[k];return _pg(cat)};
 })();
 </script>
