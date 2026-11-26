@@ -989,8 +989,7 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun
 html,body{background:#141945!important}
 :root{color-scheme:dark}
 /* Typing: nav steps aside and the field grows */
-html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app:has(.compose #ci:focus) nav{display:none!important}
-html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose:has(#ci:focus){margin:0 12px 12px!important;padding:8px 8px 8px 22px!important;border-color:#8EB4F580!important;box-shadow:0 0 0 3px #8EB4F526,0 8px 24px #05071c99!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose:has(#ci:focus){padding:8px 8px 8px 22px!important;border-color:#8EB4F580!important;box-shadow:0 0 0 3px #8EB4F526,0 8px 24px #05071c99!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose:has(#ci:focus) #ci{min-height:52px;font-size:17px}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose #ci:focus{outline:none!important}
 
@@ -998,7 +997,6 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app nav{position:absolute!important;left:0;right:0;bottom:0;margin:0 16px calc(12px + env(safe-area-inset-bottom,0px))!important;z-index:20}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .compose{position:relative;z-index:21;margin-bottom:calc(100px + env(safe-area-inset-bottom,0px))!important}
-html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app :has(.compose #ci:focus) .compose{margin-bottom:calc(12px + env(safe-area-inset-bottom,0px))!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .cksaved{background:#14194599!important;border:1px solid #ffffff1f!important;color:#fff!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .cksaved p{color:#fff!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main .cksaved svg{stroke:#7ef0c0!important}
@@ -1043,6 +1041,11 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .mhd .back::after{content:"";position:absolute;inset:-4px}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .mhd h2{font-size:26px!important;line-height:1.15!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .mhd+p.mu{margin:6px 0 0 46px!important}
+
+/* Nav always visible, fully rounded */
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app nav{display:flex!important;visibility:visible!important;border-radius:999px!important;padding:6px!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app nav button{border-radius:999px!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app :has(.modal) nav{visibility:hidden!important}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
