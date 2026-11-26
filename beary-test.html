@@ -1776,7 +1776,7 @@ function patSec(){const m=document.querySelector('main');if(!m)return;const st=m
   el.before(sec);if(el!==card)el.remove();
   if(o)sec.append(card);else{card.hidden=true;sec.append(card);const c=document.createElement('div');c.className='card patsum';c.style.cssText='padding:0;margin:0';if(cat)c.dataset.cat=cat;c.innerHTML=`<button class="accsum" onclick="patTog('${k}')"><span>${SUMS[k]||'Show this chart'}</span><span aria-hidden="true">›</span></button>`;sec.append(c)}
  });m.scrollTop=st}
-const _r=render;render=function(){const r=_r.apply(this,arguments);if(S.view=='patterns'&&ui.ptab!='sum')patSec();return r};
+const _r=render;render=function(){if(S.view=='patterns'&&ui.patLast!='patterns')ui.patC={};ui.patLast=S.view;const r=_r.apply(this,arguments);if(S.view=='patterns'&&ui.ptab!='sum')patSec();return r};
 const _pg=patGo;patGo=function(cat){ui.patC=ui.patC||{};const k=cat=='mood'?'mood and energy map':{sleep:'sleep hours',ex:'exercise minutes',meds:'medication log',food:'food log'}[cat];if(k)delete ui.patC[k];return _pg(cat)};
 })();
 </script>
