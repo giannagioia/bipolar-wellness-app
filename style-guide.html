@@ -81,8 +81,8 @@ pre{margin:16px 0 0;background:#0c1033;border:1px solid #ffffff1a;border-radius:
 .btn{font:700 14px/1 var(--f);min-height:44px;padding:0 24px;border-radius:999px;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px}
 .b1{background:linear-gradient(180deg,#2B347A,#1E2560);color:#fff;box-shadow:0 6px 16px #05071c66}
 .b2{background:linear-gradient(180deg,#F2F3FA,#DCDFF0);color:var(--ink);border-color:#8EB4F580}
-.b3{background:linear-gradient(180deg,#B3CDFB 0%,#8EB4F5 55%,#759EEA 100%);color:var(--ink);font-weight:800;border-color:#ffffff66;box-shadow:inset 0 1px 0 #ffffffb3,inset 0 -2px 0 #4F78C833,0 6px 16px #8EB4F540,0 2px 6px #05071c80}
-.b4{background:#ffffff1a;color:#fff;border-color:#ffffff33;font-weight:500}
+.b3{background:linear-gradient(180deg,#FFFFFF 0%,#EEF0FC 60%,#DDE2F7 100%);color:var(--ink);font-weight:800;border-color:#fff;box-shadow:inset 0 -2px 0 #B9C1E866,0 6px 16px #05071c80}
+.b4{background:#ffffff1a;color:#fff;border-color:#ffffff38;font-weight:700}
 .icon{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#ffffff14;border:1px solid #ffffff33}
 footer{margin-top:64px;font-size:12px;color:var(--mu)}
 </style>
@@ -191,7 +191,8 @@ footer{margin-top:64px;font-size:12px;color:var(--mu)}
         <div class="sw"><div class="c" style="background:#fff"></div><div class="i"><b>Text</b>#FFFFFF</div></div>
         <div class="sw"><div class="c" style="background:#E1E5FB"></div><div class="i"><b>Muted</b>#E1E5FB</div></div>
         <div class="sw"><div class="c" style="background:#8EB4F5"></div><div class="i"><b>Accent blue</b>#8EB4F5</div></div>
-        <div class="sw"><div class="c" style="background:linear-gradient(180deg,#B3CDFB,#8EB4F5 55%,#759EEA);box-shadow:inset 0 1px 0 #ffffffb3"></div><div class="i"><b>Selected</b>#B3CDFB → #8EB4F5 → #759EEA · ink text, ExtraBold</div></div>
+        <div class="sw"><div class="c" style="background:linear-gradient(180deg,#FFFFFF,#EEF0FC 60%,#DDE2F7)"></div><div class="i"><b>Selected</b>#FFFFFF → #DDE2F7 · ink text, ExtraBold</div></div>
+        <div class="sw"><div class="c" style="background:#ffffff1a;outline:1px solid #ffffff38;outline-offset:-1px"></div><div class="i"><b>Unselected</b>White 10% glass · white text</div></div>
         <div class="sw"><div class="c" style="background:#1E2560"></div><div class="i"><b>Ink</b>#1E2560 · text on light surfaces only</div></div>
       </div>
     </div>
@@ -249,9 +250,10 @@ footer{margin-top:64px;font-size:12px;color:var(--mu)}
     <ul class="rules" style="margin-top:24px">
       <li><b>Main</b><span>A dark navy pill. Use it for the one main action in a card.</span></li>
       <li><b>Second</b><span>A light pill with a soft blue outline. Use it next to a main action.</span></li>
-      <li><b>Selected</b><span>One look everywhere: a blue gradient with a light top edge and a soft glow, ink text, ExtraBold. Use it for the chosen pill, day, range, chart toggle and the current tab in the nav bar. Category colors are never used to show selection.</span></li>
-      <li><b>Today</b><span>The Today day card is always ExtraBold. When another day is chosen, Today keeps an accent-blue ring.</span></li>
-      <li><b>Unselected</b><span>A see-through glass pill with white text.</span></li>
+      <li><b>Selected</b><span>One look everywhere: a pearl-white pill with a soft shadow, ink text, ExtraBold. It works next to every mood and category color. Use it for the chosen pill, day, range, chart toggle and the current tab in the nav bar. Category colors are never used to show selection.</span></li>
+      <li><b>Today</b><span>The Today day card is always ExtraBold. When another day is chosen, Today keeps a white ring.</span></li>
+      <li><b>Unselected</b><span>A see-through white glass with white text. This covers pills, day cards and arrows. No navy fills.</span></li>
+      <li><b>Helper text</b><span>Keep it to a minimum. Only add a line if someone would be stuck without it. Keep it to one short sentence. Keys can use shorthand like "Dashed = no entry."</span></li>
       <li><b>Beary's bubbles</b><span>Use the card blue with a small corner pointing toward Beary. Label them BEARY in small accent-blue capitals. The person's own chat bubbles are accent blue with ink text.</span></li>
       <li><b>Icons</b><span>White line icons in a 44px glass circle. Never use emoji or text characters as icons.</span></li>
       <li><b>Numbers</b><span>A number you can change, like hours slept or minutes of exercise, opens a scroll-wheel picker when tapped.</span></li>
