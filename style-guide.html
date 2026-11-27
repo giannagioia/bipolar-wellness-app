@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Beary Style Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg1:#141945;--bg2:#10143A;--card1:#3442A6;--card2:#2A3590;--hero1:#3B4AB8;
@@ -13,7 +13,7 @@
   --line:#ffffff1f;--tile:#1A2058;
   --mood:#C9B6F2;--sleep:#6FE0EE;--meds:#F7A1D9;--food:#FFBFA3;--ex:#A3AEFF;--notes:#CFD6FA;
   --q-hn:#ff7468;--q-hp:#ffc42e;--q-ln:#5b92ff;--q-lp:#2fd39a;
-  --f:Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --q:Quicksand,Nunito,system-ui,sans-serif;--f:Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -21,8 +21,8 @@ html{background:#10143A}
 body{margin:0;background:linear-gradient(180deg,var(--bg1) 0,var(--bg2) 900px,var(--bg2));color:var(--tx);font:400 16px/1.5 var(--f);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px}
 .wrap{max-width:1160px;margin:0 auto}
-h1{font:800 32px/1.2 var(--f);letter-spacing:-.015em;margin:0}
-h2{font:800 24px/1.25 var(--f);letter-spacing:-.015em;margin:0 0 8px}
+h1{font:700 32px/1.2 var(--q);letter-spacing:-.01em;margin:0}
+h2{font:700 24px/1.25 var(--q);letter-spacing:-.01em;margin:0 0 8px}
 .lede{color:var(--mu);margin:8px 0 0;max-width:60ch}
 .lab{font:700 15px/20px var(--f);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0}
 .mu{color:var(--mu)}
@@ -45,7 +45,7 @@ section.blk>p.mu{margin:0 0 24px;max-width:62ch}
 @media(max-width:760px){.tpl{grid-template-columns:1fr}}
 .phone{position:relative;border:2px solid #ffffff40;border-radius:40px;background:linear-gradient(180deg,var(--bg1),var(--bg2));padding:40px 0 24px;overflow:hidden;max-width:320px;width:100%;margin:0 auto}
 .ph-in{padding:0 34px}
-.ph-h1{font:800 24px/1.2 var(--f);letter-spacing:-.015em;margin:0 0 20px}
+.ph-h1{font:700 24px/1.2 var(--q);letter-spacing:-.015em;margin:0 0 20px}
 .ph-guide{display:flex;gap:8px;align-items:center;margin:0 0 27px}
 .ph-guide i{flex:none;width:32px;height:32px;border-radius:50%;background:#3E4BA8;border:2px solid #8EB4F580}
 .ph-guide span{flex:1;border-radius:16px;padding:8px 12px;font-size:11px;line-height:1.4;background:#2E2A6E;border:1px solid #ffffff1f;color:var(--mu)}
@@ -224,14 +224,14 @@ footer{margin-top:64px;font-size:12px;color:var(--mu)}
 <!-- ============ TYPE ============ -->
 <section class="blk" aria-labelledby="t-type">
   <h2 id="t-type">Type</h2>
-  <p class="mu">Nunito is the only typeface. Its rounded letters match Beary's soft illustration. Headings use ExtraBold, body text Medium, and buttons Bold.</p>
+  <p class="mu">Two typefaces, both soft and rounded to match Beary. Quicksand Bold is for headings: page titles, the greeting, dates, card headings and big numbers. Nunito is for everything else: body text in Medium, buttons in Bold, and section titles in Bold capitals.</p>
   <div class="tile spec">
-    <div><span style="font:800 32px/1.2 var(--f);letter-spacing:-.015em">Page title</span><small>32 · ExtraBold 800</small></div>
-    <div><span style="font:800 24px/1.25 var(--f);letter-spacing:-.015em">Card heading, date, greeting</span><small>24 · ExtraBold 800</small></div>
-    <div><span class="lab">Section title</span><small>15 · Bold 700 · uppercase · 0.08em</small></div>
-    <div><span style="font:500 16px/1.45 var(--f)">Body text inside cards</span><small>16 · Medium 500</small></div>
-    <div><span style="font:700 14px/1 var(--f)">Buttons and controls</span><small>14 · Bold 700</small></div>
-    <div><span style="font:400 12px/1.5 var(--f);color:var(--mu)">Small print and chart labels</span><small>12 · Regular 400</small></div>
+    <div><span style="font:700 32px/1.2 var(--q);letter-spacing:-.01em">Page title</span><small>Quicksand 32 · Bold 700</small></div>
+    <div><span style="font:700 24px/1.25 var(--q);letter-spacing:-.01em">Card heading, date, greeting</span><small>Quicksand 24 · Bold 700</small></div>
+    <div><span class="lab">Section title</span><small>Nunito 15 · Bold 700 · uppercase · 0.08em</small></div>
+    <div><span style="font:500 16px/1.45 var(--f)">Body text inside cards</span><small>Nunito 16 · Medium 500</small></div>
+    <div><span style="font:700 14px/1 var(--f)">Buttons and controls</span><small>Nunito 14 · Bold 700</small></div>
+    <div><span style="font:400 12px/1.5 var(--f);color:var(--mu)">Small print and chart labels</span><small>Nunito 12 · Regular 400</small></div>
   </div>
 </section>
 
