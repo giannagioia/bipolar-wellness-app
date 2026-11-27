@@ -1195,13 +1195,14 @@ html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .mapc .mkbar{border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 0 #ffffff59,0 4px 10px #05071c59}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .mapc .mkbar i{background-image:linear-gradient(180deg,#ffffff40,#ffffff00 60%)!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .endot{filter:drop-shadow(0 2px 3px #0b0f3a99)}
-html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .cg .dot{width:18px!important;height:18px!important;margin:-9px 0 0 -9px!important;border:0!important;background:radial-gradient(circle at 34% 28%,#ffffff 0,#E4E8FB 55%,#C9CFF3 100%)!important;box-shadow:0 3px 8px #0b0f3aa6!important;opacity:1!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .cg .dot{width:18px!important;height:18px!important;margin:-9px 0 0 -9px!important;border:0!important;background-image:radial-gradient(circle at 34% 28%,#ffffff8c 0,#ffffff00 50%)!important;box-shadow:0 3px 8px #0b0f3aa6!important;opacity:1!important}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main svg circle[stroke='#ffffff']{stroke:none!important;filter:drop-shadow(0 2px 3px #0b0f3aa6) drop-shadow(0 0 1px #0b0f3a80)}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main svg circle[stroke='#ffffff'][fill='#ffc42e']{fill:#FFAA1F}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main svg circle[stroke='#ffffff'][fill='#2fd39a']{fill:#12BF86}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main svg circle[stroke='#ffffff'][fill='#5b92ff']{fill:#3B72F2}
 html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app main svg circle[stroke='#ffffff'][fill='#ff7468']{fill:#F2554A}
 [data-cat=energy]{--cd:#2E6B3E!important}
+html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .cgw>svg>g[clip-path],html.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun.sun #app .mapc svg>g[clip-path]{filter:drop-shadow(0 8px 14px #05071c66)}
 </style></head><body><div id="app"></div>
 <script>
 // ===== Data layer (prototype only: localStorage. Replace with a secure backend; not production health-data storage) =====
@@ -1924,5 +1925,15 @@ const MINS=[...Array(12)].map((_,i)=>i*5);
 function wheelSleep(where){const d=where=='home'?today():ckS().d,z=S.sleep[d],h=z?z.h:7,H=Math.floor(h),M=Math.round((h-H)*60/5)*5;
  openWheel('Hours slept',[{name:'Hours',vals:[...Array(17)].map((_,i)=>i),sel:Math.min(16,H),unit:'h'},{name:'Minutes',vals:MINS.map(m=>String(m).padStart(2,'0')),sel:Math.min(11,M/5),unit:'m'}],([hi,mi])=>{const nh=Math.min(16,hi+MINS[mi]/60);if(where=='home')ui.sleepKeep=1;S.sleep[d]={h:nh,q:z?z.q:'ok',qw:z?z.qw:undefined};award('sleep');render()})}
 function wheelEm(){const k=ckS(),V=[...Array(60)].map((_,i)=>(i+1)*5);openWheel('Minutes',[{name:'Minutes',vals:V,sel:Math.max(0,V.indexOf(k.em)),unit:'min'}],([i])=>{k.em=V[i];render()})}
+</script>
+<script>
+(function(){
+function depth(){document.querySelectorAll('#app svg g[clip-path]').forEach(g=>{if(g.dataset.depth)return;const rs=[...g.querySelectorAll(':scope>rect[fill-opacity]')];if(rs.length!=4)return;g.dataset.depth=1;
+ const svg=g.ownerSVGElement,id='qd'+Math.random().toString(36).slice(2,7),NS='http://www.w3.org/2000/svg';let defs=svg.querySelector('defs');if(!defs){defs=document.createElementNS(NS,'defs');svg.prepend(defs)}
+ defs.insertAdjacentHTML('beforeend',`<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#0b0f3a" stop-opacity=".10"/></linearGradient>`);
+ rs.forEach(r=>{const o=document.createElementNS(NS,'rect');['x','y','width','height'].forEach(a=>o.setAttribute(a,r.getAttribute(a)||0));o.setAttribute('fill',`url(#${id})`);o.setAttribute('pointer-events','none');r.after(o)});
+ const ins=document.createElementNS(NS,'rect');ins.setAttribute('width','300');ins.setAttribute('height','300');ins.setAttribute('rx','18');ins.setAttribute('fill','none');ins.setAttribute('stroke','#0b0f3a');ins.setAttribute('stroke-opacity','.12');ins.setAttribute('stroke-width','3');ins.setAttribute('pointer-events','none');g.append(ins)})}
+const _r=render;render=function(){const r=_r.apply(this,arguments);try{depth()}catch(e){}return r};
+})();
 </script>
 </body></html>
