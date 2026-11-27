@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Beary Style Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg1:#141945;--bg2:#10143A;--card1:#3442A6;--card2:#2A3590;--hero1:#3B4AB8;
@@ -13,7 +13,7 @@
   --line:#ffffff1f;--tile:#1A2058;
   --mood:#C9B6F2;--sleep:#6FE0EE;--meds:#F7A1D9;--food:#FFBFA3;--ex:#A3AEFF;--notes:#CFD6FA;
   --q-hn:#ff7468;--q-hp:#ffc42e;--q-ln:#5b92ff;--q-lp:#2fd39a;
-  --f:Figtree,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f:Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -120,7 +120,7 @@ footer{margin-top:64px;font-size:12px;color:var(--mu)}
         <li><b>Section → section</b><span>48px between the bottom of one card and the next section title. This bigger gap separates the groups.</span></li>
         <li><b>Title → card</b><span>12px between a section title and its card, measured from the title text. The small gap keeps them reading as one group.</span></li>
         <li><b>Inside a card</b><span>24px padding. 16px between things inside the card.</span></li>
-        <li><b>Titles</b><span>Always outside the card, never inside it. Uppercase, 15px, Figtree Bold, letter spacing 0.08em. Use the category color when the section has a category, and accent blue when it doesn't.</span></li>
+        <li><b>Titles</b><span>Always outside the card, never inside it. Uppercase, 15px, Nunito Bold, letter spacing 0.08em. Use the category color when the section has a category, and accent blue when it doesn't.</span></li>
         <li><b>Show / Hide</b><span>Sections the person might want to tuck away get a Show/Hide control on the right of the title. When a section is hidden, its card shrinks to a one-line summary with a chevron. Every section starts open.</span></li>
         <li><b>Bottom</b><span>Leave room so the last card can scroll clear of the floating nav bar.</span></li>
       </ul>
@@ -222,12 +222,12 @@ footer{margin-top:64px;font-size:12px;color:var(--mu)}
 <!-- ============ TYPE ============ -->
 <section class="blk" aria-labelledby="t-type">
   <h2 id="t-type">Type</h2>
-  <p class="mu">Figtree is the only typeface. Headings use the ExtraBold weight so they still stand apart from body text.</p>
+  <p class="mu">Nunito is the only typeface. Its rounded letters match Beary's soft illustration. Headings use ExtraBold, body text Medium, and buttons Bold.</p>
   <div class="tile spec">
     <div><span style="font:800 32px/1.2 var(--f);letter-spacing:-.015em">Page title</span><small>32 · ExtraBold 800</small></div>
     <div><span style="font:800 24px/1.25 var(--f);letter-spacing:-.015em">Card heading, date, greeting</span><small>24 · ExtraBold 800</small></div>
     <div><span class="lab">Section title</span><small>15 · Bold 700 · uppercase · 0.08em</small></div>
-    <div><span style="font:400 16px/1.45 var(--f)">Body text inside cards</span><small>16 · Regular 400</small></div>
+    <div><span style="font:500 16px/1.45 var(--f)">Body text inside cards</span><small>16 · Medium 500</small></div>
     <div><span style="font:700 14px/1 var(--f)">Buttons and controls</span><small>14 · Bold 700</small></div>
     <div><span style="font:400 12px/1.5 var(--f);color:var(--mu)">Small print and chart labels</span><small>12 · Regular 400</small></div>
   </div>
@@ -250,6 +250,7 @@ footer{margin-top:64px;font-size:12px;color:var(--mu)}
       <li><b>Second</b><span>A light pill with a soft blue outline. Use it next to a main action.</span></li>
       <li><b>Selected</b><span>Accent blue with ink text. Use it for the chosen option in a group.</span></li>
       <li><b>Unselected</b><span>A see-through glass pill with white text.</span></li>
+      <li><b>Beary's bubbles</b><span>Use the card blue with a small corner pointing toward Beary. Label them BEARY in small accent-blue capitals. The person's own chat bubbles are accent blue with ink text.</span></li>
       <li><b>Icons</b><span>White line icons in a 44px glass circle. Never use emoji or text characters as icons.</span></li>
       <li><b>Numbers</b><span>A number you can change, like hours slept or minutes of exercise, opens a scroll-wheel picker when tapped.</span></li>
     </ul>
