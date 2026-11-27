@@ -71,7 +71,7 @@ pre{margin:16px 0 0;background:#0c1033;border:1px solid #ffffff1a;border-radius:
 .sec-hd .lab{color:var(--c,var(--accent))}
 .sec-hd span{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-size:14px}
 .sec-hd svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.card{border-radius:24px;padding:24px;background:linear-gradient(160deg,var(--card1),var(--card2));border:1px solid #ffffff1f;box-shadow:0 14px 30px #05071c80}
+.card{border-radius:24px;padding:24px;background:linear-gradient(160deg,var(--card1),var(--card2));border:1px solid #ffffff1f;box-shadow:inset 0 1px 0 #ffffff26,0 10px 24px #05071c73}
 .card.cat{background:linear-gradient(160deg,color-mix(in srgb,var(--c) 34%,#2A3590),color-mix(in srgb,var(--c) 18%,#1C2366));border-color:color-mix(in srgb,var(--c) 60%,transparent)}
 .card p{margin:0;color:var(--body)}
 .card b{display:block;margin:0 0 8px}
@@ -243,15 +243,17 @@ footer{margin-top:64px;font-size:12px;color:var(--mu)}
     <div class="btns">
       <span class="btn b1">Prepare</span>
       <span class="btn b2">Add a visit</span>
-      <span class="btn b3">7 days</span>
+      <span class="btn b3"><i style="width:10px;height:10px;border-radius:50%;background:#FFC42E radial-gradient(circle at 34% 28%,#ffffffb3 0,#ffffff00 58%);box-shadow:0 2px 5px #0b0f3a66"></i>7 days</span>
       <span class="btn b4">Week</span>
       <span class="icon" aria-label="Settings icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span>
     </div>
     <ul class="rules" style="margin-top:24px">
       <li><b>Main</b><span>A dark navy pill. Use it for the one main action in a card.</span></li>
       <li><b>Second</b><span>A light pill with a soft blue outline. Use it next to a main action.</span></li>
-      <li><b>Selected</b><span>One look everywhere: the soft lavender from the visit card, with ink text in ExtraBold. Colored dots on a selected item get a thin ink ring so every mood and category color stays visible. Use it for the chosen pill, day, range, chart toggle and the current tab in the nav bar. Category colors are never used to show selection.</span></li>
-      <li><b>Today</b><span>The Today day card is always ExtraBold. When another day is chosen, Today keeps a lavender ring.</span></li>
+      <li><b>Selected</b><span>One look everywhere: the soft lavender from the visit card, with ink text in ExtraBold. Colored dots never get an outline. Use it for the chosen pill, day, range, chart toggle and the current tab in the nav bar. Category colors are never used to show selection.</span></li>
+      <li><b>Dots</b><span>Mood and category dots are shaded like small beads, with a light spot on top and a soft shadow underneath, and no outline. That keeps every color visible on both lavender and blue.</span></li>
+      <li><b>Depth</b><span>Cards, pills, day cards, arrows, Beary's bubble and the nav bar get a faint light line along the top edge and a soft shadow underneath. Selected items get a slightly deeper version. Never use a bright outline.</span></li>
+      <li><b>Today</b><span>The Today day card is always ExtraBold. When another day is chosen, Today keeps a soft lavender edge.</span></li>
       <li><b>Unselected</b><span>The same blue as the cards, with white text. This covers pills, day cards and arrows. Inside a card, use the see-through glass pill instead.</span></li>
       <li><b>Helper text</b><span>Keep it to a minimum. Only add a line if someone would be stuck without it. Keep it to one short sentence. Keys can use shorthand like "Dashed = no entry."</span></li>
       <li><b>Beary's bubbles</b><span>Use the card blue with a small corner pointing toward Beary. Label them BEARY in small accent-blue capitals. The person's own chat bubbles are accent blue with ink text.</span></li>
