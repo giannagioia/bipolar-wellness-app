@@ -49,8 +49,8 @@ section.blk>p.mu{margin:0 0 24px;max-width:62ch}
 .ph-guide{display:flex;gap:8px;align-items:center;margin:0 0 27px}
 .ph-guide i{flex:none;width:32px;height:32px;border-radius:50%;background:#3E4BA8;border:2px solid #8EB4F580}
 .ph-guide span{flex:1;border-radius:16px;padding:8px 12px;font-size:11px;line-height:1.4;background:#2E2A6E;border:1px solid #ffffff1f;color:var(--mu)}
-.ph-sec{margin-top:27px}.ph-sec:first-of-type{margin-top:0}
-.ph-hd{display:flex;justify-content:space-between;align-items:center;margin:0 0 14px}
+.ph-sec{margin-top:40px}.ph-sec:first-of-type{margin-top:0}
+.ph-hd{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px}
 .ph-hd b{font:700 13px/16px var(--f);letter-spacing:.08em;text-transform:uppercase;color:var(--c,var(--accent))}
 .ph-hd small{font-size:12px;color:var(--accent)}
 .ph-card{border-radius:20px;padding:20px;background:linear-gradient(160deg,var(--card1),var(--card2));border:1px solid #ffffff1f;box-shadow:0 12px 24px #05071c80}
@@ -67,7 +67,7 @@ code{font:500 13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;background:#0
 pre{margin:16px 0 0;background:#0c1033;border:1px solid #ffffff1a;border-radius:16px;padding:16px;overflow-x:auto;font:500 12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--mu)}
 /* live section pattern */
 .secdemo{max-width:420px}
-.sec-hd{display:flex;justify-content:space-between;align-items:center;min-height:36px;margin:0 0 16px}
+.sec-hd{display:flex;justify-content:space-between;align-items:center;min-height:36px;margin:0 0 4px}
 .sec-hd .lab{color:var(--c,var(--accent))}
 .sec-hd span{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-size:14px}
 .sec-hd svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -75,7 +75,7 @@ pre{margin:16px 0 0;background:#0c1033;border:1px solid #ffffff1a;border-radius:
 .card.cat{background:linear-gradient(160deg,color-mix(in srgb,var(--c) 34%,#2A3590),color-mix(in srgb,var(--c) 18%,#1C2366));border-color:color-mix(in srgb,var(--c) 60%,transparent)}
 .card p{margin:0;color:var(--body)}
 .card b{display:block;margin:0 0 8px}
-.secdemo .sec+.sec{margin-top:32px}
+.secdemo .sec+.sec{margin-top:40px}
 /* buttons */
 .btns{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
 .btn{font:700 14px/1 var(--f);min-height:44px;padding:0 24px;border-radius:999px;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px}
@@ -117,8 +117,8 @@ footer{margin-top:64px;font-size:12px;color:var(--mu)}
         <li><b>Top</b><span>40px above the page title.</span></li>
         <li><b>Title → note</b><span>24px under the page title, or under a back-arrow header.</span></li>
         <li><b>Note → first section</b><span>32px.</span></li>
-        <li><b>Section → section</b><span>32px between the bottom of one card and the next section title.</span></li>
-        <li><b>Title → card</b><span>16px between a section title and its card.</span></li>
+        <li><b>Section → section</b><span>48px between the bottom of one card and the next section title. This bigger gap separates the groups.</span></li>
+        <li><b>Title → card</b><span>12px between a section title and its card, measured from the title text. The small gap keeps them reading as one group.</span></li>
         <li><b>Inside a card</b><span>24px padding. 16px between things inside the card.</span></li>
         <li><b>Titles</b><span>Always outside the card, never inside it. Uppercase, 15px, Figtree Bold, letter spacing 0.08em. Use the category color when the section has a category, and accent blue when it doesn't.</span></li>
         <li><b>Show / Hide</b><span>Sections the person might want to tuck away get a Show/Hide control on the right of the title. When a section is hidden, its card shrinks to a one-line summary with a chevron. Every section starts open.</span></li>
